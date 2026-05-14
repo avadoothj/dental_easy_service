@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+  <g id="Group_45385" data-name="Group 45385" transform="translate(-1282 -768)">
+    <g id="Ellipse_1746" data-name="Ellipse 1746" transform="translate(1336 770) rotate(90)" fill="#fff" stroke="#754df1" stroke-width="2">
+      <circle cx="26" cy="26" r="26" stroke="none"/>
+      <circle cx="26" cy="26" r="27" fill="none"/>
+    </g>
+    <g id="down_arrow_filter" transform="translate(1321.063 800.932) rotate(180)">
+      <path id="Chevron_Right" data-name="Chevron Right" d="M11.531,11.537l9.677-9.68A1.087,1.087,0,1,0,19.672.319L10.763,9.231,1.854.32A1.087,1.087,0,1,0,.318,1.859l9.677,9.68A1.1,1.1,0,0,0,11.531,11.537Z" fill="#764df2" stroke="#764df2" stroke-width="0.5"/>
+    </g>
+  </g>
+</svg>

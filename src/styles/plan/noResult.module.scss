@@ -1,0 +1,63 @@
+@import "../variable";
+.pagebg {
+	background: #ffffff;
+	border-radius: 15px;
+	width: 100%;
+	padding: 60px 0;
+	&.removePadding {
+		padding: 0;
+		@media (max-width: 1024px) {
+			padding: 60px 0;
+		}
+	}
+	.bg404 {
+		background-image: url(#{$image_path}/plan/nosearch.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		width: 165px;
+		height: 165px;
+		position: relative;
+		margin: 0 auto;
+		// @media (max-width: 1380px){width: 165px;height: 165px;}
+		@media (max-width: 1024px) {
+			width: 250px;
+			height: 238px;
+		}
+	}
+	.nopagebox {
+		width: 380px;
+		text-align: center;
+		margin: 0px auto;
+		@media (max-width: 1024px) {
+			width: 260px;
+		}
+		.textpage {
+			color: #555a74;
+			font-size: 120px;
+			line-height: 0.9;
+			font-weight: 700;
+			@media (max-width: 1024px) {
+				font-size: 100px;
+			}
+		}
+		.opps {
+			color: #555a74;
+			font-size: 32px;
+			line-height: 1;
+			font-weight: 300;
+			@media (max-width: 1024px) {
+				font-size: 25px;
+			}
+		}
+		.misstex {
+			color: #555a74;
+			font-size: 14px;
+			line-height: 1;
+			font-weight: 400;
+			padding: 5px 0px 15px 0px;
+			@media (max-width: 1024px) {
+				line-height: 1.2;
+			}
+		}
+	}
+}

@@ -1,0 +1,118 @@
+.receiptWrapper {
+	width: 100%;
+	padding: 24px;
+	.tableWrapper {
+		background: #ffffff;
+		border-radius: 15px;
+		overflow: auto;
+		box-shadow: 0px 0px 9px #a5abcb4d;
+		@media print {
+			border-radius: 0;
+			box-shadow: none;
+			border-top: 1px solid #000000;
+			border-left: 1px solid #000000;
+		}
+	}
+	table {
+		width: 100%;
+		caption-side: bottom;
+		border-collapse: collapse;
+		tr {
+			&.tableHead {
+				background: #6a6a8c0a;
+			}
+			th {
+				font-size: 14px;
+				color: #000000;
+				font-weight: 600;
+				padding: 10px;
+				text-align: center;
+				text-transform: uppercase;
+			}
+			td {
+				font-size: 14px;
+				color: #000000;
+				font-weight: 400;
+				padding: 15px 20px;
+				@media (max-width: 480px) {
+					padding: 10px;
+					width: 75px;
+				}
+				&.noPadding {
+					padding: 0;
+				}
+				.heading {
+					margin: 0;
+					font-size: 18px;
+					font-weight: 600;
+					text-align: center;
+					text-transform: uppercase;
+				}
+			}
+		}
+	}
+	.header {
+		border-right: 1px solid #00000036;
+		border-bottom: 1px solid #00000036;
+		@media print {
+			border-right: 1px solid #000000;
+			border-bottom: 1px solid #000000;
+		}
+	}
+	.footer {
+		border-right: 1px solid #00000036;
+		border-bottom: 1px solid #00000036;
+		@media print {
+			border-right: 1px solid #000000;
+			border-bottom: 1px solid #000000;
+		}
+	}
+	.innerTable1 {
+		td {
+			border-right: 1px solid #00000036;
+			border-bottom: 1px solid #00000036;
+			@media print {
+				border-right: 1px solid #000000;
+				border-bottom: 1px solid #000000;
+			}
+		}
+	}
+	.innerTable {
+		tr {
+			th {
+				text-align: right;
+				border-right: 1px solid #00000036;
+				border-bottom: 1px solid #00000036;
+				@media print {
+					border-right: 1px solid #000000;
+					border-bottom: 1px solid #000000;
+				}
+			}
+			td {
+				text-align: right;
+				border-right: 1px solid #00000036;
+				border-bottom: 1px solid #00000036;
+				@media print {
+					border-right: 1px solid #000000;
+					border-bottom: 1px solid #000000;
+				}
+				@media (max-width: 480px) {
+					width: 200px;
+				}
+			}
+		}
+	}
+	.btnWrapper {
+		display: flex;
+		grid-gap: 10px;
+		justify-content: flex-end;
+		margin-top: 15px;
+		button {
+			width: 110px;
+			justify-content: center;
+		}
+		@media print {
+			display: none;
+		}
+	}
+}

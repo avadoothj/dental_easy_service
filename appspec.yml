@@ -1,0 +1,25 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /var/www/vhosts/cms_tenderbharo
+
+hooks:
+  AfterInstall:
+    - location: scripts/deployment/fix_permissions.sh
+      timeout: 300
+      runas: root
+
+    - location: scripts/deployment/create_env.sh
+      timeout: 300
+      runas: ubuntu
+
+    - location: scripts/deployment/build_project.sh
+      timeout: 300
+      runas: ubuntu
+
+  ApplicationStart:
+    - location: scripts/deployment/start_app.sh
+      timeout: 900
+      runas: ubuntu

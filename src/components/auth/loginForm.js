@@ -1,0 +1,168 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { getSession, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { getConstant, encryptPassword } from "@/utils/utils";
+import { loginValidation } from "@/utils/formValidation";
+import style from "@/css/auth/login.module.scss";
+import ErrorMessage from "@/common/errorMessage";
+import commonStyle from "@/css/common/common.module.scss";
+import sidebarData from "@/utils/sidebarData";
+
+export default function LoginForm() {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
+
+	const router = useRouter();
+	const inputMaxLength = getConstant("MAXLENGTH_NAME");
+
+	const defaultFormData = {
+		username: "",
+		password: "",
+	};
+
+	const formValidation = {
+		username: register("username", loginValidation.username),
+		password: register("password", loginValidation.password),
+	};
+
+	const [formData, setFormData] = useState(defaultFormData);
+	const [isLoading, setIsLoading] = useState(false);
+	const [authError, setAuthError] = useState("");
+	const [searchParams, setSearchParams] = useState("/");
+	const [showPassword, setShowPassword] = useState(false);
+
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		setSearchParams(params);
+
+		for (let i = 0; i < getConstant("USER_MENU_KEY_LENGTH"); i++) {
+			localStorage.removeItem("user_menu_" + i);
+		}
+	}, []);
+
+	const updateSelectedForm = (key, value) => {
+		let temp = { ...formData };
+		temp[key] = value;
+		setFormData(temp);
+	};
+
+	const handleFormSubmit = async () => {
+		console.log("formData :", formData);
+		setAuthError("");
+		setIsLoading(true);
+
+		const response = await signIn("credentials", {
+			username: formData.username.trim(),
+			password: encryptPassword(formData.password),
+			redirect: false,
+		});
+		console.log("response :", response);
+
+		if (response.error) {
+			setAuthError(response.error);
+			setIsLoading(false);
+		} else {
+			// Redirect preference:
+			// 1) explicit ?redirect=...
+			// 2) first allowed sidebar link (or "/")
+			const redirectTo = searchParams.get("redirect");
+			if (redirectTo) {
+				router.push(redirectTo);
+				router.refresh();
+				return;
+			}
+
+			try {
+				const session = await getSession();
+				const allowedLinks = session?.user?.allowedLinks || [];
+
+				const flattenSidebarLinks = () => {
+					const links = [];
+					sidebarData.forEach((section) => {
+						section.forEach((item) => {
+							if (item?.link) links.push(item.link);
+							(item.menus || []).forEach((child) => {
+								if (child?.link) links.push(child.link);
+							});
+						});
+					});
+					return links;
+				};
+
+				const orderedLinks = flattenSidebarLinks();
+				console.log("orderedLinks :", orderedLinks);
+				const firstAllowed = allowedLinks.includes("/")
+					? "/"
+					: orderedLinks.find((l) => allowedLinks.includes(l));
+
+				router.push(firstAllowed || "/");
+			} catch (e) {
+				router.push("/");
+			}
+			router.refresh();
+		}
+	};
+
+	return (
+		<form onSubmit={handleSubmit(handleFormSubmit)}>
+			<h2>Sign In</h2>
+			<div className={style.inpulable}>
+				<input
+					{...formValidation.username}
+					onChange={(e) => {
+						formValidation.username.onChange(e);
+						updateSelectedForm("username", e.target.value);
+					}}
+					className={commonStyle.formControl}
+					type="text"
+					name="username"
+					id="username"
+					placeholder="User ID"
+					readOnly={isLoading}
+					value={formData.username}
+					maxLength={inputMaxLength}
+				/>
+				{errors?.username && (
+					<span className={commonStyle.logerror}>{errors.username?.message}</span>
+				)}
+			</div>
+			<div className={style.inpulable}>
+				<input
+					{...formValidation.password}
+					onChange={(e) => {
+						formValidation.password.onChange(e);
+						updateSelectedForm("password", e.target.value);
+					}}
+					className={commonStyle.formControl}
+					type={showPassword ? "text" : "password"}
+					name="password"
+					id="password"
+					placeholder="Password"
+					readOnly={isLoading}
+					value={formData.password}
+					maxLength={inputMaxLength}
+				/>
+				<span
+					onClick={() => setShowPassword(!showPassword)}
+					className={showPassword ? commonStyle.eyeclose : commonStyle.eyeopen}
+				></span>
+				{errors?.password && (
+					<span className={commonStyle.logerror}>{errors.password?.message}</span>
+				)}
+			</div>
+			<ErrorMessage message={authError} />
+			<button
+				type="submit"
+				className={commonStyle.commonBtn + " " + "w-100"}
+				disabled={isLoading}
+			>
+				{isLoading ? getConstant("LOADING_TEXT") : "Sign In"}
+			</button>
+		</form>
+	);
+}

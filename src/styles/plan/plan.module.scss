@@ -1,0 +1,70 @@
+@import "../variable";
+
+.planWrapper {
+	display: grid;
+	grid-column-gap: 20px;
+	grid-template-columns: repeat(3, 1fr);
+	@media (max-width: 1024px) {
+		grid-template-columns: repeat(1, 1fr);
+		margin-bottom: 45px;
+	}
+}
+
+.plansGridWrap {
+	display: grid;
+	grid-column-gap: 20px;
+	grid-row-gap: 15px;
+	grid-template-columns: repeat(4, 1fr);
+	@media (max-width: 1024px) {
+		grid-template-columns: 100%;
+	}
+	.plansGridCard {
+		background: #ffffff;
+		cursor: pointer;
+		position: relative;
+		display: flex;
+		align-items: center;
+		border-radius: 15px;
+		padding: 10px 20px;
+		box-shadow: 0 0 10px #00000020;
+		border: 1px solid #cfd4f5;
+		grid-gap: 7px;
+		height: 100%;
+		@media (max-width: 1024px) {
+			padding: 18px 22px;
+		}
+		.col {
+			&:first-child {
+				margin-right: auto;
+			}
+			&:nth-child(2) {
+				flex-shrink: 0;
+			}
+		}
+		.arrow {
+			width: 7px;
+			height: 13px;
+			background-image: url(#{$image_path}/common/rightarw.svg);
+			background-repeat: no-repeat;
+			background-size: contain;
+			margin-left: 25px;
+		}
+		.label {
+			font-size: 11px;
+			color: #666e91;
+			font-weight: 400;
+			@media (max-width: 1024px) {
+				font-size: 12px;
+			}
+		}
+		.text {
+			font-size: 13px;
+			color: #41416e;
+			font-weight: 600;
+			@media (max-width: 1024px) {
+				font-size: 18px;
+				line-height: 20px;
+			}
+		}
+	}
+}

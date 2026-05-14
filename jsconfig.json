@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"paths": {
+			"@/*": ["./src/*"],
+			"@/nextAuth/*": ["./src/app/api/auth/[...nextauth]/*"],
+			"@/components/*": ["./src/components/*"],
+			"@/common/*": ["./src/components/common/*"],
+			"@/controllers/*": ["./src/controllers/*"],
+			"@/css/*": ["./src/styles/*"],
+			"@/images/*": ["./public/images/*"],
+			"@/lib/*": ["./src/lib/*"],
+			"@/utils/*": ["./src/utils/*"]
+		}
+	}
+}

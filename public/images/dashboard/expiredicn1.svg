@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="66" height="66" viewBox="0 0 66 66">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f505fe"/>
+      <stop offset="1" stop-color="#2bb6e4"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_46056" data-name="Group 46056" transform="translate(-464 -197)">
+    <circle id="Ellipse_1768" data-name="Ellipse 1768" cx="33" cy="33" r="33" transform="translate(464 197)" fill="#b0b0db" opacity="0.4"/>
+    <g id="Group_45801" data-name="Group 45801">
+      <circle id="Ellipse_1777" data-name="Ellipse 1777" cx="19" cy="19" r="19" transform="translate(478 211)" fill="url(#linear-gradient)"/>
+      <g id="Group_45797" data-name="Group 45797" transform="translate(0.457 0.392)">
+        <path id="Path_31364" data-name="Path 31364" d="M21.524,16.849a5.765,5.765,0,0,1-.465.943,1.753,1.753,0,0,1-1.419.7c-.063,0-.126,0-.189,0q-8.686,0-17.371,0A1.924,1.924,0,0,1,.2,17.372a1.765,1.765,0,0,1,.019-1.658c.244-.464.527-.907.8-1.356Q5.027,7.7,9.041,1.041A1.935,1.935,0,0,1,10.79,0a1.8,1.8,0,0,1,1.573.855c.49.765.95,1.551,1.42,2.329q3.668,6.083,7.331,12.17a8.293,8.293,0,0,1,.41.907ZM10.757,17.1h8.655a1.345,1.345,0,0,0,.292-.021.519.519,0,0,0,.374-.715,1.717,1.717,0,0,0-.131-.239L11.538,2.174c-.108-.18-.208-.366-.33-.536a.523.523,0,0,0-.885,0c-.037.051-.068.106-.1.16L1.586,16.121a1.713,1.713,0,0,0-.13.239.519.519,0,0,0,.376.714,1.356,1.356,0,0,0,.292.021h8.633" transform="translate(486.288 218.898)" fill="#fff" stroke="#fff" stroke-width="0.3"/>
+        <path id="Path_31365" data-name="Path 31365" d="M188.575,112.723q-.042,1.3-.083,2.6a.539.539,0,0,1-.41.583,1.032,1.032,0,0,1-.738,0,.508.508,0,0,1-.37-.5q-.088-2.6-.178-5.2a.762.762,0,0,1,.563-.85,1.029,1.029,0,0,1,1.174.315,1.081,1.081,0,0,1,.129.535c-.009.839-.041,1.678-.065,2.518Z" transform="translate(309.324 115.352)" fill="#fff" stroke="#fff" stroke-width="0.3"/>
+        <path id="Path_31366" data-name="Path 31366" d="M186.081,254.324a.992.992,0,0,1,.99-1.005,1,1,0,0,1,.012,2,1,1,0,0,1-1-1" transform="translate(310 -21.089)" fill="#fff" stroke="#fff" stroke-width="0.3"/>
+      </g>
+    </g>
+  </g>
+</svg>

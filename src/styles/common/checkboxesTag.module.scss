@@ -1,0 +1,44 @@
+.multiSelectList {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 10px;
+	grid-gap: 8px;
+	li {
+		border-radius: 4px;
+		background: #6804bf;
+		color: #ffffff;
+		padding: 6px;
+		font-size: 11px;
+		font-weight: 400;
+		line-height: 13px;
+		display: flex;
+		align-items: center;
+		word-break: break-all;
+		.closeBtn {
+			width: 12px;
+			height: 12px;
+			margin-left: 2px;
+			position: relative;
+			cursor: pointer;
+			flex-shrink: 0;
+			&:before,
+			&:after {
+				width: 1px;
+				height: 12px;
+				content: "";
+				position: absolute;
+				background: #ffffff;
+				left: 6px;
+			}
+			&:before {
+				transform: rotate(45deg);
+			}
+			&:after {
+				transform: rotate(-45deg);
+			}
+		}
+	}
+	// &::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius: 10px;background-color: #F5F5F5;}
+	// &::-webkit-scrollbar{height: 4px;background-color:#dddddd;}
+	// &::-webkit-scrollbar-thumb{border-radius: 10px;-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);background-color:#b1b1b1;}
+}

@@ -1,0 +1,132 @@
+.dashdatepicker {
+	position: relative;
+}
+.dashdatepicker input {
+	width: 152px !important;
+	height: 30px !important;
+	position: relative;
+	padding: 9px 9px 9px 28px !important;
+	color: #666e91 !important;
+	font-size: 10px !important;
+	line-height: 12px;
+	border: 1px solid #dce1ef !important;
+	border-radius: 8px !important;
+}
+.dashdatepicker .icncal {
+	width: 12px;
+	height: 11px;
+	display: inline-block;
+	position: absolute;
+	z-index: 2;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.dashdatepicker .icncal img {
+	width: 100%;
+	display: block;
+}
+.rdrDateRangePickerWrapper {
+	position: absolute;
+	z-index: 6;
+	left: 0px;
+	top: 30px;
+	border-radius: 15px !important;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1254901961);
+}
+.rdrDefinedRangesWrapper {
+	border-radius: 15px 0px 0px 15px !important;
+	width: 130px !important;
+}
+.rdrCalendarWrapper {
+	border-radius: 15px 15px 15px 0px !important;
+}
+.rdrDateDisplayWrapper {
+	border-radius: 0px 15px 0px 0px;
+}
+.rdrStaticRange:first-child {
+	border-radius: 15px 0px 0px 0px !important;
+}
+.rdrDateDisplayItem input {
+	width: 100px !important;
+	background: #fff !important;
+	padding: 9px !important;
+}
+.rdrDateDisplay {
+	justify-content: center !important;
+}
+.rdrDateDisplayItem {
+	border-radius: 0px !important;
+	background: none !important;
+	box-shadow: none !important;
+	border: 0px !important;
+	width: 100px !important;
+	flex: 0 !important;
+}
+.rdrMonth {
+	width: 20em !important;
+}
+.rdrMonthPicker,
+.rdrYearPicker {
+	margin: 0px !important;
+}
+.rdrDay {
+	line-height: 2.5em !important;
+	height: 2.5em !important;
+}
+.rdrWeekDay,
+.rdrDay {
+	color: #000 !important;
+}
+.dashdatepicker.alignRight .rdrDateRangePickerWrapper {
+	left: initial;
+	right: 0;
+}
+.dashdatepicker.dropUp .rdrDateRangePickerWrapper {
+	bottom: 100%;
+	top: inherit;
+}
+.rdrMonthAndYearPickers select {
+	padding: 10px 30px 10px 10px !important;
+	text-align: left;
+}
+@media (max-width: 1024px) {
+	.dashdatepicker .icncal {
+		width: 10px;
+		height: 9px;
+		left: 6px;
+	}
+	.rdrDateRangePickerWrapper {
+		left: inherit;
+		right: 0px;
+		display: block !important;
+	}
+	.rdrStaticRangeLabel {
+		padding: 7px 12px !important;
+	}
+	.rdrDefinedRangesWrapper {
+		width: 100% !important;
+		border-radius: 0 !important;
+	}
+	.dashdatepicker input {
+		width: 116px !important;
+		padding: 9px 9px 9px 18px !important;
+		font-size: 10px !important;
+	}
+	.rdrDateDisplayItem input {
+		width: 90px !important;
+		padding: 9px 9px 9px 8px !important;
+	}
+	.rdrMonthAndYearPickers select {
+		padding: 10px 20px 10px 10px !important;
+	}
+	.rdrInputRanges {
+		padding: 0px !important;
+	}
+	.rdrDateDisplayWrapper {
+		border-radius: 0;
+	}
+	.rdrCalendarWrapper {
+		border-radius: 0 !important;
+	}
+}

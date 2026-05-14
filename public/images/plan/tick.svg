@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="35" viewBox="0 0 35 35">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_6333" data-name="Rectangle 6333" width="35" height="35" transform="translate(-0.058 -0.058)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="tick" transform="translate(0.058 0.058)" clip-path="url(#clip-path)">
+    <path id="Path_30750" data-name="Path 30750" d="M31.041,15.413V16.73A14.312,14.312,0,1,1,22.554,3.649" transform="translate(0.538 0.537)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    <path id="Path_30751" data-name="Path 30751" d="M10.875,14.852l4.294,4.294L29.481,4.833" transform="translate(2.098 0.984)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+  </g>
+</svg>

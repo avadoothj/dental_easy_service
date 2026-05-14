@@ -1,0 +1,230 @@
+.dataTableWrap{
+	.tableHeader{}
+	.dataTable {
+		background: #ffffff;
+		border-radius: 10px;
+		overflow: auto;
+		position: relative;
+		min-height: 200px;
+		box-shadow: 0px 0px 9px #a5abcb4d;
+		&::-webkit-scrollbar {
+			height: 6px;
+			background-color: #dbdce3;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #5b5d81;
+			border-radius: 3px;
+		}
+
+		&::-webkit-scrollbar-button {
+			display: none;
+		}
+
+		.checkboxCol {
+			display: block;
+			position: relative;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			margin: 0;
+			input {
+				position: absolute;
+				opacity: 0;
+				cursor: pointer;
+				height: 0;
+				width: 0;
+				&:checked {
+					& ~ .checkmark {
+						background-color: #6804bf;
+						border-color: #6804bf;
+						&:after {
+							display: block;
+						}
+					}
+				}
+			}
+			.checkmark {
+				&:after {
+					left: 5px;
+					top: 1px;
+					width: 5px;
+					height: 10px;
+					border: solid white;
+					border-width: 0 2px 2px 0;
+					transform: rotate(45deg);
+				}
+			}
+		}
+		.checkmark {
+			width: 16px;
+			height: 16px;
+			border-radius: 2px;
+			background-color: #f5f9fc;
+			position: relative;
+			display: block;
+			border: 1px solid #dce1ef;
+			&:after {
+				content: "";
+				position: absolute;
+				display: none;
+			}
+		}
+	}
+
+	table {
+		width: 100%;
+		thead {
+			background: #6a6a8c1a;
+			tr {
+				th {
+					font-size: 12px;
+					color: #41416e;
+					font-weight: 500;
+					padding: 8px 10px;
+					white-space: nowrap;
+					text-transform: uppercase;
+					@media (max-width: 1024px) {
+						color: #000000;
+					}
+					.selectAllbox {
+						display: flex;
+						gap: 5px;
+					}
+				}
+			}
+		}
+		tbody {
+			tr {
+				border-bottom: 1px solid #b1b0dc4d;
+				@media (max-width: 1024px) {
+					border: 0;
+				}
+				td {
+					font-size: 14px;
+					color: #666e91;
+					font-weight: 400;
+					padding: 8px 10px;
+					white-space: nowrap;
+					@media (max-width: 1024px) {
+						font-size: 12px;
+						color: #414360;
+					}
+					a {
+						color: #6804bf;
+						text-decoration: underline;
+					}
+					.anchorLink {
+						color: #6804bf;
+						text-decoration: underline;
+						cursor: pointer;
+					}
+					.selectAllTd {
+						display: flex;
+						align-items: center;
+					}
+				}
+				&:hover{
+					td{background-color:#f1f1f1;}
+				}
+			}
+		}
+	}
+	.paginationWrap {
+		display: flex;
+		justify-content: center;
+		margin-top: 25px;
+		position: relative;
+		@media (max-width: 1024px) {
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			margin-top: 15px;
+		}
+		p {
+			font-size: 12px;
+			color: #555a74;
+			position: absolute;
+			left: 0;
+			margin: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			span {
+				font-weight: bold;
+			}
+			@media (max-width: 1024px) {
+				position: initial;
+				margin: 0;
+				transform: none;
+			}
+		}
+		.pagination {
+			display: flex;
+			grid-gap: 3px;
+			align-items: center;
+			.arrows {
+				display: flex;
+				background: #ffffff;
+				border-radius: 6px;
+				border: 1px solid #cfd4f5;
+				overflow: hidden;
+				button {
+					border: 0;
+					padding: 8px;
+					font-size: 12px;
+					background: #ffffff;
+					color: #8890b4;
+					&:last-child {
+						border-left: 1px solid #cfd4f5;
+					}
+				}
+			}
+			ul {
+				display: flex;
+				background: #ffffff;
+				border-radius: 6px;
+				border: 1px solid #cfd4f5;
+				overflow: hidden;
+				li {
+					border-right: 1px solid #cfd4f5;
+					&:last-child {
+						border-right: 0;
+					}
+					button {
+						border: 0;
+						font-size: 12px;
+						color: #8890b4;
+						display: block;
+						padding: 8px;
+						background: #ffffff;
+						&.active {
+							background: #6a6a8c;
+							color: #ffffff;
+							font-weight: bold;
+						}
+					}
+				}
+			}
+			@media (max-width: 1024px) {
+				width: 100%;
+				justify-content: center;
+				margin-top: 10px;
+			}
+		}
+	}
+	.selectedResult {
+		font-size: 14px;
+		color: #555a74;
+		margin-bottom: 10px;
+		margin-top: -15px;
+		@media (max-width: 1024px) {
+			margin-top: -10px;
+			padding: 0 5px;
+		}
+	}
+	@media (max-width: 1024px) {
+		margin-bottom: 65px;
+	}
+}

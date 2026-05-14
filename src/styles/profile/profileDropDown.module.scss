@@ -1,0 +1,71 @@
+@import "../variable";
+
+.wrapper {
+	width: 369px;
+	position: absolute;
+	background: #ffffff;
+	top: 100%;
+	right: 30px;
+	border-radius: 10px;
+	border: 1px solid #dce1ef;
+	padding: 24px 24px 17px;
+	box-shadow: 0 0 10px #99a2d180;
+	transition: 0.4s all;
+	visibility: hidden;
+	opacity: 0;
+	transform: translateY(50px);
+	overflow: hidden;
+	height: 0;
+	&.show {
+		visibility: visible;
+		opacity: 1;
+		transform: translateY(0px);
+		overflow: initial;
+		height: initial;
+	}
+	h3 {
+		font-size: 18px;
+		line-height: 14px;
+		font-weight: 700;
+		color: #000000;
+		margin-bottom: 20px;
+	}
+	.operatorWrap {
+		margin-bottom: 10px;
+	}
+	ul.navLists {
+		margin-bottom: 30px;
+		li {
+			border-bottom: 1px solid #6a6a8c33;
+			a {
+				padding: 20px 15px;
+				color: #666e91;
+				font-size: 14px;
+				line-height: 14px;
+				background-image: url(#{$image_path}/myprofile/arrowIcon.svg);
+				background-repeat: no-repeat;
+				background-position: right;
+				img {
+					height: 18px;
+					margin-right: 13px;
+				}
+			}
+		}
+	}
+	.setting {
+		a {
+			color: #666e91 !important;
+			font-size: 14px;
+			line-height: 14px;
+			img {
+				height: 18px;
+				margin-right: 13px;
+			}
+		}
+	}
+	.logoutBtn {
+		width: 100%;
+		justify-content: center;
+		margin-top: 30px;
+	}
+}

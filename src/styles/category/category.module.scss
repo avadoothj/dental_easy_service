@@ -1,0 +1,243 @@
+.btnWrapper {
+	display: flex;
+	justify-content: flex-end;
+	grid-gap: 15px;
+	@media (max-width: 1024px) {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		grid-gap: 10px;
+		width: 100%;
+		padding: 10px;
+		background: #ffffff;
+		box-shadow: 0 0 10px #00000029;
+		z-index: 99;
+	}
+	button {
+		min-width: 188px;
+		text-align: center;
+		justify-content: center;
+		@media (max-width: 1024px) {
+			width: auto;
+			min-width: auto;
+			flex-grow: 1;
+			font-size: 15px;
+			padding: 15px 10px;
+		}
+	}
+	a {
+		min-width: 188px;
+		text-align: center;
+		justify-content: center;
+		cursor: pointer;
+		@media (max-width: 1024px) {
+			width: auto;
+			min-width: auto;
+			flex-grow: 1;
+			font-size: 15px;
+			padding: 15px 10px;
+		}
+	}
+}
+.catManagementWrap {
+	.cardList {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-gap: 20px;
+		padding: 10px 0px;
+		@media (max-width: 1024px) {
+			grid-template-columns: repeat(1, 100%);
+			grid-gap: 15px;
+		}
+		li {
+			a {
+				background: #ffffff;
+				box-shadow: 0px 0px 9px #a5abcb4d;
+				border-radius: 15px;
+				padding: 18px 45px 18px 20px;
+				font-size: 18px;
+				line-height: 20px;
+				color: #41416e;
+				font-weight: 600;
+				position: relative;
+				border: 1.5px solid #6a6a8c33;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				word-break: break-word;
+				&.active {
+					border-color: #6804bf;
+				}
+				&::after {
+					content: "";
+					width: 12px;
+					height: 12px;
+					border-right: 2px solid #41416e;
+					border-top: 2px solid #41416e;
+					position: absolute;
+					top: 50%;
+					right: 25px;
+					transform: translateY(-50%) rotate(45deg);
+				}
+			}
+		}
+	}
+}
+
+.addNewCategory {
+	background: #ffffff;
+	box-shadow: 0px 0px 9px #a5abcb4d;
+	border-radius: 15px;
+	padding: 15px 25px;
+	margin-bottom: 30px;
+	@media (max-width: 1024px) {
+		margin-bottom: 70px;
+		padding: 20px 15px;
+	}
+	h2 {
+		font-size: 20px;
+		line-height: 24px;
+		color: #5b5d81;
+		font-weight: 500;
+		border-bottom: 1px solid #b1b0dc4d;
+		padding-bottom: 15px;
+		margin-bottom: 10px;
+	}
+	.row {
+		display: flex;
+		grid-gap: 40px;
+		padding: 15px 0;
+		@media (max-width: 1024px) {
+			flex-direction: column;
+			grid-gap: 10px;
+			align-items: flex-start;
+			padding: 0;
+			margin-bottom: 20px;
+		}
+		.col {
+			color: #8f9195;
+			font-size: 14px;
+			line-height: 16px;
+			width: 100%;
+			@media (max-width: 1024px) {
+				font-size: 12px;
+				line-height: 14px;
+			}
+			&:first-child {
+				width: 111px;
+				flex-shrink: 0;
+				padding-top: 10px;
+				@media (max-width: 1024px) {
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+				}
+			}
+			span {
+				display: block;
+				font-size: 11px;
+				@media (max-width: 1024px) {
+					font-size: 10px;
+				}
+			}
+			.catName {
+				width: 443px;
+				background: #f5f9fc;
+				border: 1px solid #dce1ef;
+				border-radius: 6px;
+				padding: 10px;
+				font-size: 14px;
+				color: #666e91;
+				@media (max-width: 1024px) {
+					font-size: 16px;
+					width: 100%;
+				}
+				&::placeholder {
+					color: #acb2c6;
+					font-size: 12px;
+					font-weight: 500;
+					@media (max-width: 1024px) {
+						font-size: 16px;
+					}
+				}
+				&:focus-visible {
+					border: 1px solid #5a7ec7;
+					outline: 0;
+				}
+			}
+			.features {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				grid-gap: 15px;
+				@media (max-width: 1024px) {
+					grid-template-columns: 100%;
+					grid-gap: 20px;
+				}
+				li {
+					width: 100%;
+				}
+			}
+			.checkboxWrap {
+				display: block;
+				position: relative;
+				cursor: pointer;
+				font-size: 14px;
+				color: #8f9195;
+				user-select: none;
+				border-radius: 4px;
+				border: 1px solid #dce1ef;
+				padding: 15px 20px;
+				@media (max-width: 1024px) {
+					font-weight: 600;
+				}
+			}
+			.checkboxWrap input {
+				position: absolute;
+				height: 0;
+				width: 0;
+				opacity: 0;
+				cursor: pointer;
+			}
+			.checkboxWrap:hover input ~ .checkmark {
+				border-color: #6804bf;
+			}
+			.checkboxWrap input:checked ~ .checkmark {
+				background-color: #6804bf;
+			}
+			.checkboxWrap input:checked ~ .checkmark:after {
+				display: block;
+			}
+			.checkboxWrap .checkmark::after {
+				left: 6px;
+				top: 1px;
+				width: 5px;
+				height: 11px;
+				border: solid #ffffff;
+				border-width: 0 2px 2px 0;
+				transform: rotate(45deg);
+			}
+			.checkmark {
+				position: absolute;
+				top: 50%;
+				right: 22px;
+				transform: translateY(-50%);
+				width: 18px;
+				height: 18px;
+				border-radius: 4px;
+				border: 1px solid #8f9195;
+			}
+			.checkmark::after {
+				content: "";
+				position: absolute;
+				display: none;
+			}
+			.errorMsg {
+				color: red;
+				font-size: 12px;
+				display: block;
+				margin-top: 5px;
+			}
+		}
+	}
+}

@@ -1,0 +1,434 @@
+@import "../variable";
+
+.searchpanel {
+	margin-bottom: 22px;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
+	.colsearch1 {
+		display: flex;
+		.searchbox {
+			width: 195px;
+			// @media (max-width: 1300px){width: 170px;}
+			.custominput {
+				display: flex;
+				align-items: center;
+				position: relative;
+				max-width: 100%;
+			}
+			.inputtext {
+				font-size: 12px;
+				padding: 5px 25px 5px 29px;
+				width: 100%;
+				outline: none;
+				background: #ffffff;
+				color: #b0b5c7;
+				border: 1px solid #cad3e8;
+				border-radius: 8px;
+				box-shadow: 0px 0px 0px 0px #e2e2e2;
+				transition: 0.3s ease;
+				&::placeholder {
+					color: #b0b5c7;
+				}
+			}
+			.svgiconsearch {
+				position: absolute;
+				left: 10px;
+				fill: #adb2c9;
+				width: 12px;
+				height: 12px;
+			}
+			.closeBtn {
+				width: 12px;
+				height: 12px;
+				position: absolute;
+				right: 8px;
+				cursor: pointer;
+				&::before,
+				&::after {
+					content: "";
+					width: 1px;
+					height: 12px;
+					position: absolute;
+					background: #b0b5c7;
+					left: 6px;
+				}
+				&::before {
+					transform: rotate(45deg);
+				}
+				&::after {
+					transform: rotate(-45deg);
+				}
+			}
+		}
+		.searchbyletters {
+			list-style-type: none;
+			padding: 4px 0px 0px 0px;
+			display: flex;
+			margin-left: 10px;
+			li {
+				padding: 0px 3px;
+				color: #666e91;
+				font-size: 14px;
+				margin: 0px 2px;
+				cursor: pointer;
+				@media (max-width: 1390px) {
+					padding: 0px 2px;
+					font-size: 12px;
+				}
+				&.active {
+					font-weight: 700;
+					color: #555a74;
+				}
+			}
+		}
+	}
+	.colsearch2 {
+		display: flex;
+		.drphead {
+			color: #666e91;
+			font-size: 9px;
+			position: absolute;
+			top: -15px;
+			left: 0px;
+			min-width: 55px;
+		}
+		.duration {
+			margin-right: 15px;
+			position: relative;
+		}
+		.pricerange {
+			margin-right: 15px;
+			position: relative;
+			@media (max-width: 1300px) {
+				margin-right: 7px;
+			}
+		}
+		.showentries {
+			position: relative;
+			font-size: 12px;
+			color: #555a74;
+			margin-left: 15px;
+			font-weight: 700;
+		}
+		.durationpop {
+			width: 126px;
+			position: absolute;
+			z-index: 9;
+			left: -47px;
+			top: 33px;
+			border-radius: 8px;
+			background: #ffffff 0% 0% no-repeat padding-box;
+			box-shadow: 0px 0px 8px #99a2d180;
+			border: 1px solid #dce1ef;
+			ul {
+				li {
+					margin: 0 10px;
+					border-bottom: 1px solid #6a6a8c33;
+					padding: 8px 0px;
+					color: #8f9195;
+					font-size: 12px;
+					&:last-child {
+						border-bottom: 0;
+					}
+				}
+			}
+		}
+		.durationpop {
+			width: 126px;
+			position: absolute;
+			z-index: 9;
+			left: -47px;
+			top: 33px;
+			border-radius: 8px;
+			background: #ffffff 0% 0% no-repeat padding-box;
+			box-shadow: 0px 0px 8px #99a2d180;
+			border: 1px solid #dce1ef;
+			ul {
+				li {
+					margin: 0 10px;
+					border-bottom: 1px solid #6a6a8c33;
+					padding: 8px 0px;
+					color: #8f9195;
+					font-size: 12px;
+					&:last-child {
+						border-bottom: 0;
+					}
+				}
+			}
+		}
+		.pricerangepop {
+			width: 126px;
+			position: absolute;
+			z-index: 9;
+			left: -27px;
+			top: 33px;
+			border-radius: 8px;
+			background: #ffffff 0% 0% no-repeat padding-box;
+			box-shadow: 0px 0px 8px #99a2d180;
+			border: 1px solid #dce1ef;
+			ul {
+				li {
+					margin: 0 10px;
+					border-bottom: 1px solid #6a6a8c33;
+					padding: 8px 0px;
+					color: #8f9195;
+					font-size: 12px;
+					&:last-child {
+						border-bottom: 0;
+					}
+				}
+			}
+		}
+		.showentriespop {
+			width: 126px;
+			position: absolute;
+			z-index: 9;
+			left: -27px;
+			top: 33px;
+			border-radius: 8px;
+			background: #ffffff 0% 0% no-repeat padding-box;
+			box-shadow: 0px 0px 8px #99a2d180;
+			border: 1px solid #dce1ef;
+			ul {
+				li {
+					margin: 0 10px;
+					border-bottom: 1px solid #6a6a8c33;
+					padding: 8px 0px;
+					color: #8f9195;
+					font-size: 12px;
+					&:last-child {
+						border-bottom: 0;
+					}
+				}
+			}
+		}
+		.addteam {
+			display: flex;
+			@media (max-width: 1024px) {
+				position: fixed;
+				top: 10px;
+				right: 14px;
+				z-index: 10;
+			}
+			.addnewbtn {
+				background: #6804bf;
+				border-radius: 8px;
+				border: 0px;
+				padding: 6px 14px;
+				color: #ffffff;
+				font-size: 12px;
+				margin-right: 10px;
+			}
+			.gridview {
+				margin-top: 3px;
+				@media (max-width: 1024px) {
+					display: none;
+				}
+			}
+		}
+	}
+	@media (max-width: 1024px) {
+		display: none;
+	}
+}
+
+.crwrapper {
+	display: table;
+	position: relative;
+	cursor: pointer;
+	width: 100%;
+	span {
+		font-size: 12px;
+		padding-right: 18px;
+		display: block;
+	}
+	input {
+		position: absolute;
+		z-index: -1;
+		opacity: 0;
+	}
+}
+.crwrapper input[type="radio"] ~ .crinput {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	height: 14px;
+	width: 14px;
+	font-size: 10px;
+	background: #ffffff;
+	border-radius: 50px;
+	transition: background 250ms;
+	border: 2px solid #8f9195;
+	transform: translate(0, -50%);
+}
+.crwrapper input[type="radio"] ~ .crinput::after {
+	content: "";
+	background: #6804bf;
+	width: 6px;
+	height: 6px;
+	border-radius: 50px;
+	position: absolute;
+	display: none;
+	left: 2px;
+	top: 2px;
+	color: #ffffff;
+	transition: rgb(4, 4, 4) und 250ms;
+}
+.crwrapper input:checked ~ .crinput::after {
+	display: block;
+}
+.crwrapper input[type="radio"]:checked ~ .crinput {
+	border: 2px solid #6804bf;
+}
+
+.mobsearchpanel {
+	display: none;
+	@media (max-width: 1024px) {
+		margin-bottom: 15px;
+		display: flex;
+		justify-content: space-between;
+	}
+	.searchboxmob {
+		width: fit-content;
+		height: fit-content;
+		position: relative;
+		.inputsearch {
+			height: 30px;
+			width: 75px;
+			border-style: none;
+			padding: 10px 24px 10px 5px;
+			font-size: 14px;
+			outline: none;
+			border-radius: 25px;
+			transition: all 0.5s ease-in-out;
+			background-color: transparent;
+			color: #666e91;
+			background-image: url(#{$image_path}/search/searchIcon.svg);
+			background-repeat: no-repeat;
+			background-position: center right;
+			@media (max-width: 1024px) {
+				font-size: 16px;
+				background: none;
+			}
+		}
+		.inputsearch::placeholder {
+			color: #666e91;
+			font-size: 14px;
+			font-weight: 300;
+		}
+		.btnsearch {
+			width: 25px;
+			height: 30px;
+			border-style: none;
+			font-size: 14px;
+			font-weight: bold;
+			outline: none;
+			cursor: pointer;
+			border-radius: 50%;
+			position: absolute;
+			right: 0px;
+			color: #666e91;
+			background-color: transparent;
+			pointer-events: painted;
+		}
+		.btnsearch:focus ~ .inputsearch {
+			width: 150px;
+			border-radius: 0px;
+			background-color: transparent;
+			border-bottom: 1px solid #666e91;
+			transition: all 300ms cubic-bezier(0, 0.11, 0.35, 2);
+		}
+		.inputsearch:focus {
+			width: 150px;
+			border-radius: 0px;
+			background-color: transparent;
+			border-bottom: 1px solid #666e91;
+			transition: all 300ms cubic-bezier(0, 0.11, 0.35, 2);
+		}
+		.svgiconsearchmob {
+			fill: #5b5d81;
+			width: 15px;
+			height: 15px;
+		}
+		.closeBtn {
+			position: absolute;
+			top: 50%;
+			right: 4px;
+			transform: translateY(-50%);
+			width: 14px;
+			height: 14px;
+			&::before,
+			&::after {
+				content: "";
+				width: 1px;
+				height: 14px;
+				position: absolute;
+				background: #5b5d81;
+				left: 6px;
+			}
+			&::before {
+				transform: rotate(45deg);
+			}
+			&::after {
+				transform: rotate(-45deg);
+			}
+		}
+	}
+	.colsearch2 {
+		display: flex;
+		.sortfilter {
+			font-size: 13px;
+			color: #666e91;
+			margin-left: 18px;
+			display: flex;
+			background: none;
+			border: 0px;
+			margin-top: 5px;
+			.sortfilterimg {
+				width: 16px;
+				height: 16px;
+				margin-left: 4px;
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
+		}
+	}
+	.addnewbtn {
+		background: #6804bf;
+		border-radius: 8px;
+		border: 0px;
+		padding: 8px 14px;
+		color: #ffffff;
+		font-size: 12px;
+		position: fixed;
+		top: 10px;
+		right: 14px;
+		z-index: 10;
+	}
+}
+
+.syncBtn {
+	background: rgb(186, 77, 254);
+	background: linear-gradient(90deg, rgb(186, 77, 254) 0%, rgb(69, 54, 226) 100%);
+	color: #ffffff;
+	border: 0;
+	font-size: 12px;
+	padding: 6px 10px;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	@media (max-width: 1024px) {
+		position: fixed;
+		right: 20px;
+		top: 13px;
+		z-index: 10;
+	}
+	img {
+		width: 17px;
+		margin-right: 5px;
+	}
+}

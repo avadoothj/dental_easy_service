@@ -1,0 +1,10 @@
+.loading {
+	background-color: rgb(231 232 255);
+	border-radius: 4px;
+	animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	color: transparent !important;
+	user-select: none;
+	img {
+		opacity: 0;
+	}
+}
