@@ -1,161 +1,237 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import PersonalStep from "@/components/onboardingEngineer/steps/personalSteps";
-import DocumentStep from "./steps/documentSteps";
-import QualificationStep from "./steps/qualificationSteps";
-import UserCreationStep from "./steps/userCreationSteps";
-import BankDetailStep from "./steps/BankDetailSteps";
-import BenefitStep from "./steps/BenefitSteps";
-import RatingStep from "./steps/RatingSteps";
+
+import DocumentStep from "@/components/onboardingEngineer/steps/documentSteps";
+import QualificationStep from "@/components/onboardingEngineer/steps/qualificationSteps";
+import UserCreationStep from "@/components/onboardingEngineer/steps/userCreationSteps";
+import BankDetailStep from "@/components/onboardingEngineer/steps/BankDetailSteps";
+import BenefitStep from "@/components/onboardingEngineer/steps/BenefitSteps";
+import RatingStep from "@/components/onboardingEngineer/steps/RatingSteps";
+
 import OnboardingProgress from "../onboardingEngineer/onBoardingProgress";
 
+import { getOnboardingDataById } from "@/controllers/onboarding";
+
 const STEPS = [
-	{ id: "personal", label: "Personal Information" },
-	{ id: "documents", label: "Document Verification" },
-	{ id: "qualification", label: "Qualification & Tech Skill" },
-	{ id: "user", label: "User Creation" },
-	{ id: "bank", label: "Bank Details" },
-	{ id: "benefits", label: "Benefits" },
-	{ id: "rating", label: "Rating" },
+	{
+		id: "personal_information",
+		label: "Personal Information",
+	},
+
+	{
+		id: "document_verification",
+		label: "Document Verification",
+	},
+
+	{
+		id: "qualification_skills",
+		label: "Qualification & Tech Skill",
+	},
+
+	{
+		id: "user_creation",
+		label: "User Creation",
+	},
+
+	{
+		id: "bank_details",
+		label: "Bank Details",
+	},
+
+	{
+		id: "benefits",
+		label: "Benefits",
+	},
+
+	{
+		id: "rating",
+		label: "Rating",
+	},
 ];
 
-const STEP_COMPONENTS = {
-	personal: PersonalStep,
-	documents: DocumentStep,
-	qualification: QualificationStep,
-	user: UserCreationStep,
-	bank: BankDetailStep,
-	benefits: BenefitStep,
-	rating: RatingStep,
-};
+export default function AddOnboardingPageWrapper({ mode, onboardingId }) {
+	const [currentStep, setCurrentStep] = useState("personal_information");
 
-const INITIAL_STATE = {
-	fieldEngineerId: null,
-	currentStep: "personal",
-	personalData: {},
-	documentData: {},
-	qualificationData: {},
-	userData: {},
-	bankData: {},
-	benefitsData: {},
-	ratingData: {},
-};
+	const [isLoading, setIsLoading] = useState(true);
 
-export default function AddOnboardingPageWrapper() {
-	const [onboardingData, setOnboardingData] = useState(INITIAL_STATE);
-	const [completedSteps, setCompletedSteps] = useState([]);
-	const [isValid, setIsValid] = useState(false);
+	const [onboardingData, setOnboardingData] = useState({
+		onboardingId: null,
 
-	// restore after refresh
+		fieldEngineerId: null,
+
+		personalData: null,
+
+		documentData: null,
+
+		qualificationData: null,
+
+		userCreationData: null,
+
+		bankData: null,
+
+		benefitData: null,
+
+		ratingData: null,
+	});
+
+	const isEditMode = mode === "edit";
+
+	const completedSteps = [];
+
+	if (onboardingData.personalData) completedSteps.push("personal_information");
+
+	if (onboardingData.documentData) completedSteps.push("document_verification");
+
+	if (onboardingData.qualificationData) completedSteps.push("qualification_skills");
+
+	if (onboardingData.userCreationData) completedSteps.push("user_creation");
+
+	if (onboardingData.bankData) completedSteps.push("bank_details");
+
+	if (onboardingData.benefitData) completedSteps.push("benefits");
+
+	if (onboardingData.ratingData) completedSteps.push("rating");
+
 	useEffect(() => {
-		const savedData = localStorage.getItem("onboardingData");
-		const savedSteps = localStorage.getItem("completedSteps");
-
-		if (savedData) {
-			setOnboardingData(JSON.parse(savedData));
-		}
-
-		if (savedSteps) {
-			setCompletedSteps(JSON.parse(savedSteps));
-		}
-	}, []);
-
-	// persist
-	useEffect(() => {
-		localStorage.setItem(
-			"onboardingData",
-			JSON.stringify(onboardingData)
-		);
-
-		localStorage.setItem(
-			"completedSteps",
-			JSON.stringify(completedSteps)
-		);
-	}, [onboardingData, completedSteps]);
-
-	const currentStep = onboardingData.currentStep;
-
-	const currentIndex = STEPS.findIndex(
-		(step) => step.id === currentStep
-	);
-
-	const CurrentStepComponent = STEP_COMPONENTS[currentStep];
-
-	const goNext = (stepPayload = {}) => {
-		if (currentIndex < STEPS.length - 1) {
-			const nextStep = STEPS[currentIndex + 1].id;
-
-			setOnboardingData((prev) => ({
-				...prev,
-				...stepPayload,
-				currentStep: nextStep,
-			}));
-
-			if (!completedSteps.includes(currentStep)) {
-				setCompletedSteps((prev) => [...prev, currentStep]);
+		const fetchData = async () => {
+			console.log("onboardingId fetchData :", onboardingId);
+			if (mode !== "edit" || !onboardingId) {
+				setIsLoading(false);
+				return;
 			}
 
-			setIsValid(false);
-		}
-	};
+			try {
+				const response = await getOnboardingDataById(onboardingId);
 
-	const goBack = () => {
-		if (currentIndex > 0) {
-			const prevStep = STEPS[currentIndex - 1].id;
+				if (response?.success) {
+					setOnboardingData({
+						onboardingId: response.data.onboarding.id,
 
-			setOnboardingData((prev) => ({
-				...prev,
-				currentStep: prevStep,
-			}));
-		}
-	};
+						fieldEngineerId: response.data.onboarding.field_engineer_id,
 
-	const resetOnboarding = () => {
-		setOnboardingData(INITIAL_STATE);
-		setCompletedSteps([]);
-		localStorage.removeItem("onboardingData");
-		localStorage.removeItem("completedSteps");
-	};
+						personalData: response.data.personal || null,
 
-	useEffect(() => {
-		document.body.className += " hamburgerHide";
+						documentData: response.data.documents || null,
 
-		return () => {
-			document.body.className =
-				document.body.className.replace("hamburgerHide", "");
+						qualificationData: response.data.qualification || null,
+
+						userCreationData: response.data.userCreation || null,
+
+						bankData: response.data.bank || null,
+
+						benefitData: response.data.benefits || null,
+
+						ratingData: response.data.rating || null,
+					});
+
+					setCurrentStep(response.data.onboarding.current_step || "personal_information");
+				}
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setIsLoading(false);
+			}
 		};
-	}, []);
+
+		fetchData();
+	}, [mode, onboardingId]);
+
+	const handleStepChange = (nextStep, payload = {}) => {
+		setOnboardingData((prev) => ({
+			...prev,
+			...payload,
+		}));
+
+		setCurrentStep(nextStep);
+	};
+
+	const handlePrevious = () => {
+		const currentIndex = STEPS.findIndex((step) => step.id === currentStep);
+
+		if (currentIndex > 0) {
+			setCurrentStep(STEPS[currentIndex - 1].id);
+		}
+	};
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 
 	return (
 		<div className="container-fluid">
-			<div
-				className="tab-content"
-				id="nav-tabContent"
-			>
+			<div className="tab-content">
 				<div className="card tab-listing mb-10">
 					<nav className="management-tabs">
 						<OnboardingProgress
 							steps={STEPS}
-							currentIndex={currentIndex}
 							currentStep={currentStep}
 							completedSteps={completedSteps}
+							  onStepChange={setCurrentStep}
+							onboardingData={onboardingData}
 						/>
 					</nav>
 				</div>
 
-				<CurrentStepComponent
-					currentStep={currentStep}
-					onboardingData={onboardingData}
-					setOnboardingData={setOnboardingData}
-					onValidityChange={setIsValid}
-					onNext={goNext}
-					onBack={goBack}
-					resetOnboarding={resetOnboarding}
-					disableNext={!isValid}
-					isFirst={currentIndex === 0}
-					isLast={currentIndex === STEPS.length - 1}
-				/>
+				{currentStep === "personal_information" && (
+					<PersonalStep
+						isEditMode={isEditMode}
+						onboardingData={onboardingData}
+						setOnboardingData={setOnboardingData}
+						onNext={(payload) => handleStepChange("document_verification", payload)}
+					/>
+				)}
+
+				{currentStep === "document_verification" && (
+					<DocumentStep
+						isEditMode={isEditMode}
+						onboardingData={onboardingData}
+						onBack={handlePrevious}
+						onNext={(payload) => handleStepChange("qualification_skills", payload)}
+					/>
+				)}
+				{currentStep === "qualification_skills" && (
+					<QualificationStep
+						isEditMode={isEditMode}
+						onboardingData={onboardingData}
+						onBack={handlePrevious}
+						onNext={(payload) => handleStepChange("user_creation", payload)}
+					/>
+				)}
+				{currentStep === "user_creation" && (
+					<UserCreationStep
+						isEditMode={isEditMode}
+						onboardingData={onboardingData}
+						onBack={handlePrevious}
+						onNext={(payload) => handleStepChange("bank_details", payload)}
+					/>
+				)}
+				{currentStep === "bank_details" && (
+					<BankDetailStep
+						isEditMode={isEditMode}
+						onboardingData={onboardingData}
+						onBack={handlePrevious}
+						onNext={(payload) => handleStepChange("benefits", payload)}
+					/>
+				)}
+				{currentStep === "benefits" && (
+					<BenefitStep
+						isEditMode={isEditMode}
+						onboardingData={onboardingData}
+						onBack={handlePrevious}
+						onNext={(payload) => handleStepChange("rating", payload)}
+					/>
+				)}
+				{currentStep === "rating" && (
+					<RatingStep
+						isEditMode={isEditMode}
+						onboardingData={onboardingData}
+						onBack={handlePrevious}
+						onNext={(payload) => handleStepChange("rating", payload)}
+					/>
+				)}
 			</div>
 		</div>
 	);

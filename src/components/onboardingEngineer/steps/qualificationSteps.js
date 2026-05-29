@@ -1,102 +1,221 @@
-export default function QualificationStep({}) {
+"use client";
+
+import { useForm } from "react-hook-form";
+
+import Form from "react-bootstrap/Form";
+
+import { addQualificationFieldEngineer, savequalificationDraft } from "@/controllers/onboarding";
+import { useEffect } from "react";
+
+export default function QualificationStep({ onboardingData, onNext, onBack }) {
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors, isSubmitting },
+	} = useForm({
+		mode: "onChange",
+
+		defaultValues: {
+			qualification: "",
+			experience: "",
+			specificEquipmentExpertise: "",
+			technicianType: "",
+			uploadtrainingCertificates: "",
+			specialCertifications: "",
+			servicesCoveragecity: "",
+			servicesCoveragearea: "",
+		},
+	});
+
+	const onSubmit = async (data) => {
+		const formData = new FormData();
+
+		formData.append("qualification", data.qualification);
+		formData.append("experience", data.experience);
+		formData.append("specificEquipmentExpertise", data.specificEquipmentExpertise);
+		formData.append("technicianType", data.technicianType);
+		formData.append("servicesCoveragecity", data.servicesCoveragecity);
+		formData.append("servicesCoveragearea", data.servicesCoveragearea);
+		formData.append("onboardingId", onboardingData.onboardingId);
+		formData.append("fieldEngineerId", onboardingData.fieldEngineerId);
+
+		if (data.uploadtrainingCertificates?.[0]) {
+			formData.append("uploadtrainingCertificates", data.uploadtrainingCertificates[0]);
+		}
+
+		if (data.specialCertifications?.[0]) {
+			formData.append("specialCertifications", data.specialCertifications[0]);
+		}
+
+		const response = await addQualificationFieldEngineer(formData);
+
+		if (response.success) {
+			onNext({
+				qualificationData: response.data,
+			});
+		}
+	};
+
+	const handleSaveDraft = async (data) => {
+		const formData = new FormData();
+
+		formData.append("qualification", data.qualification);
+		formData.append("experience", data.experience);
+		formData.append("specificEquipmentExpertise", data.specificEquipmentExpertise);
+		formData.append("technicianType", data.technicianType);
+		formData.append("servicesCoveragecity", data.servicesCoveragecity);
+		formData.append("servicesCoveragearea", data.servicesCoveragearea);
+		formData.append("onboardingId", onboardingData.onboardingId);
+		formData.append("fieldEngineerId", onboardingData.fieldEngineerId);
+
+		if (data.uploadtrainingCertificates?.[0]) {
+			formData.append("uploadtrainingCertificates", data.uploadtrainingCertificates[0]);
+		}
+
+		if (data.specialCertifications?.[0]) {
+			formData.append("specialCertifications", data.specialCertifications[0]);
+		}
+
+		const response = await savequalificationDraft(formData);
+
+		console.log("response :", response);
+	};
+
+	useEffect(() => {
+		if (!onboardingData?.qualificationData) return;
+		const qualification = onboardingData.qualificationData;
+		reset({
+			qualification: qualification.qualification || "",
+			experience: qualification.experience || "",
+			specificEquipmentExpertise: qualification.specific_equipment_expertise || "",
+			technicianType: qualification.technician_type || "",
+			servicesCoveragecity: qualification.services_coverage_city?.split(",") || [],
+			servicesCoveragearea: qualification.services_coverage_area?.split(",") || [],
+		});
+	}, [onboardingData, reset]);
+
 	return (
-		<>
-			<div
-				className="tab-pane fade pt-0"
-				id="nav-contact"
-				role="tabpanel"
-				aria-labelledby="nav-contact-tab"
-			>
+		<div className="pt-0">
+			<Form onSubmit={handleSubmit(onSubmit)}>
 				<div className="card">
 					<div className="cardHeader">
 						<h3 className="card-title">Qualification & Technical Skill</h3>
 					</div>
+
 					<div className="card-body p-0">
 						<div className="row">
 							<div className="col-md-4">
 								<div className="form-group">
-									<label className="form-label">
-										Qualification<sup>*</sup>
-									</label>
+									<label className="form-label">Qualification</label>
+
 									<select
 										className="form-select"
-										id="select_box"
+										{...register("qualification", {
+											required: "Qualification is required",
+										})}
 									>
-										<option>Select Qualification</option>
-										<option value="1">Biomedical</option>
-										<option value="2">Mechanical Electrical</option>
-										<option value="3">Dental equipment technology</option>
-										<option
-											id="#otherSelect"
-											value="other"
-										>
-											Others
+										<option value="">Select Qualification</option>
+
+										<option value="Biomedical">Biomedical</option>
+
+										<option value="Mechanical Electrical">
+											Mechanical Electrical
+										</option>
+
+										<option value="Dental equipment technology">
+											Dental equipment technology
 										</option>
 									</select>
+
+									{errors.qualification && (
+										<p className="errorMsg">{errors.qualification.message}</p>
+									)}
 								</div>
 							</div>
-							<div className="col-md-4 moreInfoShow hide">
+
+							<div className="col-md-4">
 								<div className="form-group">
-									<label className="form-label">
-										Education<sup>*</sup>
-									</label>
+									<label className="form-label">Year Of experience</label>
+
 									<input
-										type="email"
+										type="text"
 										className="form-control"
-										id="exampleInputEmail1"
-										placeholder="Enter your education"
-										aria-describedby="emailHelp"
+										placeholder="Enter education"
+										{...register("experience", {
+											required: "Education is required",
+										})}
 									/>
+
+									{errors.experience && (
+										<p className="errorMsg">{errors.experience.message}</p>
+									)}
 								</div>
 							</div>
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
-										Year Of experience<sup>*</sup>
+										Specific equipment experties
 									</label>
-									<input
-										type="email"
-										className="form-control"
-										id="exampleInputEmail1"
-										placeholder="Enter year of experience"
-										aria-describedby="emailHelp"
-									/>
-								</div>
-							</div>
-							<div className="col-md-4">
-								<div className="form-group">
-									<label className="form-label">
-										Specific equipment experties<sup>*</sup>
-									</label>
-									<select className="form-select">
-										<option>Select equipment experties</option>
-										<option value="1">
+
+									<select
+										className="form-select"
+										{...register("specificEquipmentExpertise", {
+											required: "Specific equipment experties is required",
+										})}
+									>
+										<option value="">Select equipment experties</option>
+										<option value="dentalChairs">
 											Dental chairs and delivery systems
 										</option>
-										<option value="2">Air compressors and vacuum pumps</option>
-										<option value="4">
+										<option value="airCompressors">
+											Air compressors and vacuum pumps
+										</option>
+										<option value="highSpeedLowSpeedHandpieces">
 											High-speed and low-speed handpieces
 										</option>
-										<option value="5">Electric handpiece motors</option>
-										<option value="6">LED curing lights</option>
-										<option value="7">Dental operating microscopes</option>
-										<option value="8">Portable dental units</option>
+										<option value="electrichandpiecemotors">
+											Electric handpiece motors
+										</option>
+										<option value="ledCuringLights">LED curing lights</option>
+										<option value="dentaloperatingmicroscopes">
+											Dental operating microscopes
+										</option>
+										<option value="portabledentalunits">
+											Portable dental units
+										</option>
 									</select>
+
+									{errors.specificEquipmentExpertise && (
+										<p className="errorMsg">
+											{errors.specificEquipmentExpertise.message}
+										</p>
+									)}
 								</div>
 							</div>
 							<div className="col-md-4">
 								<div className="form-group">
-									<label className="form-label">
-										Technician Type<sup>*</sup>
-									</label>
-									<select className="form-select">
-										<option>Select Technician Type</option>
-										<option value="1">ABC</option>
-										<option value="2">XYZ</option>
-										<option value="4">PQR</option>
+									<label className="form-label">Technician Type</label>
+
+									<select
+										className="form-select"
+										{...register("technicianType", {
+											required: "Technician Type is required",
+										})}
+									>
+										<option value="">Select Technician Type</option>
+										<option value="abc">ABC</option>
+										<option value="xyz">XYZ</option>
+										<option value="pqr">PQR</option>
 									</select>
+
+									{errors.technicianType && (
+										<p className="errorMsg">{errors.technicianType.message}</p>
+									)}
 								</div>
 							</div>
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
@@ -108,9 +227,11 @@ export default function QualificationStep({}) {
 										id="exampleInputEmail1"
 										placeholder="Enter your year of experience"
 										aria-describedby="emailHelp"
+										{...register("uploadtrainingCertificates")}
 									/>
 								</div>
 							</div>
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">Special Certifications </label>
@@ -120,95 +241,112 @@ export default function QualificationStep({}) {
 										id="exampleInputEmail1"
 										placeholder="Enter year of experience"
 										aria-describedby="emailHelp"
+										{...register("specialCertifications")}
 									/>
 								</div>
 							</div>
-							{/* <!-- <div className="col-md-4">
-                                                <div className="form-group">
-                                                    <label className="form-label">Serviceable Area (km) <sup>*</sup></label>
-                                                    <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter serviceable area in KM" aria-describedby="emailHelp">
-                                                
-                                                </div>
-                                            </div> --> */}
-						</div>
-						{/* <hr> */}
-						<div className="row">
-							<div className="col-md-12">
-								<h6 className="mt-1 small-title mb-0">Services coverage</h6>
-								<span className="smalllighttext mb-3">
-									Define the technician’s working locations and how far they can
-									travel for service requests.
-								</span>
-							</div>
-							<div className="col-md-6">
-								<div className="form-group">
-									<label className="form-label">
-										Select City<sup>*</sup>
-									</label>
-									<select
-										id="choices-multiple-remove-button"
-										className="form-control"
-										placeholder="Select City"
-										multiple
-									>
-										<option
-											value="Mumbai"
-											// onClick="filterSelection('Author')"
-										>
-											Mumbai
-										</option>
-										<option value="Pune">Pune</option>
-										<option value="Nagpur">Nagpur</option>
-										<option value="Thane">Thane</option>
-										<option value="Nashik">Nashik</option>
-										<option value="Kalyan-Dombivli">Kalyan-Dombivli</option>
-										<option value="Vasai-Virar">Vasai-Virar</option>
-										<option value="Navi Mumbai">Navi Mumbai</option>
-										<option value="Solapur">Solapur</option>
-										<option value="Amravati">Amravati</option>
-										<option value="Kolhapur">Kolhapur</option>
-										<option value="Sangli">Sangli</option>
-										<option value="Nanded">Nanded </option>
-									</select>
+							<hr />
+							<div className="row">
+								<div className="col-md-12">
+									<h6 className="mt-1 small-title mb-0">Services coverage</h6>
+									<span className="smalllighttext mb-3">
+										Define the technician’s working locations and how far they
+										can travel for service requests.
+									</span>
 								</div>
-							</div>
-							<div className="col-md-6">
-								<div className="form-group">
-									<label className="form-label">
-										Select Area<sup>*</sup>
-									</label>
-									<select
-										id="choices-multiple-remove-button"
-										className="form-control"
-										placeholder="Select Area"
-										multiple
-									>
-										<option
-											value="Mumbai"
-											// onclick="filterSelection('Author')"
+
+								<div className="col-md-6">
+									<div className="form-group">
+										<label className="form-label">
+											Select City<sup>*</sup>
+										</label>
+										<select
+											id="choices-multiple-remove-button"
+											className="form-control"
+											placeholder="Select City"
+											multiple
+											{...register("servicesCoveragecity", {
+												required: "City is required",
+											})}
 										>
-											Bandra
-										</option>
-										<option value="Pune">Andheri</option>
-										<option value="Nagpur">Borivali</option>
-										<option value="Thane">Colaba</option>
-										<option value="Nashik">Nashik</option>
-										<option value="Kalyan-Dombivli">Kalyan-Dombivli</option>
-										<option value="Vasai-Virar">Vasai-Virar</option>
-										<option value="Navi Mumbai">Navi Mumbai</option>
-										<option value="Solapur">Solapur</option>
-										<option value="Amravati">Amravati</option>
-										<option value="Kolhapur">Kolhapur</option>
-										<option value="Sangli">Sangli</option>
-										<option value="Nanded">Nanded </option>
-									</select>
+											<option
+												value="Mumbai"
+												// onClick="filterSelection('Author')"
+											>
+												Mumbai
+											</option>
+											<option value="Pune">Pune</option>
+											<option value="Nagpur">Nagpur</option>
+											<option value="Thane">Thane</option>
+											<option value="Nashik">Nashik</option>
+											<option value="Kalyan-Dombivli">Kalyan-Dombivli</option>
+											<option value="Vasai-Virar">Vasai-Virar</option>
+											<option value="Navi Mumbai">Navi Mumbai</option>
+											<option value="Solapur">Solapur</option>
+											<option value="Amravati">Amravati</option>
+											<option value="Kolhapur">Kolhapur</option>
+											<option value="Sangli">Sangli</option>
+											<option value="Nanded">Nanded </option>
+										</select>
+									</div>
+								</div>
+								<div className="col-md-6">
+									<div className="form-group">
+										<label className="form-label">
+											Select Area<sup>*</sup>
+										</label>
+										<select
+											id="choices-multiple-remove-button"
+											className="form-control"
+											placeholder="Select Area"
+											multiple
+											{...register("servicesCoveragearea", {
+												required: "Area is required",
+											})}
+										>
+											<option
+												value="Mumbai"
+												// onclick="filterSelection('Author')"
+											>
+												Bandra
+											</option>
+											<option value="Pune">Andheri</option>
+											<option value="Nagpur">Borivali</option>
+											<option value="Thane">Colaba</option>
+											<option value="Nashik">Nashik</option>
+											<option value="Kalyan-Dombivli">Kalyan-Dombivli</option>
+											<option value="Vasai-Virar">Vasai-Virar</option>
+											<option value="Navi Mumbai">Navi Mumbai</option>
+											<option value="Solapur">Solapur</option>
+											<option value="Amravati">Amravati</option>
+											<option value="Kolhapur">Kolhapur</option>
+											<option value="Sangli">Sangli</option>
+											<option value="Nanded">Nanded </option>
+										</select>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				
-			</div>
-		</>
+
+				<div className="btn-wrap d-flex justify-content-end">
+					<button
+						type="button"
+						className="btn btnOutline"
+						id="personalinfo"
+						onClick={handleSubmit(handleSaveDraft)}
+					>
+						Save as Draft
+					</button>
+					<button
+						type="submit"
+						className="btn btn-fill"
+					>
+						Save & Next
+					</button>
+				</div>
+			</Form>
+		</div>
 	);
 }

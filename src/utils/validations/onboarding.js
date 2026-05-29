@@ -13,7 +13,6 @@ export const personalStepValidation = {
 		},
 	},
 	altPhone: {
-		required: message.REQUIREDALTPHONE,
 		pattern: {
 			value: validationMobilePattern(),
 			message: message.INVALIDPHONE,
@@ -45,15 +44,15 @@ export const personalStepValidation = {
 		required: message.REQUIREDPOSTALCODE,
 	},
 	currentAddress1: {
-		required: message.REQUIREDADDRESS1,
+		
 	},
 	currentState: {
-		required: message.REQUIREDSTATE,
+		
 	},
 	currentCity: {
-		required: message.REQUIREDCITY,
+		
 	},
 	currentPostalCode: {
-		required: message.REQUIREDPOSTALCODE,
+		
 	},
 };

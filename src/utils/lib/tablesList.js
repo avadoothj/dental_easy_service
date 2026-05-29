@@ -106,4 +106,8 @@ export const TABLE_LIST = {
 	FIELDENGINEER: "field_engineers",
 	ONBOARDING_ADDRESS: "engineer_addresses",
 	ENGINEER_DOCUMENTS: "engineer_documents",
+	ENGINEER_QUALIFICATIONS: "engineer_qualifications",
+	ENGINEER_USER_CREATION: "engineer_user_creation",
+	ENGINEER_BANK_DETAILS: "engineer_bank_details",
+	ENGINEER_BENEFITS: "engineer_benefits",
 };

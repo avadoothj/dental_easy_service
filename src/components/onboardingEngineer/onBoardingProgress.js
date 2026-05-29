@@ -1,6 +1,24 @@
 "use client";
 import { useState } from "react";
-export default function OnboardingProgress({ steps, currentIndex, completedSteps, currentStep }) {
+import { handleStepChange } from "../../controllers/onboarding";
+import { useRouter } from "next/navigation";
+export default function OnboardingProgress({
+	steps,
+	currentIndex,
+	completedSteps,
+	currentStep,
+	onboardingData,
+	  onStepChange,
+}) {
+	const router = useRouter();
+	const handleClick = async (step) => {
+		console.log("step :", step);
+
+		const changeStep = await handleStepChange(step, onboardingData?.onboardingId);
+		if (changeStep.success) {
+			onStepChange(step.id);
+		}
+	};
 
 	return (
 		<>
@@ -16,7 +34,7 @@ export default function OnboardingProgress({ steps, currentIndex, completedSteps
 							type="button"
 							className={`nav-link ${currentStep === step.id ? "active" : ""} `}
 							aria-selected={currentStep === step.id}
-							disabled
+							onClick={() => handleClick(step)}
 						>
 							<span className="outer-round">
 								<span className="count">

@@ -1,76 +1,193 @@
-export default function UserCreationStep({}) {
+"use client";
+
+import { useForm } from "react-hook-form";
+
+import Form from "react-bootstrap/Form";
+
+import { useState, useEffect } from "react";
+
+import { addUserCreationFieldEngineer } from "@/controllers/onboarding";
+
+export default function UserCreationStep({ onboardingData, onNext, onBack }) {
+	const [showPassword, setShowPassword] = useState(false);
+
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors, isSubmitting },
+	} = useForm({
+		mode: "onChange",
+
+		defaultValues: {
+			username: "",
+
+			password: "",
+
+			assignServiceHead: "",
+		},
+	});
+
+	console.log("onboardingData :", onboardingData);
+	const onSubmit = async (data) => {
+		const payload = {
+			...data,
+			onboardingId: onboardingData?.onboardingId,
+			fieldEngineerId: onboardingData?.fieldEngineerId,
+		};
+
+		const response = await addUserCreationFieldEngineer(payload);
+
+		if (response.success) {
+			onNext({
+				userCreationData: response.data,
+			});
+		}
+	};
+
+	useEffect(() => {
+		if (!onboardingData?.userCreationData) return;
+		const usercreation = onboardingData.userCreationData;
+		console.log("usercreation :", usercreation);
+		reset({
+			username: usercreation.username || "",
+			password: usercreation.password || "",
+			assignServiceHead: usercreation.assign_service_head || "",
+		});
+	}, [onboardingData, reset]);
+
 	return (
-		<>
-			<div
-				className="tab-pane fade pt-0"
-				id="nav-user"
-				role="tabpanel"
-				aria-labelledby="nav-user-tab"
-			>
+		<div className="pt-0">
+			<Form onSubmit={handleSubmit(onSubmit)}>
 				<div className="card">
 					<div className="cardHeader">
 						<h3 className="card-title">User Creation</h3>
 					</div>
+
 					<div className="card-body p-0">
 						<div className="row mb-3">
+							{/* USERNAME */}
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
-										User Name<sup>*</sup>
+										User Name
+										<sup>*</sup>
 									</label>
+
 									<input
-										type="email"
+										type="text"
 										className="form-control"
-										id="exampleInputEmail1"
 										placeholder="Enter user name"
-										aria-describedby="emailHelp"
+										{...register("username", {
+											required: "Username is required",
+										})}
 									/>
+
+									{errors.username && (
+										<p className="errorMsg">{errors.username.message}</p>
+									)}
 								</div>
 							</div>
+
+							{/* PASSWORD */}
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
-										Password<sup>*</sup>
+										Password
+										<sup>*</sup>
 									</label>
 
 									<div className="password-wrap">
 										<input
-											type="password"
+											type={showPassword ? "text" : "password"}
 											className="form-control"
-											id="exampleInputEmail1"
-											placeholder="Enter your password"
-											aria-describedby="emailHelp"
+											placeholder="Enter password"
+											{...register("password", {
+												required: "Password is required",
+
+												minLength: {
+													value: 8,
+
+													message: "Minimum 8 characters required",
+												},
+											})}
 										/>
-										<i className="toggle-password fa fa-fw fa-eye-slash"></i>
+
+										<i
+											className={`toggle-password fa ${
+												showPassword ? "fa-eye" : "fa-eye-slash"
+											}`}
+											onClick={() => setShowPassword(!showPassword)}
+											style={{
+												cursor: "pointer",
+											}}
+										></i>
 									</div>
+
 									<span className="smalllighttext">
-										Password should contain at least 8 characters, upper and
-										lowercase letters, at least one number and at least one
-										special character
+										Password should contain at least 8 characters
 									</span>
+
+									{errors.password && (
+										<p className="errorMsg">{errors.password.message}</p>
+									)}
 								</div>
 							</div>
+
+							{/* SERVICE HEAD */}
 
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
-										Assign Service Head<sup>*</sup>
+										Assign Service Head
+										<sup>*</sup>
 									</label>
+
 									<select
-										className="form-select js-select2"
-										id="mySelect2"
+										className="form-select"
+										{...register("assignServiceHead", {
+											required: "Service Head is required",
+										})}
 									>
-										<option>Select Service Head</option>
+										<option value="">Select Service Head</option>
+
 										<option value="1">Rajesh Kumar - Ghansoli</option>
+
 										<option value="2">Pratik Tiwari - Vashi</option>
+
 										<option value="3">Dinesh Sharma - Thane</option>
 									</select>
+
+									{errors.assignServiceHead && (
+										<p className="errorMsg">
+											{errors.assignServiceHead.message}
+										</p>
+									)}
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</>
+
+				<div className="btn-wrap d-flex justify-content-end">
+					<button
+						type="button"
+						className="btn btnOutline"
+						onClick={onBack}
+					>
+						Back
+					</button>
+
+					<button
+						type="submit"
+						className="btn btn-fill"
+					>
+						Save & Next
+					</button>
+				</div>
+			</Form>
+		</div>
 	);
 }

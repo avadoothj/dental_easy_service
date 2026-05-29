@@ -1,55 +1,109 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { add } from "date-fns";
-import { addDocumentFieldEngineer } from "@/controllers/onboarding";
+import { addDocumentFieldEngineer, saveDocumentDraft } from "@/controllers/onboarding";
 
-export default function DocumentStep({
-	onValidityChange,
-	registerSubmit,
-	onNext,
-
-	onBack,
-	disableNext,
-	isFirst,
-	isLast,
-	currentStep,
-}) {
+export default function DocumentStep({ onboardingData, onNext, onBack }) {
 	const {
 		register,
 		handleSubmit,
-		watch,
-		formState: { errors, isValid },
+		reset,
+		formState: { errors, isSubmitting },
 	} = useForm({
 		mode: "onChange",
 		defaultValues: {
-			defaultValues: onboardingData.documentData,
 			passportPhoto: null,
 			identityProof: null,
 			addressProof: null,
 		},
 	});
+	const [existingFiles, setExistingFiles] = useState({
+		passportPhoto: null,
+		identityProof: null,
+		addressProof: null,
+	});
 
-	console.log("userData  INSIDE DOC :", userData);
-	const onSubmit = async (data) => {
-		console.log(data.passportPhoto[0]);
-		console.log(data.identityProof[0]);
-		console.log(data.addressProof[0]);
+	const buildFormData = (data, isDraft = false) => {
 		const formData = new FormData();
 
-		formData.append("passportPhoto", data.passportPhoto[0]);
-		formData.append("identityProof", data.identityProof[0]);
-		formData.append("addressProof", data.addressProof[0]);
-		const response = addDocumentFieldEngineer(formData);
-		onNext({
-			documentData: data,
-		});
-		return;
+		formData.append("onboardingId", onboardingData.onboardingId);
+		formData.append("fieldEngineerId", onboardingData.fieldEngineerId);
+		formData.append("isDraft", isDraft);
 
-		await onNext(formData);
+		if (data.passportPhoto?.[0]) {
+			formData.append("passportPhoto", data.passportPhoto[0]);
+		}
+
+		if (data.identityProof?.[0]) {
+			formData.append("identityProof", data.identityProof[0]);
+		}
+
+		if (data.addressProof?.[0]) {
+			formData.append("addressProof", data.addressProof[0]);
+		}
+
+		return formData;
 	};
-	console.log("DocumentStep - currentStep:", currentStep);
+
+	const onSubmit = async (data) => {
+		const formData = buildFormData(data);
+
+		const response = await addDocumentFieldEngineer(formData, onboardingData.fieldEngineerId);
+
+		if (response.success) {
+			setExistingFiles({
+				passportPhoto: response.documents?.passport_photo || null,
+				identityProof: response.documents?.identity_proof || null,
+				addressProof: response.documents?.address_proof || null,
+			});
+
+			onNext({
+				documentData: response.documents,
+			});
+		}
+	};
+
+	const handleSaveDraft = async (data) => {
+		console.log("data :", data);
+
+		const formData = buildFormData(data);
+
+		const response = await saveDocumentDraft(formData, onboardingData.fieldEngineerId);
+
+		if (response.success) {
+			// NEW USER
+
+			if (!onboardingData?.onboardingId) {
+				router.replace(`/onboarding-engineer/edit/${response.onboardingId}`);
+
+				return;
+			}
+		}
+	};
+
+	useEffect(() => {
+		if (!onboardingData?.documentData) return;
+
+		const passportPhoto = onboardingData.documentData.find(
+			(doc) => doc.document_type === "passport_photo",
+		);
+
+		const identityProof = onboardingData.documentData.find(
+			(doc) => doc.document_type === "identity_proof",
+		);
+
+		const addressProof = onboardingData.documentData.find(
+			(doc) => doc.document_type === "address_proof",
+		);
+
+		setExistingFiles({
+			passportPhoto,
+			identityProof,
+			addressProof,
+		});
+	}, [onboardingData, reset]);
 	return (
 		<>
 			<div
@@ -102,7 +156,10 @@ export default function DocumentStep({
 													<span className="files"></span>
 													<div className="d-flex align-items-center gap-2">
 														<span className="file-name">
-															office_12345.jpg
+															{existingFiles.passportPhoto
+																? existingFiles.passportPhoto
+																		.fileName
+																: "No file uploaded"}
 														</span>
 													</div>
 												</div>
@@ -187,16 +244,11 @@ export default function DocumentStep({
 							type="button"
 							className="btn btnOutline"
 							id="personalinfo"
+							onClick={handleSubmit(handleSaveDraft)}
 						>
 							Save as Draft
 						</button>
-						<button
-							type="button"
-							className="btn btnOutline"
-							id="personalinfo"
-						>
-							Preview
-						</button>
+
 						<button
 							type="submit"
 							className="btn btn-fill"

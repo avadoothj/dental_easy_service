@@ -1,111 +1,258 @@
-export default function BankDetailStep({}) {
+"use client";
+
+import { useForm } from "react-hook-form";
+
+import Form from "react-bootstrap/Form";
+import { useEffect } from "react";
+
+import { addBankDetailFieldEngineer } from "@/controllers/onboarding";
+
+export default function BankDetailStep({ onboardingData, onNext, onBack }) {
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors, isSubmitting },
+	} = useForm({
+		mode: "onChange",
+
+		defaultValues: {
+			bankName: "",
+			accountHolderName: "",
+			accountType: "",
+			accountNumber: "",
+			ifscCode: "",
+			branchName: "",
+		},
+	});
+
+	const onSubmit = async (data) => {
+		const payload = {
+			...data,
+
+			onboardingId: onboardingData?.onboardingId,
+
+			fieldEngineerId: onboardingData?.fieldEngineerId,
+		};
+
+		const response = await addBankDetailFieldEngineer(payload);
+
+		if (response.success) {
+			onNext({
+				bankData: response.data,
+			});
+		}
+	};
+
+	console.log('onboardingData :', onboardingData);
+	useEffect(() => {
+		if (!onboardingData?.bankData) return;
+		const bankData = onboardingData.bankData;
+		reset({
+			bankName: bankData.bank_name || "",
+			accountHolderName: bankData.account_holder_name || "",
+			accountType: bankData.account_type || "",
+			accountNumber: bankData.account_number || "",
+			ifscCode: bankData.ifsc_code || "",	
+			branchName: bankData.branch_name || "",
+
+		});
+	}, [onboardingData, reset]);
+
 	return (
-		<>
-			<div
-				className="tab-pane fade pt-0"
-				id="nav-bank"
-				role="tabpanel"
-				aria-labelledby="nav-bank-tab"
-			>
+		<div className="pt-0">
+			<Form onSubmit={handleSubmit(onSubmit)}>
 				<div className="card">
 					<div className="cardHeader">
 						<h3 className="card-title">Bank Details</h3>
 					</div>
+
 					<div className="card-body p-0">
 						<div className="row mb-3">
+							{/* BANK NAME */}
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
-										Bank Name<sup>*</sup>
+										Bank Name
+										<sup>*</sup>
 									</label>
-									<select className="form-select">
-										<option>Select Bank</option>
-										<option value="1">State Bank of India (SBI)</option>
-										<option value="2">Bank of Baroda</option>
-										<option value="3">Punjab National Bank</option>
-										<option value="4">Canara Bank</option>
-										<option value="5">Union Bank of India</option>
-										<option value="6">Bank of India</option>
-										<option value="7">Indian Bank</option>
-										<option value="8">Central Bank of India</option>
-										<option value="9">Indian Overseas Bank</option>
-										<option value="10">Bank of Maharashtra</option>
+
+									<select
+										className="form-select"
+										{...register("bankName", {
+											required: "Bank name is required",
+										})}
+									>
+										<option value="">Select Bank</option>
+
+										<option value="State Bank of India">
+											State Bank of India (SBI)
+										</option>
+
+										<option value="Bank of Baroda">Bank of Baroda</option>
+
+										<option value="Punjab National Bank">
+											Punjab National Bank
+										</option>
+
+										<option value="Canara Bank">Canara Bank</option>
 									</select>
+
+									{errors.bankName && (
+										<p className="errorMsg">{errors.bankName.message}</p>
+									)}
 								</div>
 							</div>
+
+							{/* ACCOUNT HOLDER */}
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
-										Account Holder Name<sup>*</sup>
+										Account Holder Name
+										<sup>*</sup>
 									</label>
+
 									<input
-										type="email"
+										type="text"
 										className="form-control"
-										id="exampleInputEmail1"
-										placeholder="Enter A/C name"
-										aria-describedby="emailHelp"
+										placeholder="Enter account holder name"
+										{...register("accountHolderName", {
+											required: "Account holder name is required",
+										})}
 									/>
+
+									{errors.accountHolderName && (
+										<p className="errorMsg">
+											{errors.accountHolderName.message}
+										</p>
+									)}
 								</div>
 							</div>
+
+							{/* ACCOUNT TYPE */}
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
-										Account Type<sup>*</sup>
+										Account Type
+										<sup>*</sup>
 									</label>
-									<select className="form-select">
-										<option>Select Account</option>
-										<option value="1">Savings Account</option>
-										<option value="2">Current Account</option>
-										<option value="3">Salary Account</option>
+
+									<select
+										className="form-select"
+										{...register("accountType", {
+											required: "Account type is required",
+										})}
+									>
+										<option value="">Select Account Type</option>
+
+										<option value="Savings Account">Savings Account</option>
+
+										<option value="Current Account">Current Account</option>
+
+										<option value="Salary Account">Salary Account</option>
 									</select>
+
+									{errors.accountType && (
+										<p className="errorMsg">{errors.accountType.message}</p>
+									)}
 								</div>
 							</div>
+
+							{/* ACCOUNT NUMBER */}
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
-										Account Number<sup>*</sup>
+										Account Number
+										<sup>*</sup>
 									</label>
+
 									<input
-										type="email"
+										type="text"
 										className="form-control"
-										id="exampleInputEmail1"
-										placeholder="Enter A/C number"
-										aria-describedby="emailHelp"
+										placeholder="Enter account number"
+										{...register("accountNumber", {
+											required: "Account number is required",
+										})}
 									/>
+
+									{errors.accountNumber && (
+										<p className="errorMsg">{errors.accountNumber.message}</p>
+									)}
 								</div>
 							</div>
+
+							{/* IFSC */}
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
-										IFSC Code<sup>*</sup>
+										IFSC Code
+										<sup>*</sup>
 									</label>
+
 									<input
-										type="email"
+										type="text"
 										className="form-control"
-										id="exampleInputEmail1"
-										placeholder="Enter A/C name"
-										aria-describedby="emailHelp"
+										placeholder="Enter IFSC code"
+										{...register("ifscCode", {
+											required: "IFSC code is required",
+										})}
 									/>
+
+									{errors.ifscCode && (
+										<p className="errorMsg">{errors.ifscCode.message}</p>
+									)}
 								</div>
 							</div>
+
+							{/* BRANCH */}
+
 							<div className="col-md-4">
 								<div className="form-group">
 									<label className="form-label">
-										Branch Name<sup>*</sup>
+										Branch Name
+										<sup>*</sup>
 									</label>
+
 									<input
-										type="email"
+										type="text"
 										className="form-control"
-										id="exampleInputEmail1"
 										placeholder="Enter branch name"
-										aria-describedby="emailHelp"
+										{...register("branchName", {
+											required: "Branch name is required",
+										})}
 									/>
+
+									{errors.branchName && (
+										<p className="errorMsg">{errors.branchName.message}</p>
+									)}
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</>
+
+				<div className="btn-wrap d-flex justify-content-end">
+					<button
+						type="button"
+						className="btn btnOutline"
+						onClick={onBack}
+					>
+						Back
+					</button>
+
+					<button
+						type="submit"
+						className="btn btn-fill"
+					>
+						Save & Next
+					</button>
+				</div>
+			</Form>
+		</div>
 	);
 }

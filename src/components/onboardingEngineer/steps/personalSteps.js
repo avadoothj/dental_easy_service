@@ -3,26 +3,39 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { personalStepValidation } from "../../../utils/validations/onboarding";
-import OnBoardingFormWrapper from "../onBoardingFormWrapper";
-import { addPersonalFieldEngineer } from "../../../controllers/onboarding";
-export default function PersonalStep({
-	onValidityChange,
-	registerSubmit,
-	onNext,
-	onBack,
-	disableNext,
-	isFirst,
-	isLast,
-	currentStep,
-}) {
+import { addPersonalFieldEngineer, savePeronalDraft } from "../../../controllers/onboarding";
+import { useRouter } from "next/navigation";
+export default function PersonalStep({ onboardingData, setOnboardingData, onNext }) {
 	const {
 		register,
 		handleSubmit,
 		watch,
 		setValue,
-		formState: { errors },
+		reset,
+		formState: { errors, isSubmitting },
 	} = useForm({
-		defaultValues: onboardingData.personalData,
+		mode: "onChange",
+		defaultValues: {
+			name: "",
+			phone: "",
+			altPhone: "",
+			email: "",
+			dob: "",
+			gender: "",
+			permanentAddress1: "",
+			permanentAddress2: "",
+			permanentCountry: "",
+			permanentState: "",
+			permanentCity: "",
+			permanentPostalCode: "",
+			currentAddress1: "",
+			currentAddress2: "",
+			currentCountry: "",
+			currentState: "",
+			currentCity: "",
+			currentPostalCode: "",
+			isAddressSame: false,
+		},
 	});
 
 	const formValidation = {
@@ -45,6 +58,7 @@ export default function PersonalStep({
 		currentPostalCode: register("currentPostalCode", personalStepValidation.currentPostalCode),
 	};
 	const [isLoading, setIsLoading] = useState(false);
+	const router = useRouter();
 	const isSame = watch("isAddressSame");
 	const permanent = watch([
 		"permanentAddress1",
@@ -54,6 +68,41 @@ export default function PersonalStep({
 		"permanentCity",
 		"permanentPostalCode",
 	]);
+	useEffect(() => {
+		if (!onboardingData?.personalData) return;
+
+		const personal = onboardingData.personalData;
+		const permanent = onboardingData?.personalData?.addresses?.permanent || {};
+		const current = onboardingData?.personalData?.addresses?.current || {};
+
+		reset({
+			name: personal.full_name || "",
+			phone: personal.phone || "",
+			altPhone: personal.alternate_phone || "",
+			email: personal.email || "",
+			dob: personal.dob
+				? typeof personal.dob === "string"
+					? personal.dob.split("T")[0]
+					: new Date(personal.dob).toISOString().split("T")[0]
+				: "",
+			gender: personal.gender || "",
+
+			permanentAddress1: permanent.address_line_1 || "",
+			permanentAddress2: permanent.address_line_2 || "",
+			permanentCountry: permanent.country || "",
+			permanentState: permanent.state || "",
+			permanentCity: permanent.city || "",
+			permanentPostalCode: permanent.postal_code || "",
+
+			currentAddress1: current.address_line_1 || "",
+			currentAddress2: current.address_line_2 || "",
+			currentCountry: current.country || "",
+			currentState: current.state || "",
+			currentCity: current.city || "",
+			currentPostalCode: current.postal_code || "",
+		});
+	}, [onboardingData, reset]);
+
 	useEffect(() => {
 		if (!isSame) return;
 
@@ -65,65 +114,105 @@ export default function PersonalStep({
 		setValue("currentPostalCode", permanent[5]);
 	}, [isSame, permanent]);
 
-	const onSubmit = (data) => {
-		console.log("Personal Step Data:", data);
-		setIsLoading(true);
-		const response = addPersonalFieldEngineer(data);
+	const onSubmit = async (data) => {
+		const payload = {
+			...data,
+			onboardingId: onboardingData?.onboardingId,
+			fieldEngineerId: onboardingData?.fieldEngineerId,
+		};
+
+		console.log("payload :", payload);
+		const response = await addPersonalFieldEngineer(payload);
+
 		if (response.success) {
+			const onboardingId = response.onboardingId;
+
+			const fieldEngineerId = response.fieldEngineerId;
+
+			setOnboardingData((prev) => ({
+				...prev,
+
+				onboardingId,
+
+				fieldEngineerId,
+
+				personalData: response.personal,
+
+				addresses: response.addresses,
+			}));
+
+			// =========================
+			// CREATE FLOW
+			// =========================
+
+			if (!onboardingData?.onboardingId) {
+				router.replace(`/onboarding-engineer/edit/${fieldEngineerId}`);
+				onNext({
+					onboardingId,
+
+					fieldEngineerId,
+
+					personalData: response.personal,
+
+					addresses: response.addresses,
+				});
+
+				return;
+			}
+
+			// =========================
+			// EDIT FLOW
+			// =========================
+
 			onNext({
-				fieldEngineerId: response.fieldEngineerId,
-				personalData: data,
+				onboardingId,
+				fieldEngineerId,
+				personalData: response.personal,
+				addresses: response.addresses,
 			});
 		}
 	};
 
-	const handleSaveasDraft = async (data) => {
-		console.log("Personal Step Data:", data);
-		setIsLoading(true);
-		const response = await addPersonalFieldEngineer(data);
-		localStorage.setItem("fieldEngineer", JSON.stringify(completedSteps));
-		console.log("response :", response);
+	const handleSaveDraft = async (data) => {
+		const payload = {
+			...data,
 
-		const defaultFormData = {
-			name: "",
-			phone: "",
-			altPhone: "",
-			email: "",
-			dob: "",
-			gender: "",
-			permanentAddress1: "",
-			permanentState: "",
-			permanentCity: "",
-			permanentPostalCode: "",
-			currentAddress1: "",
-			currentState: "",
-			currentCity: "",
-			currentPostalCode: "",
-			isAddressSame: false,
+			onboardingId: onboardingData?.onboardingId,
+
+			fieldEngineerId: onboardingData?.fieldEngineerId,
+
+			isDraft: true,
 		};
 
-		useEffect(() => {
-			const savedData = localStorage.getItem("fieldEngineer");
-			const data = JSON.parse(savedData);
+		const response = await savePeronalDraft(payload);
+		console.log("response :", response);
 
-			const getdata = async (data) => {
-				if (data.length > 0) {
-					setCompletedSteps(data);
-				}
-				await getFieldEngineer(data.id);
-			};
-		}, []);
+		if (response.success) {
+			const onboardingId = response.onboardingId;
 
-		// if (response.success) {
-		// 	// showAlert(messages.USER_ADD_SUCCESS, 1);
-		// 	// router.push("/team");
-		// } else {
-		// 	setIsLoading(false);
-		// 	showAlert(response.msg);
-		// }
-		return;
-		onNext();
+			const fieldEngineerId = response.fieldEngineerId;
+
+			setOnboardingData((prev) => ({
+				...prev,
+
+				onboardingId,
+
+				fieldEngineerId,
+
+				personalData: response.personal,
+
+				addresses: response.addresses,
+			}));
+			// NEW USER
+
+			if (!onboardingData?.onboardingId) {
+				router.replace(`/onboarding-engineer/edit/${fieldEngineerId}`);
+
+				return;
+			}
+		}
 	};
+
 	return (
 		<>
 			<div
@@ -280,7 +369,9 @@ export default function PersonalStep({
 							<div className="row">
 								<div className="col-md-6">
 									<div className="form-group">
-										<label className="form-label">Address Line 1</label>
+										<label className="form-label">
+											Address Line 1 <sup>*</sup>
+										</label>
 										<input
 											type="text"
 											className="form-control"
@@ -338,7 +429,9 @@ export default function PersonalStep({
 								</div>
 								<div className="col-md-6">
 									<div className="form-group">
-										<label className="form-label">State</label>
+										<label className="form-label">
+											State <sup>*</sup>
+										</label>
 										<input
 											type="text"
 											className="form-control"
@@ -358,7 +451,9 @@ export default function PersonalStep({
 								</div>
 								<div className="col-md-6">
 									<div className="form-group">
-										<label className="form-label">City</label>
+										<label className="form-label">
+											City <sup>*</sup>
+										</label>
 										<input
 											type="text"
 											className="form-control"
@@ -379,7 +474,9 @@ export default function PersonalStep({
 
 								<div className="col-md-6">
 									<div className="form-group mb-0">
-										<label className="form-label">Postal / ZIP Code</label>
+										<label className="form-label">
+											Postal / ZIP Code <sup>*</sup>
+										</label>
 										<input
 											type="text"
 											className="form-control"
@@ -408,9 +505,7 @@ export default function PersonalStep({
 							<div className="row">
 								<div className="col-md-6">
 									<div className="form-group">
-										<label className="form-label">
-											Address Line 1 <sup>*</sup>
-										</label>
+										<label className="form-label">Address Line 1</label>
 										<input
 											type="text"
 											className="form-control"
@@ -471,9 +566,7 @@ export default function PersonalStep({
 								</div>
 								<div className="col-md-6">
 									<div className="form-group">
-										<label className="form-label">
-											State<sup>*</sup>
-										</label>
+										<label className="form-label">State</label>
 										<input
 											type="text"
 											className="form-control"
@@ -494,9 +587,7 @@ export default function PersonalStep({
 								</div>
 								<div className="col-md-6">
 									<div className="form-group">
-										<label className="form-label">
-											City<sup>*</sup>
-										</label>
+										<label className="form-label">City</label>
 										<input
 											type="text"
 											className="form-control"
@@ -516,9 +607,7 @@ export default function PersonalStep({
 
 								<div className="col-md-6">
 									<div className="form-group">
-										<label className="form-label">
-											Postal / ZIP Code<sup>*</sup>
-										</label>
+										<label className="form-label">Postal / ZIP Code</label>
 										<input
 											type="text"
 											className="form-control"
@@ -564,23 +653,16 @@ export default function PersonalStep({
 						<button
 							type="button"
 							className="btn btnOutline"
-							onClick={handleSubmit(handleSaveasDraft)}
+							onClick={handleSubmit(handleSaveDraft)}
 							id="personalinfo"
 						>
 							Save as Draft
 						</button>
 						<button
-							type="button"
-							className="btn btnOutline"
-							id="personalinfo"
-						>
-							Preview
-						</button>
-						<button
 							type="submit"
 							className="btn btn-fill"
 						>
-							Save & Next
+							{onboardingData?.onboardingId ? "Update & Next" : "Save & Next"}
 						</button>
 					</div>
 				</Form>

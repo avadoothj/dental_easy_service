@@ -4,7 +4,7 @@ import OperatorCard from "./operatorCard";
 import style from "@/css/operator/operator.module.scss";
 import NoRecords from "../noRecords";
 import CustomInfiniteScroll from "@/common/customInfiniteScroll";
-import CardLoading from "@/components/operators/loading/card";
+// import CardLoading from "@/components/operators/loading/card";
 import { getConstant } from "@/utils/utils";
 import { getOperatorsListForIsp } from "@/controllers/isp";
 import ShowFilterRecordCount from "@/components/common/showFilterRecordCount";
@@ -75,7 +75,7 @@ export default function OperatorList({ isp, user, search, status, sortBy }) {
 		<>
 			{isLoading && currentPage <= 1 ? (
 				<div className={style.operatorGridWrap}>
-					<CardLoading />
+					{/* <CardLoading /> */}
 				</div>
 			) : (
 				<>

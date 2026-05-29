@@ -1,36 +1,38 @@
 import Link from "next/link";
+
 import { redirect } from "next/navigation";
+
 import { getServerSession } from "next-auth";
+
 import { options } from "@/nextAuth/options";
+
 import { checkPermission } from "@/controllers/permission";
+
 import CustomImage from "@/common/customImage";
+
 import { webBackArrowIcon, mobileBackArrowIcon } from "@/utils/imagesPicker";
-import { getFieldEngineer } from "@/controllers/onboarding";
-import EditOnboardingPageWrapper from "@/components/onboardingEngineer/editTeam";
+
 import { getRolesForTeams } from "@/controllers/role";
 
+import AddOnboardingPageWrapper from "@/components/onboardingEngineer/addEngineer";
+
 export const metadata = {
-	title: "Edit Team",
+	title: "Edit Onboarding Engineer",
 };
 
-export default async function EditTeamPage({ params }) {
-	const { id } = params;
-
+export default async function EditPage({ params }) {
 	const isAllow = await checkPermission("/onboarding-engineer");
- console.log('isAllow :', isAllow);
+
 	if (!isAllow) redirect("/");
 
 	const session = await getServerSession(options);
 
-	// if (session.user.allowedLinks.indexOf("/createUpdateInternalUser") == -1) {
-	// 	redirect("/");
-	// }
-
-	const [teamResponse, role] = await Promise.all([getFieldEngineer(id), getRolesForTeams()]);
-
-	if (!teamResponse.success) {
-		redirect("/onboarding-engineer");
+	if (session.user.allowedLinks.indexOf("/createUpdateInternalUser") == -1) {
+		redirect("/");
 	}
+
+	const role = await getRolesForTeams();
+	console.log("Number(params.id) :", Number(params.id));
 
 	return (
 		<>
@@ -43,6 +45,7 @@ export default async function EditTeamPage({ params }) {
 							width="20"
 							height="18"
 						/>
+
 						<CustomImage
 							src={mobileBackArrowIcon}
 							className="mweb"
@@ -50,15 +53,14 @@ export default async function EditTeamPage({ params }) {
 							height="15"
 						/>
 					</Link>
-					<h1>Edit Team Member</h1>
-					<div className="subscriberName">
-						<span>{teamResponse.data.full_name}</span>
-					</div>
+
+					<h1>Edit OnBoarding Engineer</h1>
 				</div>
 			</div>
 
-			<EditOnboardingPageWrapper
-				user={teamResponse.data}
+			<AddOnboardingPageWrapper
+				mode="edit"
+				onboardingId={Number(params.id)}
 				role={role.data}
 			/>
 		</>

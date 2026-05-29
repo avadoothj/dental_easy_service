@@ -16,6 +16,7 @@
 		"@emotion/react": "^11.14.0",
 		"@emotion/styled": "^11.14.1",
 		"@mui/material": "^5.15.18",
+		"@mui/system": "^9.0.1",
 		"@mui/x-date-pickers": "^7.4.0",
 		"aws-sdk": "^2.1636.0",
 		"axios": "^1.6.8",

@@ -48,7 +48,6 @@ export default function TeamList() {
 
 		setIsLoading(true);
 		const data = await getFieldEngineerList(params);
-		console.log("data :", data);
 		setList((list) => {
 			if (currentPage == 1) return data.list;
 			return [...list, ...data.list];
@@ -70,7 +69,6 @@ export default function TeamList() {
 			if (!isLoading) setCurrentPage((number) => parseInt(number) + 1);
 		},
 	};
-	console.log("list :", list);
 
 	return (
 		<>

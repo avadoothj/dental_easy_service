@@ -5,7 +5,7 @@ import OperatorList from "./operatorList";
 import SearchFilterOperator from "./searchFilterOperator";
 import SearchFilterMobileOperator from "./searchFilterMobileOperator";
 import { sortList } from "@/utils/masterData";
-import AddOperatorForm from "@/components/operators/details/addForm";
+// import AddOperatorForm from "@/components/operators/details/addForm";
 
 export default function OperatorView({ isp, user, stateList }) {
 	const [keyword, setKeyword] = useState("");

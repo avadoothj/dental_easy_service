@@ -14,6 +14,7 @@ import ConfirmationPopup from "@/components/layout/confirmationPopup";
 import { getTokenForLoginAsUser } from "@/controllers/profile";
 
 export default function Card({ item, reloadData }) {
+	console.log("item :", item);
 	const router = useRouter();
 	const { showAlert, user } = useContext(AppContext);
 
@@ -198,7 +199,7 @@ export default function Card({ item, reloadData }) {
 					</div>
 					<div className={style.topnamesec}>
 						<p className={style.tptxt}>Mobile</p>
-						<p className={style.btmtxt}>{item.mobile}</p>
+						<p className={style.btmtxt}>{item.phone}</p>
 					</div>
 				</div>
 				<div className={style.btmname}>
