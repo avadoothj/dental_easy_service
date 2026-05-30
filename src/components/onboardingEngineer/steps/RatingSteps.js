@@ -1,11 +1,8 @@
 "use client";
-
 import { useForm } from "react-hook-form";
-
+import commonStyle from "@/css/common/common.module.scss";
 import Form from "react-bootstrap/Form";
-
 import { addRatingFieldEngineer } from "@/controllers/onboarding";
-
 export default function RatingStep({
 	onboardingData,
 	onNext,
@@ -195,21 +192,23 @@ export default function RatingStep({
 					</div>
 				</div>
 
-				<div className="btn-wrap d-flex justify-content-end">
-					<button
-						type="button"
-						className="btn btnOutline"
-						onClick={onBack}
-					>
-						Back
-					</button>
+				<div className={commonStyle.footerButton}>
+					<div className={commonStyle.right}>
+						<button
+							type="button"
+							className={commonStyle.commonBtn + " " + commonStyle.link}
+							onClick={onBack}
+						>
+							Back
+						</button>
 
-					<button
-						type="submit"
-						className="btn btn-fill"
-					>
-						Complete
-					</button>
+						<button
+							type="submit"
+							className={commonStyle.commonBtn + " " + commonStyle.fill}
+						>
+							Complete
+						</button>
+					</div>
 				</div>
 			</Form>
 		</div>
