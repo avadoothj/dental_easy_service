@@ -1122,7 +1122,6 @@ export async function getOnboardingDataById(onboardingId) {
 			[onboarding.field_engineer_id],
 		);
 
-		console.log("documentRows :", documentRows);
 		const qualificationRows = await executeQuery(
 			`
 			SELECT
@@ -1178,6 +1177,18 @@ export async function getOnboardingDataById(onboardingId) {
 			[onboarding.field_engineer_id],
 		);
 
+		const ratingRows = await executeQuery(
+			` SELECT
+			id,
+		technical_skills,
+		qualification_skills,
+		customer_reviews,
+		feedback
+      FROM engineer_ratings
+      WHERE field_engineer_id = ?`,
+			[onboarding.field_engineer_id],
+		);
+
 		const permanentAddress =
 			addressRows.find((item) => item.address_type === "permanent") || null;
 
@@ -1201,6 +1212,7 @@ export async function getOnboardingDataById(onboardingId) {
 				userCreation: userCreationRows[0] || null,
 				bank: bankDetailRows[0] || null,
 				benefits: benefitRows[0] || null,
+				rating: ratingRows[0] || null,
 			},
 		};
 	} catch (error) {
@@ -1365,7 +1377,6 @@ export async function addQualificationFieldEngineer(formData) {
 
 export async function savequalificationDraft(formData) {
 	try {
-
 		const fieldEngineerId = formData.get("fieldEngineerId");
 
 		const qualification = formData.get("qualification");
@@ -1478,7 +1489,6 @@ export async function savequalificationDraft(formData) {
 
 			await executeQuery(insertQuery);
 		}
-
 
 		return {
 			success: true,
@@ -1825,6 +1835,89 @@ export async function addBenefitFieldEngineer(payload) {
 		};
 	} catch (error) {
 		console.error("addBenefitFieldEngineer error:", error);
+
+		return {
+			success: false,
+
+			error: error.message,
+		};
+	}
+}
+
+//Rating
+
+export async function addRatingFieldEngineer(payload) {
+	try {
+		const {
+			onboardingId,
+			fieldEngineerId,
+
+			technicalSkills,
+			qualificationSkills,
+			customerReviews,
+			feedback,
+		} = payload;
+
+		const existingRows = await executeQuery(
+			`
+				SELECT id
+				FROM engineer_ratings
+				WHERE field_engineer_id = ?
+				LIMIT 1
+				`,
+			[fieldEngineerId],
+		);
+
+		const ratingPayload = {
+			field_engineer_id: fieldEngineerId,
+
+			technical_skills: technicalSkills,
+
+			qualification_skills: qualificationSkills,
+
+			customer_reviews: customerReviews,
+
+			feedback,
+		};
+
+		// UPDATE
+
+		if (existingRows.length) {
+			const updateQuery = queryGenerator.generateUpdateQuery(
+				ratingPayload,
+
+				
+				{ field_engineer_id: fieldEngineerId },
+				TABLE_LIST.ENGINEER_RATINGS,
+
+				"user_id",
+			);
+
+			await executeQuery(updateQuery);
+		}
+
+		// CREATE
+		else {
+			const insertQuery = queryGenerator.generateInsertQuery(
+				ratingPayload,
+
+				TABLE_LIST.ENGINEER_RATINGS,
+
+				"user_id",
+			);
+
+			await executeQuery(insertQuery);
+		}
+
+		return {
+			success: true,
+
+			message: "Rating saved successfully",
+
+			data: ratingPayload,
+		};
+	} catch (error) {
+		console.error("addRatingFieldEngineer error:", error);
 
 		return {
 			success: false,
