@@ -2,121 +2,101 @@
 
 import { useForm } from "react-hook-form";
 
+import { useEffect } from "react";
 import Form from "react-bootstrap/Form";
 
 import { addRatingFieldEngineer } from "@/controllers/onboarding";
 
-export default function RatingStep({
-	onboardingData,
-	onNext,
-	onBack,
-}) {
+import { useRouter } from "next/navigation";
+
+export default function RatingStep({ onboardingData, onNext, onBack }) {
+	const router = useRouter();
+	console.log("onboardingData :", onboardingData);
 	const {
 		register,
 		handleSubmit,
 		watch,
 		setValue,
-		formState: {
-			errors,
-			isSubmitting,
-		},
+		reset,
+		formState: { errors, isSubmitting },
 	} = useForm({
 		mode: "onChange",
 
 		defaultValues: {
-			technicalSkills: 4,
-
-			qualificationSkills: 3,
-
-			customerReviews: 4,
-
+			technicalSkills: 0,
+			qualificationSkills: 0,
+			customerReviews: 0,
 			feedback: "",
 		},
 	});
 
-	const technicalSkills =
-		watch("technicalSkills");
+	const technicalSkills = watch("technicalSkills");
 
-	const qualificationSkills =
-		watch("qualificationSkills");
+	const qualificationSkills = watch("qualificationSkills");
 
-	const customerReviews =
-		watch("customerReviews");
+	const customerReviews = watch("customerReviews");
 
 	const onSubmit = async (data) => {
+		console.log("data :", data);
+
 		const payload = {
 			...data,
-
-			onboardingId:
-				onboardingData?.onboardingId,
-
-			fieldEngineerId:
-				onboardingData?.fieldEngineerId,
+			onboardingId: onboardingData?.onboardingId,
+			fieldEngineerId: onboardingData?.fieldEngineerId,
 		};
 
-		const response =
-			await addRatingFieldEngineer(
-				payload,
-			);
+		const response = await addRatingFieldEngineer(payload);
 
 		if (response.success) {
+
+			const fieldEngineerId = response.data.field_engineer_id;
+			router.replace(`/onboarding-engineer/detail/${fieldEngineerId}`);
+
 			onNext({
-				ratingData:
-					response.data,
+				ratingData: response.data,
 			});
 		}
 	};
 
-	const renderStars = (
-		field,
-		value,
-	) => {
+	const renderStars = (field, value) => {
 		return (
 			<div className="d-flex gap-2 mt-2">
-				{[1, 2, 3, 4, 5].map(
-					(star) => (
-						<span
-							key={star}
-							style={{
-								fontSize:
-									"28px",
+				{[1, 2, 3, 4, 5].map((star) => (
+					<span
+						key={star}
+						style={{
+							fontSize: "28px",
 
-								cursor:
-									"pointer",
+							cursor: "pointer",
 
-								color:
-									star <=
-									value
-										? "#ffc107"
-										: "#d3d3d3",
-							}}
-							onClick={() =>
-								setValue(
-									field,
-									star,
-								)
-							}
-						>
-							★
-						</span>
-					),
-				)}
+							color: star <= value ? "#ffc107" : "#d3d3d3",
+						}}
+						onClick={() => setValue(field, star)}
+					>
+						★
+					</span>
+				))}
 			</div>
 		);
 	};
 
+	useEffect(() => {
+		if (!onboardingData?.ratingData) return;
+		const rating = onboardingData.ratingData;
+		reset({
+			technicalSkills: rating.technical_skills || 0,
+			qualificationSkills: rating.qualification_skills || 0,
+			customerReviews: rating.customer_reviews || 0,
+			feedback: rating.feedback || "",
+		});
+	}, [onboardingData, reset]);
+
 	return (
 		<div className="pt-0">
-			<Form
-				onSubmit={handleSubmit(
-					onSubmit,
-				)}
-			>
+			<Form onSubmit={handleSubmit(onSubmit)}>
 				<div className="card">
 					<div className="cardHeader">
-						<h3 className="card-title">
-							Rating
-						</h3>
+						<h3 className="card-title">Rating</h3>
 					</div>
 
 					<div className="rating-bx">
@@ -125,90 +105,58 @@ export default function RatingStep({
 						<h5 className="mb-0">
 							Technical Skills{" "}
 							<span className="light-text">
-								(
-								{
-									technicalSkills
-								}
+								({technicalSkills}
 								.0)
 							</span>
 						</h5>
 
-						{renderStars(
-							"technicalSkills",
-							technicalSkills,
-						)}
+						{renderStars("technicalSkills", technicalSkills)}
 
 						{/* QUALIFICATION */}
 
 						<h5 className="mt-4 mb-0">
-							Qualification
-							Skills{" "}
+							Qualification Skills{" "}
 							<span className="light-text">
-								(
-								{
-									qualificationSkills
-								}
+								({qualificationSkills}
 								.0)
 							</span>
 						</h5>
 
-						{renderStars(
-							"qualificationSkills",
-							qualificationSkills,
-						)}
+						{renderStars("qualificationSkills", qualificationSkills)}
 
 						{/* CUSTOMER */}
 
 						<h5 className="mt-4 mb-0">
 							Customer Reviews{" "}
 							<span className="light-text">
-								(
-								{
-									customerReviews
-								}
+								({customerReviews}
 								.0)
 							</span>
 						</h5>
 
-						{renderStars(
-							"customerReviews",
-							customerReviews,
-						)}
+						{renderStars("customerReviews", customerReviews)}
 					</div>
 
 					{/* FEEDBACK */}
 
 					<div className="form-group mt-4 mb-0">
-						<label className="form-label">
-							Can you tell us
-							more?
-						</label>
+						<label className="form-label">Can you tell us more?</label>
 
 						<textarea
 							className="form-control"
 							rows={4}
 							placeholder="Add feedback"
-							{...register(
-								"feedback",
-							)}
+							{...register("feedback")}
 						></textarea>
 					</div>
 				</div>
 
 				<div className="btn-wrap d-flex justify-content-end">
 					<button
-						type="button"
-						className="btn btnOutline"
-						onClick={onBack}
-					>
-						Back
-					</button>
-
-					<button
 						type="submit"
 						className="btn btn-fill"
 					>
-						Complete
+						save and Preview
 					</button>
 				</div>
 			</Form>

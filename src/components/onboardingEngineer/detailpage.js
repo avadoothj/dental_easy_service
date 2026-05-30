@@ -1,0 +1,1084 @@
+"use client";
+
+import { Accordion } from "react-bootstrap";
+import style from "@/css/subscribers/subscribers.module.scss";
+import { useContext, useEffect, useState } from "react";
+import { getOnboardingDataById } from "@/controllers/onboarding";
+
+
+
+export default function DetailPageWrapper({ onboardingData }) {
+	return (
+		<>
+			{/* Personal Information */}
+			{onboardingData?.personalData && (
+				<Accordion
+					defaultActiveKey="0"
+					className={style.subscriberAccordion}
+				>
+					<Accordion.Item
+						eventKey="0"
+						className={style.subscriberAccordionItem}
+					>
+						<Accordion.Header className={style.subscriberAccordionHeader}>
+							Personal Information
+						</Accordion.Header>
+						<Accordion.Body className={style.subscriberAccordionBody}>
+							<div className={style.Detailsinner}>
+								<div className="container-fluid">
+									<div className="tab-content">
+										<div className="card tab-listing mb-10"></div>
+										<div className="card mb-10">
+											<div className="cardHeader">
+												<h3 className="card-title">Personal Details</h3>
+											</div>
+											<div className="card-body p-0">
+												<div className="row">
+													<div className="col-md-4">
+														<div className="form-group">
+															<label className="form-label">
+																Name <sup>*</sup>
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.full_name
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-4">
+														<div className="form-group">
+															<label className="form-label">
+																Phone No.<sup>*</sup>
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.phone
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-4">
+														<div className="form-group">
+															<label className="form-label">
+																Alternative Phone No.
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.alternate_phone
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-4">
+														<div className="form-group">
+															<label className="form-label">
+																Email Id<sup>*</sup>
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.email
+																}
+															</div>
+														</div>
+													</div>
+
+													<div className="col-md-4">
+														<div className="form-group mb-0">
+															<label className="form-label">
+																Date Of Birth<sup>*</sup>
+															</label>
+															<div>
+																{new Date(
+																	onboardingData?.personalData
+																		?.dob,
+																).toLocaleDateString("en-IN")}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-4">
+														<div className="form-group mb-0">
+															<label className="form-label">
+																{" "}
+																Gender<sup>*</sup>
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.gender
+																}
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div className="card mb-10">
+											<div className="cardHeader">
+												<h3 className="card-title">Permanent Address</h3>
+											</div>
+											<div className="card-body p-0">
+												<div className="row">
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																Address Line 1 <sup>*</sup>
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.permanent
+																		?.address_line_1
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																Address Line 2{" "}
+																<span className="light-text">
+																	(Optional)
+																</span>
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.permanent
+																		?.address_line_2
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																Country
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.permanent
+																		?.country
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																State <sup>*</sup>
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.permanent
+																		?.state
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																City <sup>*</sup>
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.permanent?.city
+																}
+															</div>
+														</div>
+													</div>
+
+													<div className="col-md-6">
+														<div className="form-group mb-0">
+															<label className="form-label">
+																Postal / ZIP Code <sup>*</sup>
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.permanent
+																		?.postal_code
+																}
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div className="card mb-10">
+											<div className="cardHeader">
+												<h3 className="card-title">Current Address </h3>
+											</div>
+											<div className="card-body p-0">
+												<div className="row">
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																Address Line 1
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.current
+																		?.address_line_1
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																Address Line 2{" "}
+																<span className="light-text">
+																	(Optional)
+																</span>
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.current
+																		?.address_line_2
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																Country
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.current
+																		?.country
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																State
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.current?.state
+																}
+															</div>
+														</div>
+													</div>
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																City
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.current?.city
+																}
+															</div>
+														</div>
+													</div>
+
+													<div className="col-md-6">
+														<div className="form-group">
+															<label className="form-label">
+																Postal / ZIP Code
+															</label>
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.addresses?.current
+																		?.postal_code
+																}
+															</div>
+														</div>
+													</div>
+												</div>
+												<div className="row">
+													<div className="col-md-12">
+														<div className="form-check">
+															<div>
+																{
+																	onboardingData?.personalData
+																		?.full_name
+																}
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
+			)}
+
+			{/* Document Verification */}
+
+			{onboardingData?.documentData && (
+				<Accordion
+					defaultActiveKey="1"
+					className={style.subscriberAccordion}
+				>
+					<Accordion.Item
+						eventKey="0"
+						className={style.subscriberAccordionItem}
+					>
+						<Accordion.Header className={style.subscriberAccordionHeader}>
+							Document Verification{" "}
+						</Accordion.Header>
+						<Accordion.Body className={style.subscriberAccordionBody}>
+							<div className={style.Detailsinner}>
+								<div className="container-fluid">
+									<div className="card">
+										<div className="cardHeader">
+											<h3 className="card-title">Document Verification</h3>
+										</div>
+										<div className="card-body p-0">
+											<ul className="upload-list">
+												<li>
+													<div className="document-label">
+														<div className="form-group">
+															<label className="form-label">
+																Upload Passport-size Photo
+																<sup>*</sup>
+															</label>
+															<span className="smalllighttext">
+																Please upload a passport-size
+																photograph with a white
+																background.{" "}
+															</span>
+														</div>
+													</div>
+													<div className="document-upload">
+														<label className="upload-files">
+															<input
+																type="file"
+																className="form-control"
+																accept=".jpg,.jpeg,.png,.pdf"
+															/>
+															<span className="download-icon"></span>
+															<span className="browse-text">
+																Drag your file(s) or{" "}
+																<a href="#">browse</a>
+															</span>
+															<span className="file-note">
+																The file size must be within 50 kb.
+																Only support .jpg, .png and pdf
+																files
+															</span>
+														</label>
+														<div className="d-flex align-items-center gap-2">
+															<div className="upload-files-names">
+																<div className="d-flex gap-1">
+																	<span className="files"></span>
+																	<div className="d-flex align-items-center gap-2">
+																		<span className="file-name"></span>
+																	</div>
+																</div>
+																<span className="close"></span>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div className="document-label">
+														<div className="form-group">
+															<label className="form-label">
+																Proof of Identity<sup>*</sup>
+															</label>
+															<span className="smalllighttext">
+																(Upload Aadhar card, PAN card,
+																Passport, voter Id )
+															</span>
+														</div>
+													</div>
+													<div className="document-upload">
+														<label className="upload-files">
+															<input
+																type="file"
+																className="form-control"
+																accept=".jpg,.jpeg,.png,.pdf"
+															/>
+															<span className="download-icon"></span>
+															<span className="browse-text">
+																Drag your file(s) or{" "}
+																<a href="#">browse</a>
+															</span>
+															<span className="file-note">
+																The file size must be within 200 kb.
+																Only support .jpg, .png and pdf
+																files
+															</span>
+														</label>
+														{/* <!-- <div className="note">
+                                                        <span>Please upload a passport-size photograph with a white background. The file size must be within 50 kb.</span>
+                                                    </div> --> */}
+													</div>
+												</li>
+												<li>
+													<div className="document-label">
+														<div className="form-group">
+															<label className="form-label">
+																Proof Of Address <sup>*</sup>
+															</label>
+															<span className="smalllighttext">
+																(Upload utility proof eg. Aadhar
+																card, Light bill, Driving license)
+															</span>
+														</div>
+													</div>
+													<div className="document-upload">
+														<label className="upload-files">
+															<input
+																type="file"
+																className="form-control"
+																accept=".jpg,.jpeg,.png,.pdf"
+															/>
+															<span className="download-icon"></span>
+															<span className="browse-text">
+																Drag your file(s) or{" "}
+																<a href="#">browse</a>
+															</span>
+															<span className="file-note">
+																The file size must be within 200 kb.
+																Only support .jpg, .png and pdf
+																files
+															</span>
+														</label>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
+			)}
+
+			{/* Qualification & Tech Skill */}
+
+			{onboardingData?.qualificationData && (
+				<Accordion
+					defaultActiveKey="1"
+					className={style.subscriberAccordion}
+				>
+					<Accordion.Item
+						eventKey="0"
+						className={style.subscriberAccordionItem}
+					>
+						<Accordion.Header className={style.subscriberAccordionHeader}>
+							Qualification & Tech Skill
+						</Accordion.Header>
+						<Accordion.Body className={style.subscriberAccordionBody}>
+							<div className={style.Detailsinner}>
+								<div className="container-fluid">
+									<div className="card-body p-0">
+										<div className="row">
+											<div className="col-md-4">
+												<div className="form-group">
+													<label className="form-label">
+														Qualification
+													</label>
+													<div>
+														{
+															onboardingData?.qualificationData
+																?.qualification
+														}
+													</div>
+												</div>
+											</div>
+
+											<div className="col-md-4">
+												<div className="form-group">
+													<label className="form-label">
+														Year Of experience
+													</label>
+													<div>
+														{
+															onboardingData?.qualificationData
+																?.experience
+														}
+													</div>
+												</div>
+											</div>
+
+											<div className="col-md-4">
+												<div className="form-group">
+													<label className="form-label">
+														Specific equipment experties
+													</label>
+													<div>
+														{
+															onboardingData?.qualificationData
+																?.specific_equipment_expertise
+														}
+													</div>
+												</div>
+											</div>
+											<div className="col-md-4">
+												<div className="form-group">
+													<label className="form-label">
+														Technician Type
+													</label>
+													<div>
+														{
+															onboardingData?.qualificationData
+																?.technician_type
+														}
+													</div>
+												</div>
+											</div>
+
+											<div className="col-md-4">
+												<div className="form-group">
+													<label className="form-label">
+														Upload training Certificates{" "}
+													</label>
+													<div>
+														{
+															onboardingData?.qualificationData
+																?.training_certificate_file_name
+														}
+													</div>
+												</div>
+											</div>
+
+											<div className="col-md-4">
+												<div className="form-group">
+													<label className="form-label">
+														Special Certifications{" "}
+													</label>
+													<div>
+														{
+															onboardingData?.qualificationData
+																?.special_certificate_file_name
+														}
+													</div>
+												</div>
+											</div>
+											<hr />
+											<div className="row">
+												<div className="col-md-12">
+													<h6 className="mt-1 small-title mb-0">
+														Services coverage
+													</h6>
+													<span className="smalllighttext mb-3">
+														Define the technician’s working locations
+														and how far they can travel for service
+														requests.
+													</span>
+												</div>
+
+												<div className="col-md-6">
+													<div className="form-group">
+														<label className="form-label">
+															Select City<sup>*</sup>
+														</label>
+														<div>
+															{
+																onboardingData?.qualificationData
+																	?.services_coverage_city
+															}
+														</div>
+													</div>
+												</div>
+												<div className="col-md-6">
+													<div className="form-group">
+														<label className="form-label">
+															Select Area<sup>*</sup>
+														</label>
+														<div>
+															{
+																onboardingData?.qualificationData
+																	?.services_coverage_area
+															}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
+			)}
+
+			{/* user creation */}
+
+			{onboardingData?.userCreationData && (
+				<Accordion
+					defaultActiveKey="1"
+					className={style.subscriberAccordion}
+				>
+					<Accordion.Item
+						eventKey="0"
+						className={style.subscriberAccordionItem}
+					>
+						<Accordion.Header className={style.subscriberAccordionHeader}>
+							User Creation
+						</Accordion.Header>
+						<Accordion.Body className={style.subscriberAccordionBody}>
+							<div className={style.Detailsinner}>
+								<div className="container-fluid">
+									<div className="card">
+										<div className="cardHeader">
+											<h3 className="card-title">User Creation</h3>
+										</div>
+
+										<div className="card-body p-0">
+											<div className="row mb-3">
+												{/* USERNAME */}
+
+												<div className="col-md-4">
+													<div className="form-group">
+														<label className="form-label">
+															User Name
+															<sup>*</sup>
+														</label>
+
+														<div>
+															{
+																onboardingData?.userCreationData
+																	?.username
+															}
+														</div>
+													</div>
+												</div>
+
+												{/* PASSWORD */}
+
+												{/* <div className="col-md-4">
+												<div className="form-group">
+													<label className="form-label">
+														Password
+														<sup>*</sup>
+													</label>
+													<div>
+														
+													</div>
+												</div>
+											</div> */}
+
+												{/* SERVICE HEAD */}
+
+												<div className="col-md-4">
+													<div className="form-group">
+														<label className="form-label">
+															Assign Service Head
+															<sup>*</sup>
+														</label>
+
+														<div>
+															{
+																onboardingData?.userCreationData
+																	?.assign_service_head
+															}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
+			)}
+
+			{/* bank details */}
+
+			{onboardingData?.bankData && (
+				<Accordion
+					defaultActiveKey="1"
+					className={style.subscriberAccordion}
+				>
+					<Accordion.Item
+						eventKey="0"
+						className={style.subscriberAccordionItem}
+					>
+						<Accordion.Header className={style.subscriberAccordionHeader}>
+							Bank Details
+						</Accordion.Header>
+						<Accordion.Body className={style.subscriberAccordionBody}>
+							<div className={style.Detailsinner}>
+								<div className="container-fluid">
+									<div className="card">
+										<div className="cardHeader">
+											<h3 className="card-title">Bank Details</h3>
+										</div>
+
+										<div className="card-body p-0">
+											<div className="row mb-3">
+												{/* BANK NAME */}
+
+												<div className="col-md-4">
+													<div className="form-group">
+														<label className="form-label">
+															Bank Name
+															<sup>*</sup>
+														</label>
+														<div>
+															{onboardingData?.bankData?.bank_name}
+														</div>
+													</div>
+												</div>
+
+												{/* ACCOUNT HOLDER */}
+
+												<div className="col-md-4">
+													<div className="form-group">
+														<label className="form-label">
+															Account Holder Name
+															<sup>*</sup>
+														</label>
+														<div>
+															{
+																onboardingData?.bankData
+																	?.account_holder_name
+															}
+														</div>
+													</div>
+												</div>
+
+												{/* ACCOUNT TYPE */}
+
+												<div className="col-md-4">
+													<div className="form-group">
+														<label className="form-label">
+															Account Type
+															<sup>*</sup>
+														</label>
+														<div>
+															{onboardingData?.bankData?.account_type}
+														</div>
+													</div>
+												</div>
+
+												{/* ACCOUNT NUMBER */}
+
+												<div className="col-md-4">
+													<div className="form-group">
+														<label className="form-label">
+															Account Number
+															<sup>*</sup>
+														</label>
+														<div>
+															{
+																onboardingData?.bankData
+																	?.account_number
+															}
+														</div>
+													</div>
+												</div>
+
+												{/* IFSC */}
+
+												<div className="col-md-4">
+													<div className="form-group">
+														<label className="form-label">
+															IFSC Code
+															<sup>*</sup>
+														</label>
+														<div>
+															{onboardingData?.bankData?.ifsc_code}
+														</div>
+													</div>
+												</div>
+
+												{/* BRANCH */}
+
+												<div className="col-md-4">
+													<div className="form-group">
+														<label className="form-label">
+															Branch Name
+															<sup>*</sup>
+														</label>
+														<div>
+															{onboardingData?.bankData?.branch_name}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
+			)}
+
+			{/* Benefits */}
+
+			{onboardingData?.benefitData && (
+				<Accordion
+					defaultActiveKey="1"
+					className={style.subscriberAccordion}
+				>
+					<Accordion.Item
+						eventKey="0"
+						className={style.subscriberAccordionItem}
+					>
+						<Accordion.Header className={style.subscriberAccordionHeader}>
+							Benefits
+						</Accordion.Header>
+						<Accordion.Body className={style.subscriberAccordionBody}>
+							<div className={style.Detailsinner}>
+								<div className="container-fluid">
+									<div className="card-body p-0">
+										<span className="smalllighttext">
+											Select the benefits the company will provide to the
+											technician
+										</span>
+
+										<div className="row align-items-end">
+											{/* INSURANCE PLAN */}
+
+											<div className="col-md-6">
+												<div className="form-group">
+													<label className="form-label">
+														Insurance Plan
+													</label>
+													<div>
+														{
+															onboardingData?.benefitData
+																?.insurance_plan
+														}
+													</div>
+												</div>
+											</div>
+
+											{/* INSURANCE TYPE */}
+
+											<div className="col-md-6">
+												<div className="form-group">
+													<label className="form-label">
+														Type of Insurance
+													</label>
+													<div>
+														{
+															onboardingData?.benefitData
+																?.insurance_type
+														}
+													</div>
+												</div>
+											</div>
+
+											{/* COVERAGE */}
+
+											<div className="col-md-6">
+												<div className="form-group">
+													<label className="form-label">
+														Coverage Amount
+													</label>
+													<div>
+														{
+															onboardingData?.benefitData
+																?.coverage_amount
+														}
+													</div>
+												</div>
+											</div>
+
+											{/* POLICY */}
+
+											<div className="col-md-6">
+												<div className="form-group">
+													<label className="form-label">
+														Policy Number
+													</label>
+													<div>
+														{onboardingData?.benefitData?.policy_number}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div className="card">
+										<div className="cardHeader">
+											<h3 className="card-title">Family Details</h3>
+										</div>
+
+										<div className="card-body p-0">
+											<ul className="member-list">
+												{onboardingData?.benefitData?.family_members?.map(
+													(memberDetails, index) => (
+														<li key={index}>
+															<div className="d-flex flex-grow-1 gap-3">
+																{/* NAME */}
+
+																<div className="form-group flex-grow-1 mb-0">
+																	<label className="form-label">
+																		Full Name
+																	</label>
+																	<div>
+																		{memberDetails?.fullName}
+																	</div>
+																</div>
+
+																{/* RELATIONSHIP */}
+
+																<div className="form-group flex-grow-1 mb-0">
+																	<label className="form-label">
+																		Relationship
+																	</label>
+																	<div>
+																		{
+																			memberDetails?.relationship
+																		}
+																	</div>
+																</div>
+
+																{/* AGE */}
+
+																<div className="form-group flex-grow-1 mb-0">
+																	<label className="form-label">
+																		Age
+																	</label>
+																	<div>{memberDetails?.age}</div>
+																</div>
+															</div>
+														</li>
+													),
+												)}
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
+			)}
+
+			{/* rating */}
+
+			{onboardingData?.ratingData && (
+				<Accordion
+					defaultActiveKey="1"
+					className={style.subscriberAccordion}
+				>
+					<Accordion.Item
+						eventKey="0"
+						className={style.subscriberAccordionItem}
+					>
+						<Accordion.Header className={style.subscriberAccordionHeader}>
+							Rating
+						</Accordion.Header>
+						<Accordion.Body className={style.subscriberAccordionBody}>
+							<div className={style.Detailsinner}>
+								<div className="container-fluid">
+									<div className="card">
+										<div className="cardHeader">
+											<h3 className="card-title">Rating</h3>
+										</div>
+
+										<div className="rating-bx">
+											{/* TECHNICAL */}
+
+											<h5 className="mb-0">
+												Technical Skills{" "}
+												<span className="light-text">
+													({onboardingData?.ratingData?.technical_skills}
+													.0)
+												</span>
+											</h5>
+
+											{renderStars(
+												onboardingData?.ratingData?.technical_skills,
+											)}
+
+											{/* QUALIFICATION */}
+
+											<h5 className="mt-4 mb-0">
+												Qualification Skills{" "}
+												<span className="light-text">
+													(
+													{
+														onboardingData?.ratingData
+															?.qualification_skills
+													}
+													.0)
+												</span>
+											</h5>
+
+											{renderStars(
+												onboardingData?.ratingData?.qualification_skills,
+											)}
+
+											{/* CUSTOMER */}
+
+											<h5 className="mt-4 mb-0">
+												Customer Reviews{" "}
+												<span className="light-text">
+													({onboardingData?.ratingData?.customer_reviews}
+													.0)
+												</span>
+											</h5>
+
+											{renderStars(
+												onboardingData?.ratingData?.customer_reviews,
+											)}
+										</div>
+
+										{/* FEEDBACK */}
+
+										<div className="form-group mt-4 mb-0">
+											<label className="form-label">
+												Can you tell us more?
+											</label>
+											<div>{onboardingData?.ratingData?.feedback}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
+			)}
+		</>
+	);
+}
+
+const renderStars = (value) => {
+	return (
+		<div className="d-flex gap-2 mt-2">
+			{[1, 2, 3, 4, 5].map((star) => (
+				<span
+					key={star}
+					style={{
+						fontSize: "28px",
+
+						cursor: "pointer",
+
+						color: star <= value ? "#ffc107" : "#d3d3d3",
+					}}
+				>
+					★
+				</span>
+			))}
+		</div>
+	);
+};

@@ -110,4 +110,5 @@ export const TABLE_LIST = {
 	ENGINEER_USER_CREATION: "engineer_user_creation",
 	ENGINEER_BANK_DETAILS: "engineer_bank_details",
 	ENGINEER_BENEFITS: "engineer_benefits",
+	ENGINEER_RATINGS: "engineer_ratings",
 };

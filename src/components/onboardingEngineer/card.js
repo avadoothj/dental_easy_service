@@ -14,7 +14,6 @@ import ConfirmationPopup from "@/components/layout/confirmationPopup";
 import { getTokenForLoginAsUser } from "@/controllers/profile";
 
 export default function Card({ item, reloadData }) {
-	console.log("item :", item);
 	const router = useRouter();
 	const { showAlert, user } = useContext(AppContext);
 
@@ -105,6 +104,10 @@ export default function Card({ item, reloadData }) {
 		setShowModal(!showModal);
 	};
 
+	const handledetailspage = (id) => {
+		router.push(`/onboarding-engineer/details/${id}`);
+	};
+
 	return (
 		<>
 			<div
@@ -160,7 +163,12 @@ export default function Card({ item, reloadData }) {
 
 				<div className={style.tname}>
 					<SimpleTooltip text={item.name}>
-						<div className={style.tnamelft}>{item.full_name}</div>
+						<a
+							href={`/onboarding-engineer/detail/${item.id}`}
+							className={style.tnamelft}
+						>
+							{item.full_name}
+						</a>
 					</SimpleTooltip>
 					{user?.allowedLinks.indexOf("/createUpdateInternalUser") >= 0 &&
 						item.permanent_block != 1 && (
