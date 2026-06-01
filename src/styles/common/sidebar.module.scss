@@ -280,8 +280,6 @@
 	}
 
 	.sideBarMenu {
-		border-top: 1px solid #9580f4;
-		border-bottom: 1px solid #9580f4;
 		overflow-y: auto;
 		margin-bottom: 10px;
 		@media (max-width: 1024px) {
@@ -307,12 +305,10 @@
 			margin: 0;
 			color: #c4b8f8;
 			font-size: 12px;
-			border-bottom: 1px solid #9580f4;
 			& > li {
-				padding: 10px 0;
-				border-bottom: 1px solid #dee0ff24;
 				cursor: pointer;
 				transition: all 0.5s;
+				border-top: 1px solid #9580f4;
 				&:last-child {
 					border-bottom: 0;
 				}
@@ -341,7 +337,7 @@
 						width: 100%;
 						white-space: nowrap;
 						span {
-							display: block;
+							// display: block;
 							line-height: 18px;
 							@media (max-width: 1024px) {
 								display: initial;

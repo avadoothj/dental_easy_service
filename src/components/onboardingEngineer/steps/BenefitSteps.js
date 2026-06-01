@@ -1,11 +1,8 @@
 "use client";
-
 import { useFieldArray, useForm } from "react-hook-form";
-
+import commonStyle from "@/css/common/common.module.scss";
 import Form from "react-bootstrap/Form";
-
 import { addBenefitFieldEngineer } from "@/controllers/onboarding";
-
 import { useEffect } from "react";
 
 export default function BenefitStep({ onboardingData, onNext, onBack }) {
@@ -79,120 +76,108 @@ export default function BenefitStep({ onboardingData, onNext, onBack }) {
 	return (
 		<div className="pt-0">
 			<Form onSubmit={handleSubmit(onSubmit)}>
+				<h3 className={commonStyle.mediumHeading}>Benefits</h3>
+				<span className="d-block mb-2">Select the benefits the company will provide to the technician</span>
 				{/* BENEFITS */}
 
-				<div className="card mb-10">
-					<div className="cardHeader">
-						<h3 className="card-title">Benefits</h3>
+				<div className="row align-items-end">
+					<div className="col-md-6">
+						<div className="form-group">
+							<label className="form-label">Insurance Plan</label>
+
+							<select
+								className="form-select"
+								{...register("insurancePlan", {
+									required: "Insurance plan is required",
+								})}
+							>
+								<option value="">Select Insurance Plan</option>
+
+								<option value="Basic Health Insurance">
+									Basic Health Insurance
+								</option>
+
+								<option value="Standard Health Insurance">
+									Standard Health Insurance
+								</option>
+
+								<option value="Premium Health Insurance">
+									Premium Health Insurance
+								</option>
+							</select>
+
+							{errors.insurancePlan && (
+								<p className="errorMsg">{errors.insurancePlan.message}</p>
+							)}
+						</div>
 					</div>
 
-					<div className="card-body p-0">
-						<span className="smalllighttext">
-							Select the benefits the company will provide to the technician
-						</span>
+					{/* INSURANCE TYPE */}
 
-						<div className="row align-items-end">
-							{/* INSURANCE PLAN */}
+					<div className="col-md-6">
+						<div className="form-group">
+							<label className="form-label">Type of Insurance</label>
 
-							<div className="col-md-6">
-								<div className="form-group">
-									<label className="form-label">Insurance Plan</label>
+							<select
+								className="form-select"
+								{...register("insuranceType", {
+									required: "Insurance type is required",
+								})}
+							>
+								<option value="">Select Type</option>
 
-									<select
-										className="form-select"
-										{...register("insurancePlan", {
-											required: "Insurance plan is required",
-										})}
-									>
-										<option value="">Select Insurance Plan</option>
+								<option value="Accident Insurance">
+									Accident Insurance
+								</option>
 
-										<option value="Basic Health Insurance">
-											Basic Health Insurance
-										</option>
+								<option value="Life Insurance">Life Insurance</option>
+							</select>
 
-										<option value="Standard Health Insurance">
-											Standard Health Insurance
-										</option>
+							{errors.insuranceType && (
+								<p className="errorMsg">{errors.insuranceType.message}</p>
+							)}
+						</div>
+					</div>
 
-										<option value="Premium Health Insurance">
-											Premium Health Insurance
-										</option>
-									</select>
+					{/* COVERAGE */}
 
-									{errors.insurancePlan && (
-										<p className="errorMsg">{errors.insurancePlan.message}</p>
-									)}
-								</div>
-							</div>
+					<div className="col-md-6">
+						<div className="form-group">
+							<label className="form-label">Coverage Amount</label>
 
-							{/* INSURANCE TYPE */}
+							<input
+								type="text"
+								className="form-control"
+								placeholder="Enter coverage amount"
+								{...register("coverageAmount", {
+									required: "Coverage amount is required",
+								})}
+							/>
 
-							<div className="col-md-6">
-								<div className="form-group">
-									<label className="form-label">Type of Insurance</label>
+							{errors.coverageAmount && (
+								<p className="errorMsg">{errors.coverageAmount.message}</p>
+							)}
+						</div>
+					</div>
 
-									<select
-										className="form-select"
-										{...register("insuranceType", {
-											required: "Insurance type is required",
-										})}
-									>
-										<option value="">Select Type</option>
+					{/* POLICY */}
 
-										<option value="Accident Insurance">
-											Accident Insurance
-										</option>
+					<div className="col-md-6">
+						<div className="form-group">
+							<label className="form-label">Policy Number</label>
 
-										<option value="Life Insurance">Life Insurance</option>
-									</select>
+							<input
+								type="text"
+								className="form-control"
+								placeholder="INS-2025-001"
+								{...register("policyNumber", {
+									required: "Policy number is required",
+								})}
+							/>
 
-									{errors.insuranceType && (
-										<p className="errorMsg">{errors.insuranceType.message}</p>
-									)}
-								</div>
-							</div>
-
-							{/* COVERAGE */}
-
-							<div className="col-md-6">
-								<div className="form-group">
-									<label className="form-label">Coverage Amount</label>
-
-									<input
-										type="text"
-										className="form-control"
-										placeholder="Enter coverage amount"
-										{...register("coverageAmount", {
-											required: "Coverage amount is required",
-										})}
-									/>
-
-									{errors.coverageAmount && (
-										<p className="errorMsg">{errors.coverageAmount.message}</p>
-									)}
-								</div>
-							</div>
-
-							{/* POLICY */}
-
-							<div className="col-md-6">
-								<div className="form-group">
-									<label className="form-label">Policy Number</label>
-
-									<input
-										type="text"
-										className="form-control"
-										placeholder="INS-2025-001"
-										{...register("policyNumber", {
-											required: "Policy number is required",
-										})}
-									/>
-
-									{errors.policyNumber && (
-										<p className="errorMsg">{errors.policyNumber.message}</p>
-									)}
-								</div>
-							</div>
+							{errors.policyNumber && (
+								<p className="errorMsg">{errors.policyNumber.message}</p>
+							)}
 						</div>
 					</div>
 				</div>
@@ -290,21 +275,23 @@ export default function BenefitStep({ onboardingData, onNext, onBack }) {
 					</div>
 				</div>
 
-				<div className="btn-wrap d-flex justify-content-end">
-					<button
-						type="button"
-						className="btn btnOutline"
-						onClick={onBack}
-					>
-						Back
-					</button>
+				<div className={commonStyle.footerButton}>
+					<div className={commonStyle.right}>
+						<button
+							type="button"
+							className={commonStyle.commonBtn + " " + commonStyle.link}
+							onClick={onBack}
+						>
+							Back
+						</button>
 
-					<button
-						type="submit"
-						className="btn btn-fill"
-					>
-						Save & Next
-					</button>
+						<button
+							type="submit"
+							className={commonStyle.commonBtn + " " + commonStyle.fill}
+						>
+							Save & Next
+						</button>
+					</div>
 				</div>
 			</Form>
 		</div>

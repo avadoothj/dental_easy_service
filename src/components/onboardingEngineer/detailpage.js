@@ -2,6 +2,8 @@
 
 import { Accordion } from "react-bootstrap";
 import style from "@/css/subscribers/subscribers.module.scss";
+import commonStyle from "@/css/common/common.module.scss";
+
 import { useContext, useEffect, useState } from "react";
 import { getOnboardingDataById } from "@/controllers/onboarding";
 
@@ -10,318 +12,285 @@ import { getOnboardingDataById } from "@/controllers/onboarding";
 export default function DetailPageWrapper({ onboardingData }) {
 	return (
 		<>
+		<div className="contentCopy">
 			{/* Personal Information */}
 			{onboardingData?.personalData && (
 				<Accordion
 					defaultActiveKey="0"
-					className={style.subscriberAccordion}
+					className={commonStyle.accordion}
 				>
 					<Accordion.Item
-						eventKey="0"
-						className={style.subscriberAccordionItem}
-					>
-						<Accordion.Header className={style.subscriberAccordionHeader}>
+						eventKey="0">
+						<Accordion.Header>
 							Personal Information
 						</Accordion.Header>
 						<Accordion.Body className={style.subscriberAccordionBody}>
 							<div className={style.Detailsinner}>
-								<div className="container-fluid">
-									<div className="tab-content">
-										<div className="card tab-listing mb-10"></div>
-										<div className="card mb-10">
-											<div className="cardHeader">
-												<h3 className="card-title">Personal Details</h3>
-											</div>
-											<div className="card-body p-0">
-												<div className="row">
-													<div className="col-md-4">
-														<div className="form-group">
-															<label className="form-label">
-																Name <sup>*</sup>
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.full_name
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-4">
-														<div className="form-group">
-															<label className="form-label">
-																Phone No.<sup>*</sup>
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.phone
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-4">
-														<div className="form-group">
-															<label className="form-label">
-																Alternative Phone No.
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.alternate_phone
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-4">
-														<div className="form-group">
-															<label className="form-label">
-																Email Id<sup>*</sup>
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.email
-																}
-															</div>
-														</div>
-													</div>
-
-													<div className="col-md-4">
-														<div className="form-group mb-0">
-															<label className="form-label">
-																Date Of Birth<sup>*</sup>
-															</label>
-															<div>
-																{new Date(
-																	onboardingData?.personalData
-																		?.dob,
-																).toLocaleDateString("en-IN")}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-4">
-														<div className="form-group mb-0">
-															<label className="form-label">
-																{" "}
-																Gender<sup>*</sup>
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.gender
-																}
-															</div>
-														</div>
-													</div>
-												</div>
+								<div className="row">
+									<div className="col-md-3">
+										<div className="form-group">
+											<label className="form-label">
+												Name <sup>*</sup>
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.full_name
+												}
 											</div>
 										</div>
-										<div className="card mb-10">
-											<div className="cardHeader">
-												<h3 className="card-title">Permanent Address</h3>
-											</div>
-											<div className="card-body p-0">
-												<div className="row">
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																Address Line 1 <sup>*</sup>
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.permanent
-																		?.address_line_1
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																Address Line 2{" "}
-																<span className="light-text">
-																	(Optional)
-																</span>
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.permanent
-																		?.address_line_2
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																Country
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.permanent
-																		?.country
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																State <sup>*</sup>
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.permanent
-																		?.state
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																City <sup>*</sup>
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.permanent?.city
-																}
-															</div>
-														</div>
-													</div>
-
-													<div className="col-md-6">
-														<div className="form-group mb-0">
-															<label className="form-label">
-																Postal / ZIP Code <sup>*</sup>
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.permanent
-																		?.postal_code
-																}
-															</div>
-														</div>
-													</div>
-												</div>
+									</div>
+									<div className="col-md-3">
+										<div className="form-group">
+											<label className="form-label">
+												Phone No.<sup>*</sup>
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.phone
+												}
 											</div>
 										</div>
-										<div className="card mb-10">
-											<div className="cardHeader">
-												<h3 className="card-title">Current Address </h3>
+									</div>
+									<div className="col-md-3">
+										<div className="form-group">
+											<label className="form-label">
+												Alternative Phone No.
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.alternate_phone
+												}
 											</div>
-											<div className="card-body p-0">
-												<div className="row">
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																Address Line 1
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.current
-																		?.address_line_1
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																Address Line 2{" "}
-																<span className="light-text">
-																	(Optional)
-																</span>
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.current
-																		?.address_line_2
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																Country
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.current
-																		?.country
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																State
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.current?.state
-																}
-															</div>
-														</div>
-													</div>
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																City
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.current?.city
-																}
-															</div>
-														</div>
-													</div>
+										</div>
+									</div>
+									<div className="col-md-3">
+										<div className="form-group">
+											<label className="form-label">
+												Email Id<sup>*</sup>
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.email
+												}
+											</div>
+										</div>
+									</div>
 
-													<div className="col-md-6">
-														<div className="form-group">
-															<label className="form-label">
-																Postal / ZIP Code
-															</label>
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.addresses?.current
-																		?.postal_code
-																}
-															</div>
-														</div>
-													</div>
-												</div>
-												<div className="row">
-													<div className="col-md-12">
-														<div className="form-check">
-															<div>
-																{
-																	onboardingData?.personalData
-																		?.full_name
-																}
-															</div>
-														</div>
-													</div>
-												</div>
+									<div className="col-md-3">
+										<div className="form-group mb-0">
+											<label className="form-label">
+												Date Of Birth<sup>*</sup>
+											</label>
+											<div>
+												{new Date(
+													onboardingData?.personalData
+														?.dob,
+												).toLocaleDateString("en-IN")}
+											</div>
+										</div>
+									</div>
+									<div className="col-md-3">
+										<div className="form-group mb-0">
+											<label className="form-label">
+												{" "}
+												Gender<sup>*</sup>
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.gender
+												}
 											</div>
 										</div>
 									</div>
 								</div>
+								<h3 className={commonStyle.mediumHeading + " " + "mt-3"}>Permanent Address</h3>
+								<div className="row">
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												Address Line 1 <sup>*</sup>
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.permanent
+														?.address_line_1
+												}
+											</div>
+										</div>
+									</div>
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												Address Line 2{" "}
+												<span className="light-text">
+													(Optional)
+												</span>
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.permanent
+														?.address_line_2
+												}
+											</div>
+										</div>
+									</div>
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												Country
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.permanent
+														?.country
+												}
+											</div>
+										</div>
+									</div>
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												State <sup>*</sup>
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.permanent
+														?.state
+												}
+											</div>
+										</div>
+									</div>
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												City <sup>*</sup>
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.permanent?.city
+												}
+											</div>
+										</div>
+									</div>
+
+									<div className="col-md-6">
+										<div className="form-group mb-0">
+											<label className="form-label">
+												Postal / ZIP Code <sup>*</sup>
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.permanent
+														?.postal_code
+												}
+											</div>
+										</div>
+									</div>
+								</div>
+								<h3 className={commonStyle.mediumHeading + " " + "mt-3"}>Current Address </h3>
+								<div className="row">
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												Address Line 1
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.current
+														?.address_line_1
+												}
+											</div>
+										</div>
+									</div>
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												Address Line 2{" "}
+												<span className="light-text">
+													(Optional)
+												</span>
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.current
+														?.address_line_2
+												}
+											</div>
+										</div>
+									</div>
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												Country
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.current
+														?.country
+												}
+											</div>
+										</div>
+									</div>
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												State
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.current?.state
+												}
+											</div>
+										</div>
+									</div>
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												City
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.current?.city
+												}
+											</div>
+										</div>
+									</div>
+
+									<div className="col-md-6">
+										<div className="form-group">
+											<label className="form-label">
+												Postal / ZIP Code
+											</label>
+											<div>
+												{
+													onboardingData?.personalData
+														?.addresses?.current
+														?.postal_code
+												}
+											</div>
+										</div>
+									</div>
+								</div>
+								{
+									onboardingData?.personalData
+										?.full_name
+								}
 							</div>
 						</Accordion.Body>
 					</Accordion.Item>
@@ -333,13 +302,11 @@ export default function DetailPageWrapper({ onboardingData }) {
 			{onboardingData?.documentData && (
 				<Accordion
 					defaultActiveKey="1"
-					className={style.subscriberAccordion}
+					className={commonStyle.accordion}
 				>
 					<Accordion.Item
-						eventKey="0"
-						className={style.subscriberAccordionItem}
-					>
-						<Accordion.Header className={style.subscriberAccordionHeader}>
+						eventKey="0">
+						<Accordion.Header>
 							Document Verification{" "}
 						</Accordion.Header>
 						<Accordion.Body className={style.subscriberAccordionBody}>
@@ -347,7 +314,6 @@ export default function DetailPageWrapper({ onboardingData }) {
 								<div className="container-fluid">
 									<div className="card">
 										<div className="cardHeader">
-											<h3 className="card-title">Document Verification</h3>
 										</div>
 										<div className="card-body p-0">
 											<ul className="upload-list">
@@ -1058,6 +1024,7 @@ export default function DetailPageWrapper({ onboardingData }) {
 					</Accordion.Item>
 				</Accordion>
 			)}
+			</div>
 		</>
 	);
 }

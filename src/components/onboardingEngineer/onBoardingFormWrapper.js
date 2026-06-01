@@ -1,3 +1,4 @@
+import commonStyle from "@/css/common/common.module.scss";
 export default function OnBoardingFormWrapper({
 	onNext,
 	onBack,
@@ -7,7 +8,7 @@ export default function OnBoardingFormWrapper({
 }) {
 	return (
 		<>
-			<div className="btn-wrap d-flex justify-content-end">
+			<div className={commonStyle.footerButton}>
 				<button
 					className="btn btnOutline"
 					id="personalinfo"

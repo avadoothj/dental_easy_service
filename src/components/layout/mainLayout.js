@@ -70,7 +70,7 @@ export default async function MainLayout({ children }) {
 						user={session.user}
 						userMenu={userMenu}
 					/>
-					<main className="mainbox px-4 py-4">{children}</main>
+					<main className="mainbox p-3">{children}</main>
 				</div>
 				{/* <AccountActions
 					terms={terms}

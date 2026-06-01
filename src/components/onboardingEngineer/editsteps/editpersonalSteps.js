@@ -97,10 +97,8 @@ export default function PersonalStep({
 				aria-labelledby="nav-home-tab"
 			>
 				<Form onSubmit={handleSubmit(onSubmit)}>
+					<h3 className={commonStyle.mediumHeading}>Personal Details</h3>
 					<div className="card mb-10">
-						<div className="cardHeader">
-							<h3 className="card-title">Personal Details</h3>
-						</div>
 						<div className="card-body p-0">
 							<div className="row">
 								<div className="col-md-4">

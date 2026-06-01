@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-
+import commonStyle from "@/css/common/common.module.scss";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
 
@@ -62,195 +62,188 @@ export default function BankDetailStep({ onboardingData, onNext, onBack }) {
 	return (
 		<div className="pt-0">
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<div className="card">
-					<div className="cardHeader">
-						<h3 className="card-title">Bank Details</h3>
+				<h3 className={commonStyle.mediumHeading}>Bank Details</h3>
+				<div className="row mb-3">
+					<div className="col-md-4">
+						<div className="form-group">
+							<label className="form-label">
+								Bank Name
+								<sup>*</sup>
+							</label>
+
+							<select
+								className="form-select"
+								{...register("bankName", {
+									required: "Bank name is required",
+								})}
+							>
+								<option value="">Select Bank</option>
+
+								<option value="State Bank of India">
+									State Bank of India (SBI)
+								</option>
+
+								<option value="Bank of Baroda">Bank of Baroda</option>
+
+								<option value="Punjab National Bank">
+									Punjab National Bank
+								</option>
+
+								<option value="Canara Bank">Canara Bank</option>
+							</select>
+
+							{errors.bankName && (
+								<p className="errorMsg">{errors.bankName.message}</p>
+							)}
+						</div>
 					</div>
 
-					<div className="card-body p-0">
-						<div className="row mb-3">
-							{/* BANK NAME */}
+					{/* ACCOUNT HOLDER */}
 
-							<div className="col-md-4">
-								<div className="form-group">
-									<label className="form-label">
-										Bank Name
-										<sup>*</sup>
-									</label>
+					<div className="col-md-4">
+						<div className="form-group">
+							<label className="form-label">
+								Account Holder Name
+								<sup>*</sup>
+							</label>
 
-									<select
-										className="form-select"
-										{...register("bankName", {
-											required: "Bank name is required",
-										})}
-									>
-										<option value="">Select Bank</option>
+							<input
+								type="text"
+								className="form-control"
+								placeholder="Enter account holder name"
+								{...register("accountHolderName", {
+									required: "Account holder name is required",
+								})}
+							/>
 
-										<option value="State Bank of India">
-											State Bank of India (SBI)
-										</option>
+							{errors.accountHolderName && (
+								<p className="errorMsg">
+									{errors.accountHolderName.message}
+								</p>
+							)}
+						</div>
+					</div>
 
-										<option value="Bank of Baroda">Bank of Baroda</option>
+					{/* ACCOUNT TYPE */}
 
-										<option value="Punjab National Bank">
-											Punjab National Bank
-										</option>
+					<div className="col-md-4">
+						<div className="form-group">
+							<label className="form-label">
+								Account Type
+								<sup>*</sup>
+							</label>
 
-										<option value="Canara Bank">Canara Bank</option>
-									</select>
+							<select
+								className="form-select"
+								{...register("accountType", {
+									required: "Account type is required",
+								})}
+							>
+								<option value="">Select Account Type</option>
 
-									{errors.bankName && (
-										<p className="errorMsg">{errors.bankName.message}</p>
-									)}
-								</div>
-							</div>
+								<option value="Savings Account">Savings Account</option>
 
-							{/* ACCOUNT HOLDER */}
+								<option value="Current Account">Current Account</option>
 
-							<div className="col-md-4">
-								<div className="form-group">
-									<label className="form-label">
-										Account Holder Name
-										<sup>*</sup>
-									</label>
+								<option value="Salary Account">Salary Account</option>
+							</select>
 
-									<input
-										type="text"
-										className="form-control"
-										placeholder="Enter account holder name"
-										{...register("accountHolderName", {
-											required: "Account holder name is required",
-										})}
-									/>
+							{errors.accountType && (
+								<p className="errorMsg">{errors.accountType.message}</p>
+							)}
+						</div>
+					</div>
 
-									{errors.accountHolderName && (
-										<p className="errorMsg">
-											{errors.accountHolderName.message}
-										</p>
-									)}
-								</div>
-							</div>
+					{/* ACCOUNT NUMBER */}
 
-							{/* ACCOUNT TYPE */}
+					<div className="col-md-4">
+						<div className="form-group">
+							<label className="form-label">
+								Account Number
+								<sup>*</sup>
+							</label>
 
-							<div className="col-md-4">
-								<div className="form-group">
-									<label className="form-label">
-										Account Type
-										<sup>*</sup>
-									</label>
+							<input
+								type="text"
+								className="form-control"
+								placeholder="Enter account number"
+								{...register("accountNumber", {
+									required: "Account number is required",
+								})}
+							/>
 
-									<select
-										className="form-select"
-										{...register("accountType", {
-											required: "Account type is required",
-										})}
-									>
-										<option value="">Select Account Type</option>
+							{errors.accountNumber && (
+								<p className="errorMsg">{errors.accountNumber.message}</p>
+							)}
+						</div>
+					</div>
 
-										<option value="Savings Account">Savings Account</option>
+					{/* IFSC */}
 
-										<option value="Current Account">Current Account</option>
+					<div className="col-md-4">
+						<div className="form-group">
+							<label className="form-label">
+								IFSC Code
+								<sup>*</sup>
+							</label>
 
-										<option value="Salary Account">Salary Account</option>
-									</select>
+							<input
+								type="text"
+								className="form-control"
+								placeholder="Enter IFSC code"
+								{...register("ifscCode", {
+									required: "IFSC code is required",
+								})}
+							/>
 
-									{errors.accountType && (
-										<p className="errorMsg">{errors.accountType.message}</p>
-									)}
-								</div>
-							</div>
+							{errors.ifscCode && (
+								<p className="errorMsg">{errors.ifscCode.message}</p>
+							)}
+						</div>
+					</div>
 
-							{/* ACCOUNT NUMBER */}
+					{/* BRANCH */}
 
-							<div className="col-md-4">
-								<div className="form-group">
-									<label className="form-label">
-										Account Number
-										<sup>*</sup>
-									</label>
+					<div className="col-md-4">
+						<div className="form-group">
+							<label className="form-label">
+								Branch Name
+								<sup>*</sup>
+							</label>
 
-									<input
-										type="text"
-										className="form-control"
-										placeholder="Enter account number"
-										{...register("accountNumber", {
-											required: "Account number is required",
-										})}
-									/>
+							<input
+								type="text"
+								className="form-control"
+								placeholder="Enter branch name"
+								{...register("branchName", {
+									required: "Branch name is required",
+								})}
+							/>
 
-									{errors.accountNumber && (
-										<p className="errorMsg">{errors.accountNumber.message}</p>
-									)}
-								</div>
-							</div>
-
-							{/* IFSC */}
-
-							<div className="col-md-4">
-								<div className="form-group">
-									<label className="form-label">
-										IFSC Code
-										<sup>*</sup>
-									</label>
-
-									<input
-										type="text"
-										className="form-control"
-										placeholder="Enter IFSC code"
-										{...register("ifscCode", {
-											required: "IFSC code is required",
-										})}
-									/>
-
-									{errors.ifscCode && (
-										<p className="errorMsg">{errors.ifscCode.message}</p>
-									)}
-								</div>
-							</div>
-
-							{/* BRANCH */}
-
-							<div className="col-md-4">
-								<div className="form-group">
-									<label className="form-label">
-										Branch Name
-										<sup>*</sup>
-									</label>
-
-									<input
-										type="text"
-										className="form-control"
-										placeholder="Enter branch name"
-										{...register("branchName", {
-											required: "Branch name is required",
-										})}
-									/>
-
-									{errors.branchName && (
-										<p className="errorMsg">{errors.branchName.message}</p>
-									)}
-								</div>
-							</div>
+							{errors.branchName && (
+								<p className="errorMsg">{errors.branchName.message}</p>
+							)}
 						</div>
 					</div>
 				</div>
 
-				<div className="btn-wrap d-flex justify-content-end">
-					<button
-						type="button"
-						className="btn btnOutline"
-						onClick={onBack}
-					>
-						Back
-					</button>
+				<div className={commonStyle.footerButton}>
+					<div className={commonStyle.right}>
+						<button
+							type="button"
+							className={commonStyle.commonBtn + " " + commonStyle.link}
+							onClick={onBack}
+						>
+							Back
+						</button>
 
-					<button
-						type="submit"
-						className="btn btn-fill"
-					>
-						Save & Next
-					</button>
+						<button
+							type="submit"
+							className={commonStyle.commonBtn + " " + commonStyle.fill}
+						>
+							Save & Next
+						</button>
+					</div>
 				</div>
 			</Form>
 		</div>

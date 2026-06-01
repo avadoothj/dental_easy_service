@@ -25,7 +25,6 @@ export default function OnBoardingPage() {
 
 	return (
 		<>
-			<div className="container-fluid">
 				<div className="card">
 					<div className="cardHeader">
 						<h3 className="card-title">Onboarding Technicians</h3>
@@ -234,7 +233,6 @@ export default function OnBoardingPage() {
 						</ul>
 					</nav>
 				</div>
-			</div>
 		</>
 	);
 }

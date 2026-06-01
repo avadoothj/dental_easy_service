@@ -399,7 +399,6 @@ export default function EditOnboardingPageWrapper({ user, role }) {
 
 	return (
 		<>
-			<div className="container-fluid">
 				<div
 					className="tab-content"
 					id="nav-tabContent"
@@ -426,7 +425,6 @@ export default function EditOnboardingPageWrapper({ user, role }) {
 						isLast={currentIndex === STEPS.length - 1}
 					/>
 				</div>
-			</div>
 		</>
 	);
 }

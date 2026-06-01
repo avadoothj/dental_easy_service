@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import PersonalStep from "@/components/onboardingEngineer/steps/personalSteps";
-
+import commonStyle from "@/css/common/common.module.scss";
 import DocumentStep from "@/components/onboardingEngineer/steps/documentSteps";
 import QualificationStep from "@/components/onboardingEngineer/steps/qualificationSteps";
 import UserCreationStep from "@/components/onboardingEngineer/steps/userCreationSteps";
@@ -157,23 +157,21 @@ export default function AddOnboardingPageWrapper({ mode, onboardingId }) {
 	};
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <div className={commonStyle.loading}>Loading...</div>;
 	}
 
 	return (
-		<div className="container-fluid">
+		<div className="contentCopy">
 			<div className="tab-content">
-				<div className="card tab-listing mb-10">
-					<nav className="management-tabs">
-						<OnboardingProgress
-							steps={STEPS}
-							currentStep={currentStep}
-							completedSteps={completedSteps}
-							  onStepChange={setCurrentStep}
-							onboardingData={onboardingData}
-						/>
-					</nav>
-				</div>
+				<nav className="management-tabs">
+					<OnboardingProgress
+						steps={STEPS}
+						currentStep={currentStep}
+						completedSteps={completedSteps}
+							onStepChange={setCurrentStep}
+						onboardingData={onboardingData}
+					/>
+				</nav>
 
 				{currentStep === "personal_information" && (
 					<PersonalStep

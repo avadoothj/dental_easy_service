@@ -1,3 +1,5 @@
+import commonStyle from "@/css/common/common.module.scss";
+
 export default function DocumentStep({
 	onValidityChange,
 	registerSubmit,
@@ -18,9 +20,7 @@ export default function DocumentStep({
 				aria-labelledby="nav-profile-tab"
 			>
 				<div className="card">
-					<div className="cardHeader">
-						<h3 className="card-title">Document Verification</h3>
-					</div>
+					<h3 className={commonStyle.mediumHeading}>Document Verification</h3>
 					<div className="card-body p-0">
 						<ul className="upload-list">
 							<li>
@@ -137,7 +137,7 @@ export default function DocumentStep({
 						</ul>
 					</div>
 				</div>
-				<div className="btn-wrap d-flex justify-content-end">
+				<div className={commonStyle.footerButton}>
 					<button
 						type="button"
 						className="btn btnOutline"

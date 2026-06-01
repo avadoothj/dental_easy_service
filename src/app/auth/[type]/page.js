@@ -11,7 +11,7 @@ export default function AuthCallback() {
 
 	return (
 		<div className="contentWrapper contentWrapperPreAuth">
-			<main className="mainbox px-4 py-4">
+			<main className="mainbox p-2">
 				<div className={style.paymentFailSuccess}>
 					<div className={style.inner}>
 						<div className={style.imagebox}>

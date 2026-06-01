@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
+import commonStyle from "@/css/common/common.module.scss";
 import { add } from "date-fns";
 import { addDocumentFieldEngineer, saveDocumentDraft } from "@/controllers/onboarding";
 
@@ -113,148 +114,142 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 				aria-labelledby="nav-profile-tab"
 			>
 				<Form onSubmit={handleSubmit(onSubmit)}>
-					<div className="card">
-						<div className="cardHeader">
-							<h3 className="card-title">Document Verification</h3>
-						</div>
-						<div className="card-body p-0">
-							<ul className="upload-list">
-								<li>
-									<div className="document-label">
-										<div className="form-group">
-											<label className="form-label">
-												Upload Passport-size Photo<sup>*</sup>
-											</label>
-											<span className="smalllighttext">
-												Please upload a passport-size photograph with a
-												white background.{" "}
-											</span>
-										</div>
-									</div>
-									<div className="document-upload">
-										<label className="upload-files">
-											<input
-												type="file"
-												className="form-control"
-												accept=".jpg,.jpeg,.png,.pdf"
-												{...register("passportPhoto", {
-													required: "Passport photo is required",
-												})}
-											/>
-											<span className="download-icon"></span>
-											<span className="browse-text">
-												Drag your file(s) or <a href="#">browse</a>
-											</span>
-											<span className="file-note">
-												The file size must be within 50 kb. Only support
-												.jpg, .png and pdf files
-											</span>
-										</label>
-										<div className="d-flex align-items-center gap-2">
-											<div className="upload-files-names">
-												<div className="d-flex gap-1">
-													<span className="files"></span>
-													<div className="d-flex align-items-center gap-2">
-														<span className="file-name">
-															{existingFiles.passportPhoto
-																? existingFiles.passportPhoto
-																		.fileName
-																: "No file uploaded"}
-														</span>
-													</div>
-												</div>
-												<span className="close"></span>
+					<h3 className={commonStyle.mediumHeading}>Document Verification</h3>
+
+					{/* <ul className={commonStyle.documentList}>
+						<li>
+							<div className={commonStyle.documentLabel}>
+								<label className="form-label">Upload Passport-size Photo<sup>*</sup></label>
+								<small>Please upload a passport-size photograph with a white background.</small>
+							</div>
+							<div className={commonStyle.documentCopy}>
+								<label className={commonStyle.fileUpload}>
+									<input type="file" />
+									<span className="title">Click to <a href="#!">browse</a> local files</span>
+									<small>Supported formats: JPG, JPEG, PNG (Max size: 5MB)</small>
+								</label>
+							</div>
+						</li>
+						<li>
+							<div className={commonStyle.documentLabel}>
+								<label className="form-label">Proof of Identity<sup>*</sup></label>
+								<small>Upload Aadhar card, PAN card, Passport, voter Id</small>
+							</div>
+							<div className={commonStyle.documentCopy}>
+								<label className={commonStyle.fileUpload}>
+									<input type="file" />
+									<span className="title">Click to <a href="#!">browse</a> local files</span>
+									<small>Supported formats: JPG, JPEG, PNG (Max size: 5MB)</small>
+								</label>
+							</div>
+						</li>
+					</ul> */}
+					<ul className={commonStyle.documentList}>
+						<li>
+							<div className={commonStyle.documentLabel}>
+								<label className="form-label">
+									Upload Passport-size Photo<sup>*</sup>
+								</label>
+								<small>Please upload a passport-size photograph with a white background.</small>
+							</div>
+							<div className={commonStyle.documentCopy}>
+								<label className={commonStyle.fileUpload}>
+									<input
+										type="file"
+										className="form-control"
+										accept=".jpg,.jpeg,.png,.pdf"
+										{...register("passportPhoto", {
+											required: "Passport photo is required",
+										})}
+									/>
+									<span className="title">Click to <a href="#!">browse</a> local files</span>
+									<small>Supported formats: JPG, JPEG, PNG (Max size: 50KB)</small>
+								</label>
+								<div className={commonStyle.fileName}>myPhoto_2025.jpg</div>
+								<div className="d-flex align-items-center gap-2">
+									<div className="upload-files-names">
+										<div className="d-flex gap-1">
+											<span className="files"></span>
+											<div className="d-flex align-items-center gap-2">
+												<span className="file-name">
+													{existingFiles.passportPhoto
+														? existingFiles.passportPhoto
+																.fileName
+														: "No file uploaded"}
+												</span>
 											</div>
 										</div>
+										<span className="close"></span>
 									</div>
-								</li>
-								<li>
-									<div className="document-label">
-										<div className="form-group">
-											<label className="form-label">
-												Proof of Identity<sup>*</sup>
-											</label>
-											<span className="smalllighttext">
-												(Upload Aadhar card, PAN card, Passport, voter Id )
-											</span>
-										</div>
-									</div>
-									<div className="document-upload">
-										<label className="upload-files">
-											<input
-												type="file"
-												className="form-control"
-												accept=".jpg,.jpeg,.png,.pdf"
-												{...register("identityProof", {
-													required: "Identity proof is required",
-												})}
-											/>
-											<span className="download-icon"></span>
-											<span className="browse-text">
-												Drag your file(s) or <a href="#">browse</a>
-											</span>
-											<span className="file-note">
-												The file size must be within 200 kb. Only support
-												.jpg, .png and pdf files
-											</span>
-										</label>
-										{/* <!-- <div className="note">
-                                                        <span>Please upload a passport-size photograph with a white background. The file size must be within 50 kb.</span>
-                                                    </div> --> */}
-									</div>
-								</li>
-								<li>
-									<div className="document-label">
-										<div className="form-group">
-											<label className="form-label">
-												Proof Of Address <sup>*</sup>
-											</label>
-											<span className="smalllighttext">
-												(Upload utility proof eg. Aadhar card, Light bill,
-												Driving license)
-											</span>
-										</div>
-									</div>
-									<div className="document-upload">
-										<label className="upload-files">
-											<input
-												type="file"
-												className="form-control"
-												accept=".jpg,.jpeg,.png,.pdf"
-												{...register("addressProof", {
-													required: "Address proof is required",
-												})}
-											/>
-											<span className="download-icon"></span>
-											<span className="browse-text">
-												Drag your file(s) or <a href="#">browse</a>
-											</span>
-											<span className="file-note">
-												The file size must be within 200 kb. Only support
-												.jpg, .png and pdf files
-											</span>
-										</label>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div className="btn-wrap d-flex justify-content-end">
-						<button
-							type="button"
-							className="btn btnOutline"
-							id="personalinfo"
-							onClick={handleSubmit(handleSaveDraft)}
-						>
-							Save as Draft
-						</button>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div className={commonStyle.documentLabel}>
+								<label className="form-label">
+									Proof of Identity<sup>*</sup>
+								</label>
+								<small>Upload Aadhar card, PAN card, Passport, voter Id</small>
+							</div>
+							<div className={commonStyle.documentCopy}>
+								<label className={commonStyle.fileUpload}>
+									<input
+										type="file"
+										className="form-control"
+										accept=".jpg,.jpeg,.png,.pdf"
+										{...register("identityProof", {
+											required: "Identity proof is required",
+										})}
+									/>
+									<span className="title">Click to <a href="#!">browse</a> local files</span>
+									<small>Supported formats: JPG, JPEG, PNG (Max size: 200KB)</small>
+								</label>
+								{/* <!-- <div className="note">
+												<span>Please upload a passport-size photograph with a white background. The file size must be within 50 kb.</span>
+											</div> --> */}
+							</div>
+						</li>
+						<li>
+							<div className={commonStyle.documentLabel}>
+								<label className="form-label">
+									Proof Of Address <sup>*</sup>
+								</label>
+								<small>Upload utility proof eg. Aadhar card, Light bill, Driving license</small>
+							</div>
+							<div className={commonStyle.documentCopy}>
+								<label className={commonStyle.fileUpload}>
+									<input
+										type="file"
+										className="form-control"
+										accept=".jpg,.jpeg,.png,.pdf"
+										{...register("addressProof", {
+											required: "Address proof is required",
+										})}
+									/>
+									<span className="title">Click to <a href="#!">browse</a> local files</span>
+									<small>Supported formats: JPG, JPEG, PNG (Max size: 200KB)</small>
+								</label>
+							</div>
+						</li>
+					</ul>
+					<div className={commonStyle.footerButton}>
+						<div className={commonStyle.right}>
+							<button
+								type="button"
+								className={commonStyle.commonBtn + " " + commonStyle.link}
+								id="personalinfo"
+								onClick={handleSubmit(handleSaveDraft)}
+							>
+								Save as Draft
+							</button>
 
-						<button
-							type="submit"
-							className="btn btn-fill"
-						>
-							Save & Next
-						</button>
+							<button
+								type="submit"
+								className={commonStyle.commonBtn + " " + commonStyle.fill}
+							>
+								Save & Next
+							</button>
+						</div>
 					</div>
 				</Form>
 			</div>
