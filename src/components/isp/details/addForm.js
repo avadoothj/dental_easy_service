@@ -14,7 +14,7 @@ import { addStackHolder } from "@/controllers/isp";
 import SelectMultiSearch from "@/common/selectMultiSearch";
 import { partnerType } from "@/utils/masterData";
 
-export default function AddIspForm({ stateList, category, superIspList, user }) {
+export default function AddIspForm({ stateList, category, superIspList }) {
 	const {
 		register,
 		handleSubmit,
@@ -23,58 +23,30 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 	} = useForm();
 
 	const router = useRouter();
-	const { showAlert } = useContext(AppContext);
+	// const { showAlert } = useContext(AppContext);
 
 	const inputMaxLength = getConstant("INPUT_MAXLENGTH");
 	const textareaMaxLength = getConstant("TEXT_AREA_MAXLENGTH");
 
 	const defaultFormData = {
-		isp_code: "",
 		oper_name: "",
-		category: user.user_type == "super isp" ? category[0]?.cat_id : "",
-		critical_balance: "",
-		auto_renewal: "",
-		zone_name: "",
 		contact1: "",
 		email1: "",
 		email2: "",
 		address: "",
-		finance_email1: "",
-		finance_email2: "",
-		business_email1: "",
-		business_email2: "",
-		sap_code: "",
-		super_isp: user.user_type == "super isp" ? user.oper_id : "",
-
 		state_id: "",
 		district_id: "",
 		city_id: "",
-
-		partner_type: "",
-		api_version: "",
 	};
 
 	const formValidation = {
 		oper_name: register("oper_name", addIspValidation.oper_name),
-		critical_balance: register("critical_balance", addIspValidation.critical_balance),
 	};
-
-	if (user.user_type == "internal") {
-		formValidation.category = register("category", addIspValidation.category);
-		formValidation.isp_code = register("isp_code", addIspValidation.isp_code);
-		formValidation.sap_code = register("sap_code", addIspValidation.sap_code);
-	}
 
 	formValidation.contact1 = register("contact1", addIspValidation.contact1);
 	formValidation.email1 = register("email1", addIspValidation.email1);
 	formValidation.email2 = register("email2", addIspValidation.email2);
 	formValidation.address = register("address", addIspValidation.address);
-
-	formValidation.finance_email1 = register("finance_email1", addIspValidation.finance_email1);
-	formValidation.finance_email2 = register("finance_email2", addIspValidation.finance_email2);
-
-	formValidation.business_email1 = register("business_email1", addIspValidation.business_email1);
-	formValidation.business_email2 = register("business_email2", addIspValidation.business_email2);
 
 	const [formData, setFormData] = useState(defaultFormData);
 	const [state, setState] = useState("");
@@ -84,9 +56,6 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 	const [showPreviewModal, setShowPreviewModal] = useState(false);
 	const [dataEdited, setDataEdited] = useState(false);
 	const [superIsp, setSuperIsp] = useState(0);
-	const [partnerTypeList, setPartnerTypeList] = useState(partnerType);
-
-	const [categoryList, setCategoryList] = useState(category);
 
 	useEffect(() => {
 		document.body.className += " hamburgerHide";
@@ -103,7 +72,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 			state_id: formData.state_id,
 		};
 		const districtList = await getDistrictList(payload);
-		setDistrictList(districtList);
+		setDistrictList(districtList?.list);
 	};
 
 	const fetchCityList = async () => {
@@ -115,7 +84,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 			district_id: formData.district_id,
 		};
 		const cityList = await getCityList(payload);
-		setCityList(cityList);
+		setCityList(cityList?.list);
 	};
 
 	useEffect(() => {
@@ -172,15 +141,15 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 			email: formData.email1,
 			mobile: formData.contact1,
 		};
-
 		const response = await addStackHolder(checkedFormData);
+		console.log("response :", response);
 		setIsLoading(false);
 
 		if (response.success) {
 			router.push("/isp/details/" + response.oper_id);
-			showAlert(messages.ISP_CREATE_SUCCESS, 1);
+			// showAlert(messages.ISP_CREATE_SUCCESS, 1);
 		} else {
-			showAlert(response.msg);
+			// showAlert(response.msg);
 		}
 	};
 
@@ -190,28 +159,13 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 
 	const handleError = (error) => {
 		console.log("error", error);
-		if (
-			errors.oper_name ||
-			errors.category ||
-			(user.user_type != "super isp" && errors.isp_code) ||
-			errors.critical_balance ||
-			errors.sap_code
-		) {
+		if (errors.oper_name || errors.category || errors.critical_balance || errors.sap_code) {
 			if (jQuery("#primaryDetails").children().children().hasClass("collapsed")) {
 				jQuery("#primaryDetails").children().children().trigger("click");
 			}
 		} else if (errors.contact1 || errors.email1 || errors.email2 || errors.address) {
 			if (jQuery("#contactDetails").children().children().hasClass("collapsed")) {
 				jQuery("#contactDetails").children().children().trigger("click");
-			}
-		} else if (
-			errors.finance_email1 ||
-			errors.finance_email2 ||
-			errors.business_email1 ||
-			errors.business_email2
-		) {
-			if (jQuery("#spocDetails").children().children().hasClass("collapsed")) {
-				jQuery("#spocDetails").children().children().trigger("click");
 			}
 		}
 	};
@@ -257,7 +211,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 										</div>
 									</div>
 
-									{user.user_type == "internal" && (
+									{/* {user.user_type == "internal" && (
 										<div className={style.detlcoln}>
 											<label>Category</label>
 											<div className={style.customselect}>
@@ -311,61 +265,9 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 										</div>
 									)}
 
-									{user.user_type == "internal" && (
-										<div className={style.detlcoln}>
-											<label>ISP Code</label>
-											<div className={style.inptrel}>
-												<input
-													{...formValidation.isp_code}
-													onChange={(e) => {
-														formValidation.isp_code.onChange(e);
-														updateSelectedForm(
-															"isp_code",
-															e.target.value
-														);
-													}}
-													type="text"
-													name="isp_code"
-													id="isp_code"
-													placeholder="Enter ISP Code"
-													maxLength={10}
-												/>
-												{errors?.isp_code && (
-													<span className={style.logerror}>
-														{errors.isp_code?.message}
-													</span>
-												)}
-											</div>
-										</div>
-									)}
+									
 
-									<div className={style.detlcoln}>
-										<label>Critical Balance Limit</label>
-										<div className={style.inptrel}>
-											<input
-												{...formValidation.critical_balance}
-												onChange={(e) => {
-													formValidation.critical_balance.onChange(e);
-													updateSelectedForm(
-														"critical_balance",
-														e.target.value
-													);
-												}}
-												type="text"
-												name="critical_balance"
-												id="critical_balance"
-												placeholder="Enter Critical Balance Limit"
-												maxLength={10}
-											/>
-											{errors?.critical_balance && (
-												<span className={style.logerror}>
-													{errors.critical_balance?.message}
-												</span>
-											)}
-										</div>
-									</div>
-
-									{user.user_type == "internal" && (
+									{/* {user.user_type == "internal" && (
 										<div className={style.detlcoln}>
 											<label>
 												SAP Code<span>Optional</span>
@@ -393,7 +295,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 												)}
 											</div>
 										</div>
-									)}
+									)} */}
 
 									{/* <div className={style.detlcoln}>
 										<label>
@@ -411,7 +313,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 										</div>
 									</div> */}
 
-									{user.user_type == "internal" && (
+									{/* {user.user_type == "internal" && (
 										<div className={style.detlcoln}>
 											<label>
 												Partner Type<span>Optional</span>
@@ -444,9 +346,9 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 												</div>
 											</div>
 										</div>
-									)}
+									)} */}
 
-									{user.user_type == "internal" && (
+									{/* {user.user_type == "internal" && (
 										<div className={style.detlcoln}>
 											<label>
 												API Version<span>Optional</span>
@@ -467,7 +369,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 												/>
 											</div>
 										</div>
-									)}
+									)} */}
 								</div>
 							</div>
 						</Accordion.Body>
@@ -566,7 +468,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 														formValidation.address.onChange(e);
 														updateSelectedForm(
 															"address",
-															e.target.value
+															e.target.value,
 														);
 													}}
 													name="address"
@@ -590,7 +492,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 
 											<SelectMultiSearch
 												defaultSelected={formData.state_id}
-												data={stateList}
+												data={stateList.list}
 												id="state"
 												placeholder="States"
 												noOptionsText="No states found"
@@ -609,7 +511,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 													onChange={(e) => {
 														updateSelectedForm(
 															"district_id",
-															parseInt(e.target.value)
+															parseInt(e.target.value),
 														);
 													}}
 												>
@@ -637,7 +539,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 													onChange={(e) => {
 														updateSelectedForm(
 															"city_id",
-															parseInt(e.target.value)
+															parseInt(e.target.value),
 														);
 													}}
 												>
@@ -659,7 +561,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 						</Accordion.Body>
 					</Accordion.Item>
 
-					<Accordion.Item
+					{/* <Accordion.Item
 						eventKey="2"
 						id="spocDetails"
 						className={style.subscriberAccordionItem}
@@ -679,7 +581,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 													formValidation.finance_email1.onChange(e);
 													updateSelectedForm(
 														"finance_email1",
-														e.target.value
+														e.target.value,
 													);
 												}}
 												type="text"
@@ -704,7 +606,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 													formValidation.finance_email2.onChange(e);
 													updateSelectedForm(
 														"finance_email2",
-														e.target.value
+														e.target.value,
 													);
 												}}
 												type="text"
@@ -731,7 +633,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 													formValidation.business_email1.onChange(e);
 													updateSelectedForm(
 														"business_email1",
-														e.target.value
+														e.target.value,
 													);
 												}}
 												type="text"
@@ -756,7 +658,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 													formValidation.business_email2.onChange(e);
 													updateSelectedForm(
 														"business_email2",
-														e.target.value
+														e.target.value,
 													);
 												}}
 												type="text"
@@ -775,7 +677,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 								</div>
 							</div>
 						</Accordion.Body>
-					</Accordion.Item>
+					</Accordion.Item> */}
 				</Accordion>
 				<div className={style.addbtn}>
 					<button
@@ -824,100 +726,7 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 											</div>
 										</div>
 									</div>
-									{user.user_type == "internal" ? (
-										<div className={style.twocol2}>
-											<div className={style.detlcol}>
-												<label>Category</label>
-												<div className={style.datecoln}>
-													{categoryList.find(
-														(x) =>
-															x.cat_id ==
-															(user.user_type == "super isp"
-																? category[0]?.cat_id
-																: formData.category)
-													)?.name || "---"}
-												</div>
-											</div>
-										</div>
-									) : (
-										<div className={style.twocol2}>
-											<div className={style.detlcol}>
-												<label>Critical Balance Limit</label>
-												<div className={style.datecoln}>
-													{formatPrice(formData.critical_balance) ??
-														"---"}
-												</div>
-											</div>
-										</div>
-									)}
 								</div>
-								{user.user_type == "internal" && (
-									<>
-										<div className={style.brdtop}>
-											<div className={style.twocol2}>
-												<div className={style.detlcol}>
-													<label>ISP Code</label>
-													<div className={style.datecoln}>
-														{formData.isp_code ?? "---"}
-													</div>
-												</div>
-											</div>
-											<div className={style.twocol2}>
-												<div className={style.detlcol}>
-													<label>Critical Balance Limit</label>
-													<div className={style.datecoln}>
-														{formatPrice(formData.critical_balance) ??
-															"---"}
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div className={style.brdtop}>
-											<div className={style.twocol2}>
-												<div className={style.detlcol}>
-													<label>SAP Code</label>
-													<div className={style.datecoln}>
-														{formData.sap_code ?? "---"}
-													</div>
-												</div>
-											</div>
-											<div className={style.twocol2}>
-												<div className={style.detlcol}>
-													<label>Partner Type</label>
-													<div className={style.datecoln}>
-														{formData.partner_type
-															? formData.partner_type
-															: "---"}
-													</div>
-												</div>
-											</div>
-											{/* <div className={style.twocol2}>
-												<div className={style.detlcol}>
-													<label>Super ISP</label>
-													<div className={style.datecoln}>
-														{superIspList.find(
-															(isp) => isp.id == formData.super_isp
-														)?.label || "---"}
-													</div>
-												</div>
-											</div> */}
-										</div>
-
-										<div className={style.brdtop}>
-											<div className={style.twocol2}>
-												<div className={style.detlcol}>
-													<label>API Version</label>
-													<div className={style.datecoln}>
-														{formData.api_version
-															? formData.api_version
-															: "---"}
-													</div>
-												</div>
-											</div>
-										</div>
-									</>
-								)}
 							</div>
 						</div>
 
@@ -966,9 +775,10 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 										<div className={style.detlcol}>
 											<label>State</label>
 											<div className={style.datecoln}>
-												{stateList.find(
-													(state) => state.id == formData.state_id
-												)?.name || "---"}
+												{stateList?.list?.find(
+													(state) =>
+														state.id === Number(formData.state_id),
+												)?.label || "---"}
 											</div>
 										</div>
 									</div>
@@ -976,9 +786,10 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 										<div className={style.detlcol}>
 											<label>District</label>
 											<div className={style.datecoln}>
-												{districtList.find(
+												{districtList?.find(
 													(district) =>
-														district.id == formData.district_id
+														district.id ===
+														Number(formData.district_id),
 												)?.name || "---"}
 											</div>
 										</div>
@@ -989,52 +800,9 @@ export default function AddIspForm({ stateList, category, superIspList, user }) 
 										<div className={style.detlcol}>
 											<label>City</label>
 											<div className={style.datecoln}>
-												{cityList.find(
-													(city) => city.id == formData.city_id
+												{cityList?.find(
+													(city) => city.id === Number(formData.city_id),
 												)?.name || "---"}
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div className={style.inner}>
-							<h4 className={style.heading}>Internal SPOC Details</h4>
-
-							<div className={style.dtlpop}>
-								<div className={style.brdtop}>
-									<div className={style.twocol2}>
-										<div className={style.detlcol}>
-											<label>Finance email</label>
-											<div className={style.datecoln}>
-												{formData.finance_email1 ?? "---"}
-											</div>
-										</div>
-									</div>
-									<div className={style.twocol2}>
-										<div className={style.detlcol}>
-											<label>Finance Secondary Email</label>
-											<div className={style.datecoln}>
-												{formData.finance_email2 ?? "---"}
-											</div>
-										</div>
-									</div>
-								</div>
-								<div className={style.brdtop}>
-									<div className={style.twocol2}>
-										<div className={style.detlcol}>
-											<label>Business Email</label>
-											<div className={style.datecoln}>
-												{formData.business_email1 ?? "---"}
-											</div>
-										</div>
-									</div>
-									<div className={style.twocol2}>
-										<div className={style.detlcol}>
-											<label>Business Secondary Email</label>
-											<div className={style.datecoln}>
-												{formData.business_email2 ?? "---"}
 											</div>
 										</div>
 									</div>

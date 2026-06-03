@@ -17,27 +17,21 @@ export default async function Isp() {
 	const isAllow = true;
 	if (!isAllow) redirect("/");
 
-	const [stateList, category, superIspList, session] = await Promise.all([
-		getStateList(),
-		getIspCategories(),
-		getSuperIspList(),
-		getServerSession(options),
-	]);
-	console.log('stateList :', stateList);
+	const category = null;
+	const superIspList = null;
+	const session = null;
+
+	const stateList = await getStateList();
 	return (
 		<DetailsPageHeader>
 			<ul className={style.tabs}>
 				<li className={style.active}>Details</li>
 				<li>Team</li>
-				<li>Operators</li>
-				<li>Plans</li>
-				<li>Wallet</li>
 			</ul>
 			<AddIspForm
 				stateList={stateList}
 				category={category}
 				superIspList={superIspList}
-				user={session.user}
 			/>
 		</DetailsPageHeader>
 	);

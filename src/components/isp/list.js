@@ -19,7 +19,6 @@ export default function IspList() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalCount, setTotalCount] = useState(-1);
-	const [filterCount, setFilterCount] = useState(-1);
 
 	const perPageItems = getConstant("ISP_LIST_LIMIT");
 
@@ -41,26 +40,21 @@ export default function IspList() {
 	}, [searchParams]);
 
 	const handleFetchData = async () => {
-		const params = { page_no: currentPage };
+		// const params = { page_no: currentPage };
 
-		if (searchParams.get("search")) params.search = searchParams.get("search");
-		if (searchParams.get("category")) params.category = searchParams.get("category");
-		if (searchParams.get("zone")) params.zone = searchParams.get("zone");
-		if (searchParams.get("sort")) params.sort = searchParams.get("sort");
+		// if (searchParams.get("search")) params.search = searchParams.get("search");
+		// if (searchParams.get("category")) params.category = searchParams.get("category");
+		// if (searchParams.get("zone")) params.zone = searchParams.get("zone");
+		// if (searchParams.get("sort")) params.sort = searchParams.get("sort");
 
 		setIsLoading(true);
-		const data = await getAllIspList(params);
+		const data = await getAllIspList();
+		console.log("data :", data);
 		setList((list) => {
-			if (currentPage == 1) return data.list;
-			return [...list, ...data.list];
+			if (currentPage == 1) return data;
+			return [...list, ...data];
 		});
 
-		if (currentPage == 1) {
-			setTotalCount(data.total ?? -1);
-			setFilterCount(data.filter ?? -1);
-		}
-
-		setHasMore(data.list.length == perPageItems);
 		setIsLoading(false);
 	};
 
@@ -72,18 +66,13 @@ export default function IspList() {
 		},
 	};
 
+	console.log("list :", list);
 	return (
 		<>
 			{isLoading && currentPage <= 1 ? (
 				<CardLoading />
 			) : (
 				<>
-					{filterCount >= 0 && (
-						<ShowFilterRecordCount
-							filterCount={filterCount}
-							totalCount={totalCount}
-						/>
-					)}
 					{list.length > 0 ? (
 						<CustomInfiniteScroll {...scrollOptions}>
 							<div className={style.teamgridbox}>

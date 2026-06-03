@@ -5,27 +5,27 @@ import SimpleTooltip from "@/common/simpleTooltip";
 
 export default function Card({ item }) {
 	return (
-		<Link href={`/isp/details/${item.oper_id}`}>
+		<Link href={`/isp/details/${item.entity_id}`}>
 			<div className={style.inbox}>
 				<div className={style.tname}>
 					<div className={style.tnamelft}>
-						<span>#{item.oper_code}</span>
-						<SimpleTooltip text={item.oper_name}>
-							<div>{item.oper_name}</div>
+						<span>#{item.entity_id}</span>
+						<SimpleTooltip text={item.entity_name}>
+							<div>{item.entity_name}</div>
 						</SimpleTooltip>
 					</div>
 				</div>
 				<div className={style.topname}>
 					<div className={style.topnamesec}>
-						<p className={style.tptxt}>Category</p>
-						<p className={style.btmtxt}>{item.category_name ?? "---"}</p>
+						<p className={style.tptxt}>contact_no</p>
+						<p className={style.btmtxt}>{item.contact_no ?? "---"}</p>
 					</div>
 					<div className={style.topnamesec}>
-						<p className={style.tptxt}>Zone</p>
-						<p className={style.btmtxt}>{item.zone_name}</p>
+						<p className={style.tptxt}>Email</p>
+						<p className={style.btmtxt}>{item.oper_email_1 ?? "---"}</p>
 					</div>
 				</div>
-				<div className={style.topname}>
+				{/* <div className={style.topname}>
 					<div className={style.topnamesec}>
 						<p className={style.tptxt}>No. of Users</p>
 						<p className={style.btmtxt}>{item.no_of_users}</p>
@@ -41,7 +41,7 @@ export default function Card({ item }) {
 							Wallet Balance <span>{formatPrice(item.balance)}</span>
 						</p>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</Link>
 	);

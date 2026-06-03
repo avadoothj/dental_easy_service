@@ -204,6 +204,8 @@ export async function getProfileData() {
 	});
 }
 
+
+
 export async function editUserProfile(formData) {
 	return new Promise((resolve, reject) => {
 		callPostApi(apiList.profile.updateProfile, {
