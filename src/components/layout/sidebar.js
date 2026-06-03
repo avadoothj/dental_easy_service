@@ -5,6 +5,7 @@ import SidebarItems from "./sidebarItems";
 import CustomImage from "@/common/customImage";
 import style from "@/css/common/sidebar.module.scss";
 import { ottplayLogo, logOutImg, bundlrLogo } from "@/utils/imagesPicker";
+import {dentallogo}from "@/utils/images/common"
 import Wallet from "./wallet";
 import { AppContext } from "@/contextProvider";
 import SidebarLoading from "./sidebarLoading";
@@ -25,7 +26,7 @@ export default function Sidebar({ user, balance, planCount, autoRenewal, userMen
 		if (jQuery(".hamburgerGlobal").is(":visible")) {
 			$("body").css(
 				"overflow",
-				$("body").css("overflow") === "hidden" ? "visible" : "hidden"
+				$("body").css("overflow") === "hidden" ? "visible" : "hidden",
 			);
 		}
 	};
@@ -54,8 +55,8 @@ export default function Sidebar({ user, balance, planCount, autoRenewal, userMen
 				<div className={style.ispLogo}>
 					<Link href="/">
 						<CustomImage
-							alt="Bundlr Logo"
-							src={bundlrLogo}
+							alt="Dental Easy Services Logo"
+							src={dentallogo}
 							width="115"
 							height="45"
 						/>

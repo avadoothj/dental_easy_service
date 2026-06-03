@@ -7,6 +7,7 @@ import { planSortList } from "@/utils/masterData";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth/next";
 import { options } from "@/nextAuth/options";
+import { executeQuery } from "@/utils/lib/database";
 
 export async function getIspCounts(type = "") {
 	return new Promise((resolve, reject) => {
@@ -50,31 +51,31 @@ export async function getIspListForWalletPlans(params, type) {
 	});
 }
 
-export async function getAllIspList(params) {
-	return new Promise((resolve, reject) => {
-		const payload = {
-			page_no: 1,
-			per_page: getConstant("ISP_LIST_LIMIT"),
-			sort: sortList[0].id,
-		};
-
-		if (params.search) payload.search = params.search;
-		if (params.category) payload.category = params.category;
-		if (params.zone) payload.zone = params.zone;
-		if (params.sort) payload.sort = params.sort;
-		if (params.page_no) payload.page_no = params.page_no;
-
-		callPostApi(apiList.isp.list, payload)
-			.then(function (response) {
-				if (response.success) {
-					resolve(response);
-				} else {
-					resolve([]);
-				}
-			})
-			.catch(function (error) {
-				reject(error);
-			});
+export async function getAllIspList() {
+	return new Promise(async (resolve, reject) => {
+		try {
+			const result = await executeQuery(
+				`SELECT
+	s.entity_id,
+	s.entity_name,
+	s.entity_code,
+	s.state_id,
+	s.district_id,
+	s.city_id,
+	sd.contact_no,
+	sd.oper_email_1,
+	sd.oper_email_2,
+	sd.address
+FROM stakeholders s
+JOIN stakeholder_details sd
+	ON s.entity_id = sd.entity_id
+ORDER BY s.entity_name ASC`,
+			);
+			console.log("result :", result);
+			resolve(result);
+		} catch (error) {
+			reject(error);
+		}
 	});
 }
 
@@ -91,14 +92,32 @@ export async function creditDebitIspBalance(payload) {
 }
 
 export async function getIspDetails(ispId) {
-	return new Promise((resolve, reject) => {
-		callGetApi(apiList.isp.get + ispId)
-			.then(function (response) {
-				resolve(response);
-			})
-			.catch(function (error) {
-				reject(error);
-			});
+	return new Promise(async (resolve, reject) => {
+		try {
+			const result = await executeQuery(
+				`SELECT
+	s.entity_id,
+	s.entity_name,
+	s.entity_code,
+	s.state_id,
+	s.district_id,
+	s.city_id,
+	sd.contact_no,
+	sd.oper_email_1,
+	sd.oper_email_2,
+	sd.address
+FROM stakeholders s
+JOIN stakeholder_details sd
+	ON s.entity_id = sd.entity_id
+	WHERE s.entity_id = ?
+ORDER BY s.entity_name ASC`,
+				[ispId],
+			);
+			console.log("result :", result);
+			resolve({ success: true, data: result });
+		} catch (error) {
+			reject(error);
+		}
 	});
 }
 
@@ -246,14 +265,64 @@ export async function getIspTeamList(params = {}) {
 }
 
 export async function addStackHolder(formData) {
-	return new Promise((resolve, reject) => {
-		callPostApi(apiList.isp.addStackHolder, formData)
-			.then(function (response) {
-				resolve(response);
-			})
-			.catch(function (error) {
-				reject(error);
+	return new Promise(async (resolve, reject) => {
+		try {
+			const {
+				oper_name,
+				isp_code,
+				state_id,
+				district_id,
+				city_id,
+				contact1,
+				email1,
+				email2,
+				address,
+			} = formData;
+
+			const stakeholderResult = await executeQuery(
+				`
+			INSERT INTO stakeholders (
+				entity_name,
+				entity_code,
+				state_id,
+				district_id,
+				city_id,
+				inserted_date
+				)
+				VALUES (?, ?, ?, ?, ?, NOW())
+			`,
+				[oper_name, isp_code || null, state_id, district_id, city_id],
+			);
+
+			const entityId = stakeholderResult.insertId;
+
+			// Insert stakeholder details
+			await executeQuery(
+				`
+			INSERT INTO stakeholder_details (
+				entity_id,
+				contact_no,
+				oper_email_1,
+				oper_email_2,
+				address
+				)
+				VALUES (?, ?, ?, ?, ?)
+				`,
+				[entityId, contact1, email1, email2, address],
+			);
+			resolve({
+				success: true,
+				message: "Stakeholder added successfully",
+				entityId,
 			});
+		} catch (error) {
+			console.error("addStackHolder error:", error);
+
+			reject({
+				success: false,
+				message: error.message,
+			});
+		}
 	});
 }
 

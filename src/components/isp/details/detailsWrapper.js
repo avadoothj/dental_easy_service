@@ -11,12 +11,12 @@ import TeamsView from "./teamsView";
 import OperatorView from "./operatorsView";
 import ShowTabCount from "@/components/common/showTabCount";
 
-export default function DetailsWrapper({ isp, user, stateList, isAllowBalancePage, superIspList }) {
+export default function DetailsWrapper({ isp, user, stateList }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [activeTab, setActiveTab] = useState("details");
-	const [teamCount, setTeamCount] = useState(isp.no_of_users);
-	const [planCount, setPlanCount] = useState(isp.no_of_plans);
-	const [operatorCount, setOperatorCount] = useState(isp.no_of_operators);
+	// const [teamCount, setTeamCount] = useState(isp.no_of_users);
+	// const [planCount, setPlanCount] = useState(isp.no_of_plans);
+	// const [operatorCount, setOperatorCount] = useState(isp.no_of_operators);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -114,22 +114,22 @@ export default function DetailsWrapper({ isp, user, stateList, isAllowBalancePag
 					className={activeTab == "teams" ? style.active : ""}
 					onClick={() => setActiveTab("teams")}
 				>
-					Team <ShowTabCount count={teamCount} />
+					Team <ShowTabCount count={1} />
 				</li>
-				<li
+				{/* <li
 					id="stack_operator"
 					className={activeTab == "operators" ? style.active : ""}
 					onClick={() => setActiveTab("operators")}
 				>
 					Operators <ShowTabCount count={operatorCount} />
-				</li>
-				<li
+				</li> */}
+				{/* <li
 					id="stack_plans"
 					className={activeTab == "plans" ? style.active : ""}
 					onClick={() => setActiveTab("plans")}
 				>
 					Plans <ShowTabCount count={planCount} />
-				</li>
+				</li> */}
 				<li
 					className={activeTab == "balance" ? style.active : ""}
 					onClick={() => setActiveTab("balance")}
@@ -148,7 +148,7 @@ export default function DetailsWrapper({ isp, user, stateList, isAllowBalancePag
 							user={user}
 							stateList={stateList}
 							handleResetPlanPage={handleResetPlanPage}
-							superIspList={superIspList}
+						
 						/>
 					)}
 					{activeTab == "teams" && (
@@ -172,12 +172,12 @@ export default function DetailsWrapper({ isp, user, stateList, isAllowBalancePag
 							setActiveTab={setActiveTab}
 						/>
 					)}
-					{activeTab == "balance" && (
+					{/* {activeTab == "balance" && (
 						<BalanceView
 							isp={isp}
 							isAllowBalancePage={isAllowBalancePage}
 						/>
-					)}
+					)} */}
 				</>
 			)}
 			{activeTab == "details" && (
@@ -191,7 +191,7 @@ export default function DetailsWrapper({ isp, user, stateList, isAllowBalancePag
 							Back
 						</button>
 
-						{isp.no_of_users > 0 ? (
+						{/* {isp.no_of_users > 0 ? (
 							<button
 								id="teamBtn"
 								className="commonBtn dark"
@@ -211,7 +211,7 @@ export default function DetailsWrapper({ isp, user, stateList, isAllowBalancePag
 									</button>
 								)}
 							</>
-						)}
+						)} */}
 					</>
 				</div>
 			)}

@@ -16,7 +16,7 @@ export default async function AuthLayout({ children }) {
 					<div className={style.ottlogo}>
 						<CustomImage
 							src={bundlrLogo2}
-							alt="Bundlr Logo"
+							alt="sdfsdfsdfs Logo"
 							width="185"
 							height="47"
 						/>

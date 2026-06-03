@@ -17,17 +17,18 @@ export default async function IspDetails({ params }) {
 	if (!isAllow) redirect("/");
 
 	const { id } = params;
-	const [ispResponse, stateList, session, isAllowBalancePage, superIspList] = await Promise.all([
+	const [ispResponse, stateList, session] = await Promise.all([
 		getIspDetails(id),
 		getStateList(),
 		getServerSession(options),
-		checkPermission("/ispWallet"),
-		getSuperIspList(),
+		
 	]);
-
-	if (!ispResponse.success) {
-		redirect("/isp");
-	}
+	console.log('ispResponse :', ispResponse);
+	
+	
+	// if (!ispResponse.success) {
+	// 	redirect("/isp");
+	// }
 
 	return (
 		<DetailsPageHeader isp={ispResponse.data}>
@@ -35,8 +36,7 @@ export default async function IspDetails({ params }) {
 				isp={ispResponse.data}
 				user={session.user}
 				stateList={stateList}
-				isAllowBalancePage={isAllowBalancePage}
-				superIspList={superIspList}
+				
 			/>
 		</DetailsPageHeader>
 	);

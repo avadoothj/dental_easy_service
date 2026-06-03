@@ -11,9 +11,9 @@ import { AppContext } from "@/contextProvider";
 import { editIspDetails, editSuperIsp } from "@/controllers/isp";
 import { addIspValidation } from "@/utils/formValidation";
 import SelectMultiSearch from "@/components/common/selectMultiSearch";
-import { partnerType } from "@/utils/masterData";
+// import { partnerType } from "@/utils/masterData";
 
-export default function DetailsView({ isp, stateList, handleResetPlanPage, superIspList, user }) {
+export default function DetailsView({ isp, stateList, handleResetPlanPage, user }) {
 	const {
 		register: register1,
 		reset: reset1,
@@ -41,37 +41,24 @@ export default function DetailsView({ isp, stateList, handleResetPlanPage, super
 	const { showAlert } = useContext(AppContext);
 
 	const defaultFormData = {
-		oper_id: isp.oper_id,
-		oper_code: isp.oper_code,
-		oper_name: isp.oper_name,
-		category_name: isp.category_name,
-		critical_balance: isp.critical_balance,
-		auto_renewal: isp.auto_renewal,
-		zone_name: isp.zone_name,
+		oper_name: isp.entity_id,
 		contact1: isp.contact1,
 		email1: isp.email1,
 		email2: isp.email2,
 		address: isp.address,
-		finance_email1: isp.finance_email1,
-		finance_email2: isp.finance_email2,
-		business_email1: isp.business_email1,
-		business_email2: isp.business_email2,
 		state_id: isp.state_id,
 		district_id: isp.district_id,
 		city_id: isp.city_id,
-		sap_code: isp.sap_code,
-		super_isp: isp.super_isp_id,
-		partner_type: isp.partner_type,
-		api_version: isp.api_version,
+
 	};
 
 	isp.display_partner_type = "---";
 
-	partnerType
-		.filter((x) => x.value == isp.partner_type)
-		.map((x) => {
-			isp.display_partner_type = x.label;
-		});
+	// partnerType
+	// 	.filter((x) => x.value == isp.partner_type)
+	// 	.map((x) => {
+	// 		isp.display_partner_type = x.label;
+	// 	});
 
 	const formValidation = {
 		oper_name: register1("oper_name", addIspValidation.oper_name),
@@ -102,7 +89,7 @@ export default function DetailsView({ isp, stateList, handleResetPlanPage, super
 	const [isOrgDetailsEditable, setIsOrgDetailsEditable] = useState(false);
 	const [isContactDetailsEditable, setIsContactDetailsEditable] = useState(false);
 	const [isSpocDetailsEditable, setIsSpocDetailsEditable] = useState(false);
-	const [partnerTypeList, setPartnerTypeList] = useState(partnerType);
+	// const [partnerTypeList, setPartnerTypeList] = useState(partnerType);
 	const [isSupIspEditable, setIsSupIspEditable] = useState(false);
 	const [autoRenewOnoff, setAutoRenewOnoff] = useState(
 		defaultFormData.auto_renewal == 1 ? true : false
@@ -390,209 +377,9 @@ export default function DetailsView({ isp, stateList, handleResetPlanPage, super
 											)}
 										</div>
 									</div>
-									{user.user_type == "internal" ? (
-										<>
-											<div className={style.detlcoln}>
-												<label>ISP Code</label>
-												<div className={style.inptrel}>
-													{formData.oper_code}
-												</div>
-											</div>
-											<div className={style.detlcoln}>
-												<label>Category</label>
-												<div className={style.inptrel}>
-													{formData.category_name}
-												</div>
-											</div>
-										</>
-									) : (
-										<div className={style.detlcoln}>
-											<label>Critical Balance Limit</label>
-											<div className={style.inptrel}>
-												<input
-													{...formValidation.critical_balance}
-													onChange={(e) => {
-														formValidation.critical_balance.onChange(e);
-														updateSelectedForm(
-															"critical_balance",
-															e.target.value
-														);
-														setForm1Update(true);
-													}}
-													type="text"
-													name="critical_balance"
-													id="critical_balance"
-													value={formData.critical_balance}
-													placeholder="Enter Critical Balance Limit"
-													maxLength={10}
-												/>
-												{errors1?.critical_balance && (
-													<span className={style.logerror}>
-														{errors1.critical_balance?.message}
-													</span>
-												)}
-											</div>
-										</div>
-									)}
+								
 								</div>
-								{user.user_type == "internal" && (
-									<div className={style.brdtopopdtl}>
-										<div className={style.detlcoln}>
-											<label>Critical Balance Limit</label>
-											<div className={style.inptrel}>
-												<input
-													{...formValidation.critical_balance}
-													onChange={(e) => {
-														formValidation.critical_balance.onChange(e);
-														updateSelectedForm(
-															"critical_balance",
-															e.target.value
-														);
-														setForm1Update(true);
-													}}
-													type="text"
-													name="critical_balance"
-													id="critical_balance"
-													value={formData.critical_balance}
-													placeholder="Enter Critical Balance Limit"
-													maxLength={10}
-												/>
-												{errors1?.critical_balance && (
-													<span className={style.logerror}>
-														{errors1.critical_balance?.message}
-													</span>
-												)}
-											</div>
-										</div>
-
-										<div className={style.detlcoln}>
-											<label>
-												SAP Code<span>Optional</span>
-											</label>
-											<div className={style.inptrel}>
-												<input
-													{...formValidation.sap_code}
-													onChange={(e) => {
-														formValidation.sap_code.onChange(e);
-														updateSelectedForm(
-															"sap_code",
-															e.target.value
-														);
-														setForm1Update(true);
-													}}
-													type="text"
-													name="sap_code"
-													id="sap_code"
-													value={formData.sap_code}
-													placeholder="Enter SAP Code"
-													maxLength={20}
-												/>
-												{errors1?.sap_code && (
-													<span className={style.logerror}>
-														{errors1.sap_code?.message}
-													</span>
-												)}
-											</div>
-										</div>
-
-										<div className={style.detlcoln}>
-											<label>Super ISP</label>
-											<div className={style.inputDetails}>
-												{isp.super_isp ?? "---"}
-											</div>
-										</div>
-
-										<div className={style.detlcoln}>
-											<label>
-												Partner Type<span>Optional</span>
-											</label>
-											<div className={`${style.inptrel}`}>
-												<div className={style.customSelectWrap}>
-													<div className={style.customselect}>
-														<select
-															name="partner_type"
-															id="partner_type"
-															value={formData.partner_type}
-															onChange={(e) => {
-																updateSelectedForm(
-																	"partner_type",
-																	e.target.value
-																);
-																setForm1Update(true);
-															}}
-														>
-															<option value={""}>Select</option>
-															{partnerTypeList.map((x, i) => (
-																<option
-																	key={i}
-																	value={x.value}
-																>
-																	{x.label}
-																</option>
-															))}
-														</select>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div className={style.detlcoln}>
-											<label>
-												API Version<span>Optional</span>
-											</label>
-											<div className={style.inptrel}>
-												<input
-													defaultValue={isp.api_version}
-													onChange={(e) => {
-														updateSelectedForm(
-															"api_version",
-															e.target.value
-														);
-														setForm1Update(true);
-													}}
-													type="text"
-													name="api_version"
-													id="api_version"
-													placeholder="Enter API Version"
-													maxLength={7}
-												/>
-											</div>
-										</div>
-
-										{false && formData.auto_renewal >= 0 && (
-											<div className={style.detlcoln}>
-												<label>Auto Renewal</label>
-												<div className={style.inptrel}>
-													<div className={style.onoff}>
-														<span
-															className={
-																autoRenewOnoff ? "" : style.active
-															}
-														>
-															OFF
-														</span>
-														<div
-															onClick={() => {
-																toggleAutoRenew();
-																setForm1Update(true);
-															}}
-															className={
-																autoRenewOnoff ? style.active : ""
-															}
-														></div>
-														<span
-															className={
-																autoRenewOnoff ? style.active : ""
-															}
-														>
-															ON
-														</span>
-													</div>
-												</div>
-											</div>
-										)}
-									</div>
-								)}
+							
 								<div className={style.editBtnWrap}>
 									<div className={style.btnWrapper2}>
 										<button
@@ -625,183 +412,10 @@ export default function DetailsView({ isp, stateList, handleResetPlanPage, super
 													{formData.oper_name}
 												</div>
 											</div>
-											{user.user_type == "internal" ? (
-												<>
-													<div className={style.detlcoln}>
-														<label>ISP Code</label>
-														<div className={style.inptrel}>
-															{formData.oper_code}
-														</div>
-													</div>
-													<div className={style.detlcoln}>
-														<label>Category</label>
-														<div className={style.inptrel}>
-															{formData.category_name}
-														</div>
-													</div>
-												</>
-											) : (
-												<div
-													className={`${style.detailCol2} ${style.AlignTop}`}
-												>
-													<label>Critical Balance Limit</label>
-													<div className={style.inputDetails}>
-														{formatPrice(formData.critical_balance)}
-													</div>
-												</div>
-											)}
+											
 										</div>
 									</div>
-									{user.user_type == "internal" && (
-										<div className={style.detailsRow}>
-											<div className={style.brdtopopdtl}>
-												<div
-													className={`${style.detailCol2} ${style.AlignTop}`}
-												>
-													<label>Critical Balance Limit</label>
-													<div className={style.inputDetails}>
-														{formatPrice(formData.critical_balance)}
-													</div>
-												</div>
-
-												<div
-													className={`${style.detailCol2} ${style.AlignTop}`}
-												>
-													<label>SAP Code</label>
-													<div className={style.inputDetails}>
-														{isp.sap_code ?? "---"}
-													</div>
-												</div>
-
-												<div
-													className={`${style.detailCol2} ${style.AlignTop}`}
-												>
-													<label>Super ISP</label>
-													<div className={style.superIspCol}>
-														{isp.super_isp_id == 0 &&
-														!isSupIspEditable ? (
-															<div className={style.editSuperIsp}>
-																---{" "}
-																{user?.allowedLinks.indexOf(
-																	"/stakeholderAddEdit"
-																) >= 0 && (
-																	<span
-																		onClick={() =>
-																			handleChangeSupIspEditable()
-																		}
-																	>
-																		(Assign)
-																	</span>
-																)}
-															</div>
-														) : (
-															isp.super_isp
-														)}
-														{isSupIspEditable && (
-															<>
-																<SelectMultiSearch
-																	defaultSelected={
-																		formData.super_isp_id
-																	}
-																	data={superIspList}
-																	id="super_isp_id"
-																	placeholder="Select Super ISP"
-																	noOptionsText="No Super ISP found"
-																	callback={(data) => {
-																		setSuperIsp(data);
-																		updateSelectedForm(
-																			"super_isp_id",
-																			data
-																		);
-																	}}
-																/>
-																<div className={style.saveBtnWrap}>
-																	<button
-																		onClick={() =>
-																			handleSaveSupIsp()
-																		}
-																		disabled={isSuperLoading}
-																	>
-																		{isSuperLoading
-																			? getConstant(
-																					"LOADING_TEXT"
-																			  )
-																			: "Save"}
-																	</button>
-																	<button
-																		disabled={isSuperLoading}
-																		onClick={() =>
-																			setIsSupIspEditable(
-																				false
-																			)
-																		}
-																	>
-																		Cancel
-																	</button>
-																</div>
-															</>
-														)}
-													</div>
-												</div>
-
-												<div
-													className={`${style.detailCol2} ${style.AlignTop}`}
-												>
-													<label>Partner Type</label>
-													<div className={style.inputDetails}>
-														{isp.partner_type
-															? isp.display_partner_type
-															: "---"}
-													</div>
-												</div>
-
-												<div
-													className={`${style.detailCol2} ${style.AlignTop}`}
-												>
-													<label>API Version</label>
-													<div className={style.inputDetails}>
-														{isp.api_version ? isp.api_version : "---"}
-													</div>
-												</div>
-
-												<div
-													className={`${style.detailCol2} ${style.AlignTop}`}
-												>
-													<label>Consent Version</label>
-													<div className={style.inputDetails}>
-														{isp.version ? (
-															<>
-																<Link
-																	href={isp.consent_doc_url}
-																	target="_blank"
-																>{`#${isp.version}`}</Link>
-																&nbsp;
-																{`(${formatDate(
-																	isp.inserted_date,
-																	2
-																)})`}
-															</>
-														) : (
-															"---"
-														)}
-													</div>
-												</div>
-
-												{formData.auto_renewal >= 0 && (
-													<div
-														className={`${style.detailCol2} ${style.AlignTop}`}
-													>
-														<label>Auto Renewal</label>
-														<div className={style.inputDetails}>
-															{formData.auto_renewal == 1
-																? "Enabled"
-																: "Disabled"}
-														</div>
-													</div>
-												)}
-											</div>
-										</div>
-									)}
+									
 								</div>
 
 								{user?.allowedLinks.indexOf("/stakeholderAddEdit") >= 0 && (
@@ -1088,7 +702,7 @@ export default function DetailsView({ isp, stateList, handleResetPlanPage, super
 											>
 												<label>State</label>
 												<div className={style.inputDetails}>
-													{stateList.find(
+													{stateList?.list?.find(
 														(state) => state.id == formData.state_id
 													)?.name || "---"}
 												</div>
