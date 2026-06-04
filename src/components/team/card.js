@@ -14,7 +14,6 @@ import ConfirmationPopup from "@/components/layout/confirmationPopup";
 import { getTokenForLoginAsUser } from "@/controllers/profile";
 
 export default function Card({ item, reloadData }) {
-	console.log("item :", item);
 	const router = useRouter();
 	const { showAlert, user } = useContext(AppContext);
 
@@ -91,7 +90,8 @@ export default function Card({ item, reloadData }) {
 	};
 
 	const redirectToEdit = () => {
-		router.push(`/onboarding-engineer/edit/${item.user_id}`);
+		console.log(item.user_id);
+		router.push(`/team/edit/${item.user_id}`);
 	};
 
 	const confirmChangeSubStatus = () => {

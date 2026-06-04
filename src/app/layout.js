@@ -5,8 +5,8 @@ import "@/css/globals.css";
 export const metadata = {
   title: {
     absolute: "",
-    default: "Tender bharo",
-    template: "%s - Tender bharo",
+    default: "Dental Easy Services",
+    template: "%s - Dental Easy Services",
   },
   description:
     "TenderBharo is a reliable tender consulting partner offering end-to-end support for tender registration, portal login, product uploads, and tender bidding services across India.",

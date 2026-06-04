@@ -24,7 +24,6 @@ export default function PersonalStep({
 		formState: { errors },
 	} = useForm();
 
-	console.log("just for check render", userData);
 
 	const formValidation = {
 		name: register("name", personalStepValidation.name),
@@ -66,17 +65,14 @@ export default function PersonalStep({
 		setValue("currentPostalCode", permanent[5]);
 	}, [isSame, permanent]);
 	const onSubmit = (data) => {
-		console.log("Personal Step Data:", data);
 		return;
 		onNext();
 	};
 
 	const handleSaveasDraft = async (data) => {
-		console.log("Personal Step Data:", data);
 		return;
 		setIsLoading(true);
 		const response = await addFieldEngineer(data);
-		console.log("response :", response);
 
 		// if (response.success) {
 		// 	// showAlert(messages.USER_ADD_SUCCESS, 1);

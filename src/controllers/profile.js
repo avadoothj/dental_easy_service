@@ -109,7 +109,6 @@ export async function setChangePassword(formData) {
 			userId,
 		]);
 
-		console.log("result :", result);
 
 		if (result.length === 0) {
 			return {
@@ -127,7 +126,6 @@ export async function setChangePassword(formData) {
     `;
 
 		const results = await executeQuery(validationQuery, [userId]);
-		console.log("results validate :", results);
 
 		let passwordCheck = true;
 
@@ -184,45 +182,102 @@ export async function setChangePassword(formData) {
 }
 
 export async function getProfileData() {
-	return new Promise((resolve, reject) => {
-		getServerSession(options).then((session) => {
-			if (session) {
-				callGetApi(apiList.profile.getProfileData, {})
-					.then(function (response) {
-						resolve({
-							user: session.user,
-							profile: response.success ? response.data : response,
-						});
-					})
-					.catch(function (error) {
-						reject(error);
-					});
-			} else {
-				resolve({ user: null });
-			}
-		});
-	});
+	try {
+		const session = await getServerSession(options);
+
+		if (!session) {
+			return { user: null };
+		}
+
+		const query = `
+			SELECT
+				sh.entity_code AS oper_code,
+				sh.entity_name AS oper_name,
+				shd.contact_no AS oper_mobile,
+				shd.oper_email_1 AS oper_email,
+				sh.state_name AS state,
+				sh.district_name AS district,
+				sh.city_name AS city,
+				shd.address,
+
+				um.login_id AS username,
+				um.user_name AS display_name,
+				um.mobile AS user_mobile,
+				um.email AS user_email,
+				um.inserted_date AS added_on,
+				um.last_login,
+				um.role_name AS role
+
+			FROM user_master um
+
+			LEFT JOIN stakeholders sh
+				ON um.entity_id = sh.entity_id
+
+			LEFT JOIN stakeholder_details shd
+				ON shd.entity_id = um.entity_id
+
+			WHERE um.user_id = ?
+		`;
+
+		const result = await executeQuery(query, [session?.user?.user_id]);
+
+		return {
+			user: session.user,
+			profile: result?.[0] || null,
+		};
+	} catch (error) {
+		console.error("Error fetching profile data:", error);
+		throw error;
+	}
 }
 
-
-
 export async function editUserProfile(formData) {
-	return new Promise((resolve, reject) => {
-		callPostApi(apiList.profile.updateProfile, {
-			user_name: formData.display_name,
-			email: formData.email,
-			mobile: formData.mobile,
-		})
-			.then(function (response) {
-				if (response.success) {
-					revalidatePath("/profile");
-				}
-				resolve(response);
-			})
-			.catch(function (error) {
-				reject(error);
-			});
-	});
+	const session = await getServerSession(options);
+
+	if (!session) {
+		return { user: null };
+	}
+
+	const getPrevDataQuery = `
+		SELECT
+			user_name,
+			mobile,
+			email
+		FROM ${TABLE_LIST.USER_MASTER}
+		WHERE user_id = ?
+	`;
+
+	const result = await executeQuery(getPrevDataQuery, [
+		session.user.user_id,
+	]);
+
+	if (result.length === 0) {
+		return {
+			success: false,
+			data: MESSAGES_LIST.INVALID_ID_PROVIDED,
+		};
+	}
+
+	const updateQuery = `
+		UPDATE ${TABLE_LIST.USER_MASTER}
+		SET
+			user_name = ?,
+			email = ?,
+			mobile = ?
+		WHERE user_id = ?
+	`;
+
+	await executeQuery(updateQuery, [
+		formData.display_name,
+		formData.email,
+		formData.mobile,
+		session.user.user_id,
+	]);
+
+	return {
+		success: true,
+		msg: MESSAGES_LIST.USER_UPDATE_SUCCESS,
+	};
 }
 
 export async function sendTokenOnMail() {

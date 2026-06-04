@@ -44,7 +44,6 @@ export default function StepOne({ nextStep, setUsername, setDisplayMessage }) {
 		setAuthError("");
 		setIsLoading(true);
 		const response = await checkUsernameAndSendOtp(formData);
-		console.log("response :", response);
 
 		if (response.success) {
 			setUsername(formData.username);

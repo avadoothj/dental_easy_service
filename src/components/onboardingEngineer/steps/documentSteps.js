@@ -67,7 +67,6 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 	};
 
 	const handleSaveDraft = async (data) => {
-		console.log("data :", data);
 
 		const formData = buildFormData(data);
 

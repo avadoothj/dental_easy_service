@@ -44,7 +44,6 @@ export default function BankDetailStep({ onboardingData, onNext, onBack }) {
 		}
 	};
 
-	console.log('onboardingData :', onboardingData);
 	useEffect(() => {
 		if (!onboardingData?.bankData) return;
 		const bankData = onboardingData.bankData;

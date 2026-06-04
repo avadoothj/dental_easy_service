@@ -70,7 +70,6 @@ export default function TeamList() {
 		},
 	};
 
-	console.log("list :", list);
 	return (
 		<>
 			{isLoading && currentPage <= 1 ? (

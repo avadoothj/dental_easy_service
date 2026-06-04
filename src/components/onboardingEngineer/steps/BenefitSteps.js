@@ -50,7 +50,6 @@ export default function BenefitStep({ onboardingData, onNext, onBack }) {
 
 			fieldEngineerId: onboardingData?.fieldEngineerId,
 		};
-		console.log("payload--- :", payload);
 		const response = await addBenefitFieldEngineer(payload);
 
 		if (response.success) {
@@ -63,7 +62,6 @@ export default function BenefitStep({ onboardingData, onNext, onBack }) {
 	useEffect(() => {
 		if (!onboardingData?.benefitData) return;
 		const benefitData = onboardingData.benefitData;
-		console.log("benefitData :", benefitData);
 		reset({
 			insurancePlan: benefitData.insurance_plan || "",
 			insuranceType: benefitData.insurance_type || "",

@@ -122,7 +122,6 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 			fieldEngineerId: onboardingData?.fieldEngineerId,
 		};
 
-		console.log("payload :", payload);
 		const response = await addPersonalFieldEngineer(payload);
 
 		if (response.success) {
@@ -186,7 +185,6 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 		};
 
 		const response = await savePeronalDraft(payload);
-		console.log("response :", response);
 
 		if (response.success) {
 			const onboardingId = response.onboardingId;

@@ -71,7 +71,6 @@ JOIN stakeholder_details sd
 	ON s.entity_id = sd.entity_id
 ORDER BY s.entity_name ASC`,
 			);
-			console.log("result :", result);
 			resolve(result);
 		} catch (error) {
 			reject(error);
@@ -113,7 +112,6 @@ JOIN stakeholder_details sd
 ORDER BY s.entity_name ASC`,
 				[ispId],
 			);
-			console.log("result :", result);
 			resolve({ success: true, data: result });
 		} catch (error) {
 			reject(error);

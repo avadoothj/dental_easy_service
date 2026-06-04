@@ -142,7 +142,6 @@ export default function AddIspForm({ stateList, category, superIspList }) {
 			mobile: formData.contact1,
 		};
 		const response = await addStackHolder(checkedFormData);
-		console.log("response :", response);
 		setIsLoading(false);
 
 		if (response.success) {

@@ -139,7 +139,6 @@ export default function SelectMultiSearch(props) {
 	const handleSelect = (event, newValue) => {
 		const list = [...data];
 		const clickedId = event?.currentTarget?.getAttribute("value");
-		console.log("clickedId :", clickedId);
 
 		if (clickedId === "all") {
 			const allItem = list.find((x) => x.id === "all");

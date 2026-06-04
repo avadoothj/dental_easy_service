@@ -338,7 +338,6 @@ export default function EditOnboardingPageWrapper({ user, role }) {
 		formState: { errors },
 	} = useForm();
 
-	console.log("role :", role);
 
 	const defaultFormData = {
 		roleType: "",
@@ -384,9 +383,7 @@ export default function EditOnboardingPageWrapper({ user, role }) {
 
 	const handleFormSubmit = async () => {
 		setIsLoading(true);
-		console.log("formData :", formData);
 		const response = await addTeam(formData);
-		console.log("response :", response);
 
 		if (response.success) {
 			// showAlert(messages.USER_ADD_SUCCESS, 1);

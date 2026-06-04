@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 
 export default function RatingStep({ onboardingData, onNext, onBack }) {
 	const router = useRouter();
-	console.log("onboardingData :", onboardingData);
 	const {
 		register,
 		handleSubmit,
@@ -34,7 +33,6 @@ export default function RatingStep({ onboardingData, onNext, onBack }) {
 	const customerReviews = watch("customerReviews");
 
 	const onSubmit = async (data) => {
-		console.log("data :", data);
 
 		const payload = {
 			...data,
