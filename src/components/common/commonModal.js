@@ -20,6 +20,8 @@ export default function CommonModal({
 			className={className}
 			animation={animation}
 			size={modalSize}
+			backdrop="static"
+			keyboard={false}
 		>
 			<Modal.Body className={bodyClassName}>{children}</Modal.Body>
 		</Modal>
