@@ -183,96 +183,86 @@ export default function BenefitStep({ onboardingData, onNext, onBack }) {
 				</div>
 
 				{/* FAMILY DETAILS */}
+				<div className="p-4 bg-light rounded-4">
+				<div className="d-flex gap-2">
+				<h3 className={commonStyle.mediumHeading + " " + "mb-0"}>Family Details</h3>
+				<button type="button" className="btn btn-sm btn-primary"
+					onClick={() =>
+						append({
+							fullName: "",
 
-				<div className="card">
-					<div className="cardHeader">
-						<h3 className="card-title">Family Details</h3>
+							relationship: "",
 
-						<button
-							type="button"
-							className="btn btnPrimary add"
-							onClick={() =>
-								append({
-									fullName: "",
+							age: "",
+						})
+					}
+				>Add New Member</button></div>
+				<ul className="member-list">
+					{fields.map((field, index) => (
+						<li key={field.id} className="d-flex flex-grow-1 gap-3">
+							<div className="d-flex flex-grow-1 gap-3">
+								{/* NAME */}
 
-									relationship: "",
+								<div className="form-group flex-grow-1 mb-0">
+									<label className="form-label">Full Name</label>
 
-									age: "",
-								})
-							}
-						>
-							Add New Member
-						</button>
-					</div>
+									<input
+										type="text"
+										className="form-control"
+										placeholder="Enter full name"
+										{...register(`familyMembers.${index}.fullName`)}
+									/>
+								</div>
 
-					<div className="card-body p-0">
-						<ul className="member-list">
-							{fields.map((field, index) => (
-								<li key={field.id}>
-									<div className="d-flex flex-grow-1 gap-3">
-										{/* NAME */}
+								{/* RELATIONSHIP */}
 
-										<div className="form-group flex-grow-1 mb-0">
-											<label className="form-label">Full Name</label>
+								<div className="form-group flex-grow-1 mb-0">
+									<label className="form-label">Relationship</label>
 
-											<input
-												type="text"
-												className="form-control"
-												placeholder="Enter full name"
-												{...register(`familyMembers.${index}.fullName`)}
-											/>
-										</div>
+									<select
+										className="form-select"
+										{...register(`familyMembers.${index}.relationship`)}
+									>
+										<option value="">Select</option>
 
-										{/* RELATIONSHIP */}
+										<option value="Wife">Wife</option>
 
-										<div className="form-group flex-grow-1 mb-0">
-											<label className="form-label">Relationship</label>
+										<option value="Son">Son</option>
 
-											<select
-												className="form-select"
-												{...register(`familyMembers.${index}.relationship`)}
-											>
-												<option value="">Select</option>
+										<option value="Daughter">Daughter</option>
 
-												<option value="Wife">Wife</option>
+										<option value="Father">Father</option>
 
-												<option value="Son">Son</option>
+										<option value="Mother">Mother</option>
+									</select>
+								</div>
 
-												<option value="Daughter">Daughter</option>
+								{/* AGE */}
 
-												<option value="Father">Father</option>
+								<div className="form-group flex-grow-1 mb-0">
+									<label className="form-label">Age</label>
 
-												<option value="Mother">Mother</option>
-											</select>
-										</div>
+									<input
+										type="number"
+										className="form-control"
+										placeholder="Enter age"
+										{...register(`familyMembers.${index}.age`)}
+									/>
+								</div>
+							</div>
 
-										{/* AGE */}
-
-										<div className="form-group flex-grow-1 mb-0">
-											<label className="form-label">Age</label>
-
-											<input
-												type="number"
-												className="form-control"
-												placeholder="Enter age"
-												{...register(`familyMembers.${index}.age`)}
-											/>
-										</div>
-									</div>
-
-									<div>
-										<button
-											type="button"
-											className="btn btn-danger"
-											onClick={() => remove(index)}
-										>
-											Remove
-										</button>
-									</div>
-								</li>
-							))}
-						</ul>
-					</div>
+							<div>
+								<button
+									type="button"
+									className="btn btn-danger"
+									onClick={() => remove(index)}
+								>
+									Remove
+								</button>
+							</div>
+						</li>
+					))}
+				</ul>
 				</div>
 
 				<div className={commonStyle.footerButton}>

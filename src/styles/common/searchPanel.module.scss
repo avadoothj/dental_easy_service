@@ -1,10 +1,11 @@
 @import "../variable";
 
 .searchpanel {
-	margin-bottom: 22px;
+	margin-bottom: 10px;
+	padding-bottom:10px;
+	border-bottom:1px solid #ddd;
 	display: flex;
 	justify-content: space-between;
-	margin-top: 10px;
 	.colsearch1 {
 		display: flex;
 		.searchbox {
@@ -17,7 +18,7 @@
 				max-width: 100%;
 			}
 			.inputtext {
-				font-size: 12px;
+				font-size: inherit;
 				padding: 5px 25px 5px 29px;
 				width: 100%;
 				outline: none;
@@ -87,19 +88,23 @@
 		display: flex;
 		.drphead {
 			color: #666e91;
-			font-size: 9px;
-			position: absolute;
-			top: -15px;
+			// font-size: 9px;
+			// position: absolute;
+			// top: -15px;
 			left: 0px;
 			min-width: 55px;
 		}
 		.duration {
-			margin-right: 15px;
+			margin-right: 20px;
 			position: relative;
+			display: flex;
+			align-items:center;
 		}
 		.pricerange {
 			margin-right: 15px;
 			position: relative;
+			display: flex;
+			align-items:center;
 			@media (max-width: 1300px) {
 				margin-right: 7px;
 			}

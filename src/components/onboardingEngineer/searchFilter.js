@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import style from "@/css/common/searchPanel.module.scss";
 import CustomDropdown from "@/common/customDropdown";
 import { AppContext } from "@/contextProvider";
+import commonStyle from "@/css/common/common.module.scss";
 import { searchLetters, teamStatusList, sortList, roleTypesList } from "@/utils/masterData";
 
 export default function SearchFilter() {
@@ -148,7 +149,7 @@ export default function SearchFilter() {
 					<div className={style.addteam}>
 						<Link
 							href="/onboarding-engineer/add"
-							className={style.addnewbtn}
+							className={commonStyle.commonBtn}
 						>
 							+ Add New
 						</Link>

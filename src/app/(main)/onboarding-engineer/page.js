@@ -21,10 +21,11 @@ export default async function OnboardingEngineer() {
 			<Suspense fallback={<TeamHeaderLoading />}>
 				<TeamHeading />
 			</Suspense>
-			<SearchFilter />
-			<SearchFilterMobile />
-
-			<TeamList />
+			<div className="contentCopy">
+				<SearchFilter />
+				<SearchFilterMobile />
+				<TeamList />
+			</div>
 		</>
 	);
 }

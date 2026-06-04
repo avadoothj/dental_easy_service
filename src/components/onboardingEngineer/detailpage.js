@@ -24,7 +24,7 @@ export default function DetailPageWrapper({ onboardingData }) {
 						<Accordion.Header>
 							Personal Information
 						</Accordion.Header>
-						<Accordion.Body className={style.subscriberAccordionBody}>
+						<Accordion.Body className={commonStyle.subscriberAccordionBody}>
 							<div className={style.Detailsinner}>
 								<div className="row">
 									<div className="col-md-3">
@@ -310,129 +310,17 @@ export default function DetailPageWrapper({ onboardingData }) {
 							Document Verification{" "}
 						</Accordion.Header>
 						<Accordion.Body className={style.subscriberAccordionBody}>
-							<div className={style.Detailsinner}>
-								<div className="container-fluid">
-									<div className="card">
-										<div className="cardHeader">
-										</div>
-										<div className="card-body p-0">
-											<ul className="upload-list">
-												<li>
-													<div className="document-label">
-														<div className="form-group">
-															<label className="form-label">
-																Upload Passport-size Photo
-																<sup>*</sup>
-															</label>
-															<span className="smalllighttext">
-																Please upload a passport-size
-																photograph with a white
-																background.{" "}
-															</span>
-														</div>
-													</div>
-													<div className="document-upload">
-														<label className="upload-files">
-															<input
-																type="file"
-																className="form-control"
-																accept=".jpg,.jpeg,.png,.pdf"
-															/>
-															<span className="download-icon"></span>
-															<span className="browse-text">
-																Drag your file(s) or{" "}
-																<a href="#">browse</a>
-															</span>
-															<span className="file-note">
-																The file size must be within 50 kb.
-																Only support .jpg, .png and pdf
-																files
-															</span>
-														</label>
-														<div className="d-flex align-items-center gap-2">
-															<div className="upload-files-names">
-																<div className="d-flex gap-1">
-																	<span className="files"></span>
-																	<div className="d-flex align-items-center gap-2">
-																		<span className="file-name"></span>
-																	</div>
-																</div>
-																<span className="close"></span>
-															</div>
-														</div>
-													</div>
-												</li>
-												<li>
-													<div className="document-label">
-														<div className="form-group">
-															<label className="form-label">
-																Proof of Identity<sup>*</sup>
-															</label>
-															<span className="smalllighttext">
-																(Upload Aadhar card, PAN card,
-																Passport, voter Id )
-															</span>
-														</div>
-													</div>
-													<div className="document-upload">
-														<label className="upload-files">
-															<input
-																type="file"
-																className="form-control"
-																accept=".jpg,.jpeg,.png,.pdf"
-															/>
-															<span className="download-icon"></span>
-															<span className="browse-text">
-																Drag your file(s) or{" "}
-																<a href="#">browse</a>
-															</span>
-															<span className="file-note">
-																The file size must be within 200 kb.
-																Only support .jpg, .png and pdf
-																files
-															</span>
-														</label>
-														{/* <!-- <div className="note">
-                                                        <span>Please upload a passport-size photograph with a white background. The file size must be within 50 kb.</span>
-                                                    </div> --> */}
-													</div>
-												</li>
-												<li>
-													<div className="document-label">
-														<div className="form-group">
-															<label className="form-label">
-																Proof Of Address <sup>*</sup>
-															</label>
-															<span className="smalllighttext">
-																(Upload utility proof eg. Aadhar
-																card, Light bill, Driving license)
-															</span>
-														</div>
-													</div>
-													<div className="document-upload">
-														<label className="upload-files">
-															<input
-																type="file"
-																className="form-control"
-																accept=".jpg,.jpeg,.png,.pdf"
-															/>
-															<span className="download-icon"></span>
-															<span className="browse-text">
-																Drag your file(s) or{" "}
-																<a href="#">browse</a>
-															</span>
-															<span className="file-note">
-																The file size must be within 200 kb.
-																Only support .jpg, .png and pdf
-																files
-															</span>
-														</label>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
+							<div className={commonStyle.documentViewWrapper}>
+								<ul>
+									<li>
+										<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg1zOymBRc16NauTlarhkCn07Ifp7CShiOKG9Bev7abQVWxY-KMlVfqVuSM1HvBBHw6VrIjJiZjruThKzHphr1yYcsf77Ahi-degcX9TTJpm1X6HAga_n1lYxB5Cj4ZI5NR_tlhM1-m0awW/s1600/chandrakanth+009+%25281%2529.jpg" />
+										<span className={commonStyle.name}>Proof of Identity</span>
+									</li>
+									<li>
+										<img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/9a21c953622711.593ad088f2616.jpg" />
+										<span className={commonStyle.name}>Proof of Address</span>
+									</li>
+								</ul>
 							</div>
 						</Accordion.Body>
 					</Accordion.Item>

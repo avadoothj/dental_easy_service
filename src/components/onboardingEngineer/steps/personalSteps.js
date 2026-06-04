@@ -242,7 +242,7 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 									placeholder="Enter Full Name"
 								/>
 								{errors.name && (
-									<p className="d-block text-danger">
+									<p className={commonStyle.errorMsg}>
 										{errors.name.message}
 									</p>
 								)}

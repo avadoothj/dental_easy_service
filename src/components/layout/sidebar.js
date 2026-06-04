@@ -32,7 +32,7 @@ export default function Sidebar({ user, balance, planCount, autoRenewal, userMen
 	};
 
 	const handleToggleClick = () => {
-		jQuery("#toggleButton").toggleClass("checked");
+		jQuery("#toggleButton").toggleClass(style.checked);
 		isSidebarClosedHandler();
 	};
 
@@ -52,16 +52,14 @@ export default function Sidebar({ user, balance, planCount, autoRenewal, userMen
 			></div>
 
 			<aside className={`${style.sidebar} sidebar`}>
-				<div className={style.ispLogo}>
-					<Link href="/">
-						<CustomImage
-							alt="Dental Easy Services Logo"
-							src={dentallogo}
-							width="115"
-							height="45"
-						/>
-					</Link>
-				</div>
+				<Link href="/" className={style.ispLogo}>
+					{/* <CustomImage
+						alt="Dental Easy Services Logo"
+						src={dentallogo}
+						width="115"
+						height="45"
+					/> */}
+				</Link>
 				<ul className={style.profileWrapper}>
 					<li className={style.profile}>
 						<Link

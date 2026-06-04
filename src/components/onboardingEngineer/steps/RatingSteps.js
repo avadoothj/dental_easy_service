@@ -89,84 +89,74 @@ export default function RatingStep({ onboardingData, onNext, onBack }) {
 	}, [onboardingData, reset]);
 
 	return (
-		<div className="pt-0">
-			<Form onSubmit={handleSubmit(onSubmit)}>
-				<div className="card">
-					<div className="cardHeader">
-						<h3 className="card-title">Rating</h3>
-					</div>
+		<Form onSubmit={handleSubmit(onSubmit)}>
+			<h3 className={commonStyle.mediumHeading}>Rating</h3>
+			<div className="rating-bx">
+			{/* TECHNICAL */}
 
-					<div className="rating-bx">
-						{/* TECHNICAL */}
+			<h5 className="mb-0">
+				Technical Skills{" "}
+				<span className="light-text">
+					({technicalSkills}
+					.0)
+				</span>
+			</h5>
 
-						<h5 className="mb-0">
-							Technical Skills{" "}
-							<span className="light-text">
-								({technicalSkills}
-								.0)
-							</span>
-						</h5>
+			{renderStars("technicalSkills", technicalSkills)}
 
-						{renderStars("technicalSkills", technicalSkills)}
+			{/* QUALIFICATION */}
 
-						{/* QUALIFICATION */}
+			<h5 className="mt-4 mb-0">
+				Qualification Skills{" "}
+				<span className="light-text">
+					({qualificationSkills}
+					.0)
+				</span>
+			</h5>
 
-						<h5 className="mt-4 mb-0">
-							Qualification Skills{" "}
-							<span className="light-text">
-								({qualificationSkills}
-								.0)
-							</span>
-						</h5>
+			{renderStars("qualificationSkills", qualificationSkills)}
 
-						{renderStars("qualificationSkills", qualificationSkills)}
+			{/* CUSTOMER */}
 
-						{/* CUSTOMER */}
+			<h5 className="mt-4 mb-0">
+				Customer Reviews{" "}
+				<span className="light-text">
+					({customerReviews}
+					.0)
+				</span>
+			</h5>
 
-						<h5 className="mt-4 mb-0">
-							Customer Reviews{" "}
-							<span className="light-text">
-								({customerReviews}
-								.0)
-							</span>
-						</h5>
-
-						{renderStars("customerReviews", customerReviews)}
-					</div>
-
-					{/* FEEDBACK */}
-
-					<div className="form-group mt-4 mb-0">
-						<label className="form-label">Can you tell us more?</label>
-
-						<textarea
-							className="form-control"
-							rows={4}
-							placeholder="Add feedback"
-							{...register("feedback")}
-						></textarea>
-					</div>
-				</div>
-
-				<div className={commonStyle.footerButton}>
-					<div className={commonStyle.right}>
-						<button
-							type="button"
-							className={commonStyle.commonBtn + " " + commonStyle.link}
-							onClick={onBack}
-						>
-							Back
-						</button>
-
-						<button
-							type="submit"
-							className={commonStyle.commonBtn + " " + commonStyle.fill}
-						>
-							Complete
-						</button>
-					</div>
-				</div>
-			</Form>
+			{renderStars("customerReviews", customerReviews)}
 		</div>
+		<div className="form-group mt-4 mb-0">
+			<label className="form-label">Can you tell us more?</label>
+
+			<textarea
+				className="form-control"
+				rows={4}
+				placeholder="Add feedback"
+				{...register("feedback")}
+			></textarea>
+		</div>
+
+		<div className={commonStyle.footerButton}>
+			<div className={commonStyle.right}>
+				<button
+					type="button"
+					className={commonStyle.commonBtn + " " + commonStyle.link}
+					onClick={onBack}
+				>
+					Back
+				</button>
+
+				<button
+					type="submit"
+					className={commonStyle.commonBtn + " " + commonStyle.fill}
+				>
+					Complete
+				</button>
+			</div>
+		</div>
+	</Form>
 	);
 }

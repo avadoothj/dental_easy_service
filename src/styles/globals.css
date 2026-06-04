@@ -278,8 +278,9 @@ ul {
 	border-radius: 8px;
 	cursor: pointer;
 	color: #666e91;
-	font-size: 11px;
+	font-size:inherit;
 	position: relative;
+	border:1px solid #cad3e8;
 }
 .buttonduration.active {
 	background-color: #6804bf;
@@ -317,7 +318,7 @@ ul {
 	border-radius: 8px;
 	cursor: pointer;
 	color: #666e91;
-	font-size: 11px;
+	font-size: inherit;
 	position: relative;
 	border: 1px solid #cad3e8;
 }
@@ -755,7 +756,6 @@ ul {
 .planIcon {
 	display: none;
 }
-
 .toggleButton + .sidebar .sideBarMenu > ul > li > .subMenuWrap .subMenu.open .menuLabel::after {
 	transform: rotate(-135deg);
 }
@@ -767,7 +767,7 @@ ul {
 	left: 11px;
 }
 .toggleButton.checked + .sidebar {
-	width:120px;
+	width:100px;
 }
 .toggleButton.checked + .sidebar .sideBarMenu > ul > li > a {
 	flex-direction: column;
@@ -887,7 +887,7 @@ ul {
 	position: fixed;
 	z-index: 9;
 	top: 16px;
-	left:calc(30px + 180px);
+	padding-left:10px;
 }
 .commonHeading h1 {
 	font-size: 24px;
@@ -1074,8 +1074,7 @@ ul {
 	height: 60px;
 	display: flex;
 	align-items: center;
-	left: 180px;
-    padding-left: 20px;
+    padding-left: 10px;
 }
 .commonBackHeading .headingWrap {
 	padding-left: 30px;

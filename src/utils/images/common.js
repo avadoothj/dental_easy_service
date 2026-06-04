@@ -5,7 +5,7 @@ export * as avatar from "@/images/header/avatar.png";
 // Sidebar
 export * as bundlrLogo from "@/images/sidebar/tender_logo.svg";
 export * as bundlrLogo2 from "@/images/sidebar/tender_logo1.svg";
-export * as dentallogo from "@/images/sidebar/white-DentalEasy.svg";
+export * as dentallogo from "@/images/sidebar/logo.svg";
 export * as ispLogo from "@/images/sidebar/ISPLogo2.svg";
 export * as ottplayLogo from "@/images/sidebar/OTTplayLogo1.svg";
 export * as logOutImg from "@/images/sidebar/logout.svg";

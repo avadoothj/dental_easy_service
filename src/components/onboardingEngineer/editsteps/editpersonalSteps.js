@@ -118,7 +118,7 @@ export default function PersonalStep({
 											placeholder="Enter Full Name"
 										/>
 										{errors.name && (
-											<p className="d-block text-danger">
+											<p className={commonStyle.errorMsg}>
 												{errors.name.message}
 											</p>
 										)}

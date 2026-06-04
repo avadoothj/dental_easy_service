@@ -3135,7 +3135,7 @@
 }
 .formBtnWrap{padding-top:15px;border-top: 1px solid #c7c7c7;display: flex;justify-content:flex-end;gap:10px;margin-top:15px;}
 .commonBtn{
-	background: #6804bf;
+	background: #002864;
     border-radius: 10px;
     color: #fff;
     border: 0;
@@ -3144,8 +3144,20 @@
     font-weight: 400;
     padding: 12px 15px;
 	letter-spacing:inherit;
-	&.link{background-color:transparent;color:#6804bf;border:1px solid transparent}
-	&.stroke{background-color:transparent;color:#6804bf;border:1px solid #6804bf;}
+	transition:all .4s ease-in-out;
+	&:hover{
+		background-color:#004a6e;
+	}
+	&.link{background-color:transparent;color:#002864;border:1px solid transparent;
+		&:hover{
+			background-color:#d6e6ff;
+		}
+	}
+	&.stroke{background-color:transparent;color:#002864;border:1px solid #002864;
+		&:hover{
+			background: #002864;
+		}
+	}
 	&:disabled{opacity:0.6;}
 	&.small{padding:6px 10px;font-size:14px;border-radius:4px;}
 	&.light{background-color:#999;}
@@ -3224,7 +3236,7 @@ label{
 		display: block;
 	}
 }
-.errorMsg{font-size:12px;margin-bottom:0;margin-top:2px;color:#dc3545;}
+.errorMsg{font-size:12px;margin-bottom:0;margin-top:4px;color:#dc3545;}
 .tabWrapper{
 	padding:15px;
 	background-color:#eee;border-radius:10px;
@@ -3276,4 +3288,14 @@ label{
 		.documentCopy{flex:1;padding-left:20px;}
 	}
 }
-.accordion{border:1px solid red;margin-bottom:15px;}
+.accordion{border:1px solid red;margin-bottom:15px;
+	.subscriberAccordionBody{border:1px solid red;}
+	.documentViewWrapper{border:1px solid red;
+		ul{display: flex;flex-wrap:wrap;gap:20px;
+			li{flex:0 0 auto;width:25%;
+				img{width:100%;border:5px solid #eee;margin-bottom:5px;}
+				.name{font-size:16px;font-weight:500;}
+			}
+		}
+	}
+}
