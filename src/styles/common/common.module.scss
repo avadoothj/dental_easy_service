@@ -3288,9 +3288,10 @@ label{
 		.documentCopy{flex:1;padding-left:20px;}
 	}
 }
-.accordion{border:1px solid red;margin-bottom:15px;
-	.subscriberAccordionBody{border:1px solid red;}
-	.documentViewWrapper{border:1px solid red;
+.accordion{margin-bottom:15px;
+	button{font-size: 16px;font-weight:600;}
+	.subscriberAccordionBody{}
+	.documentViewWrapper{
 		ul{display: flex;flex-wrap:wrap;gap:20px;
 			li{flex:0 0 auto;width:25%;
 				img{width:100%;border:5px solid #eee;margin-bottom:5px;}

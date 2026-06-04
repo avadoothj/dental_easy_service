@@ -113,12 +113,12 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 	useEffect(() => {
 		setSelectedMenu(findSidebarItem());
 	}, [pathname]);
-
+	console.log("menus", menus)
 	return (
 		<div className={`${style.sideBarMenu} sideBarMenu`}>
 			{menus != null &&
 				JSON.parse(menus).map((parentMenu, parentIndex) => (
-					<ul key={parentIndex}>
+					<ul key={parentIndex} className="testtttt">
 						{parentMenu
 							.filter((y) => y.on_sidebar == 1)
 							.map((x, i) => (
@@ -128,8 +128,8 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 										selectedMenu?.includes(x.menu_id)
 											? style.active
 											: x.link != "/" && pathname.startsWith(x.link)
-											? style.active
-											: ""
+												? style.active
+												: ""
 									}
 								>
 									{x.menus.length == 0 ? (
@@ -184,7 +184,7 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 													)}
 												</div>
 											</div>
-											<ul>
+											<ul className="testtttt">
 												{x.menus
 													.filter((y) => y.on_sidebar == 1)
 													.map((y, j) => (
