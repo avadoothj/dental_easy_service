@@ -8,8 +8,6 @@ export const metadata = {
 
 export default async function Plans() {
 	const [pageData, userMenu] = await Promise.all([getProfileData(), getUserMenuData()]);
- console.log('pageData :', pageData);
- console.log('userMenu :', userMenu);
 
 	return (
 		<MyProfile

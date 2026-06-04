@@ -6,7 +6,7 @@ export default async function DefaultDashboard() {
 	return (
 		<div className={commonStyle.DashboardNoResult}>
 			<div className={commonStyle.inner}>
-				<h3>Welcome to Tender Bharo CMS!</h3>
+				<h3>Welcome to Dental Easy Services CMS</h3>
 				{/* <p>
 					Unlock the power to effortlessly manage your plans, subscribers, and the entire
 					ecosystem in one centralized portal. From seamless plan updates to efficient

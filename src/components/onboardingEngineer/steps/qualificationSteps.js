@@ -79,7 +79,6 @@ export default function QualificationStep({ onboardingData, onNext, onBack }) {
 
 		const response = await savequalificationDraft(formData);
 
-		console.log("response :", response);
 	};
 
 	useEffect(() => {

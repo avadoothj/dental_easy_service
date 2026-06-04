@@ -86,6 +86,7 @@ export default function EditTeam({ user, role }) {
   };
 
   const handleFormSubmit = async () => {
+    console.log("formData :", formData);
     setIsLoading(true);
     const response = await editTeam(formData);
 

@@ -49,10 +49,8 @@ module.exports = async () => {
 		query += `order by section_id, parent_id, sort_order`;
 
 		const result = await executeQuery(query);
-		console.log("result Inside getMenu.js", result);
 		if (result) {
 			const menu = createFullMenu(result);
-			console.log("menu :", menu);
 			content = "export default " + JSON.stringify(menu);
 		}
 	} catch (error) {

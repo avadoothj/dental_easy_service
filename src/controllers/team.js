@@ -111,7 +111,6 @@ export async function addTeam(formData) {
 		);
 
 		const result = await executeQuery(insertQuery);
-		console.log("result :", result);
 
 		if (result.insertId) {
 			// await sendUserMail({
@@ -143,7 +142,6 @@ export async function addTeam(formData) {
 }
 
 export async function getTeam(teamId) {
-	console.log("teamId :", teamId);
 	try {
 		let query = `
       SELECT 
@@ -164,7 +162,6 @@ export async function getTeam(teamId) {
        `;
 
 		const result = await executeQuery(query, [teamId]);
-		console.log("result :", result);
 
 		if (result.length > 0) {
 			return {
@@ -201,15 +198,6 @@ export async function editTeam(formData) {
 	} = formData;
 
 	try {
-		const selectQuery = `
-      SELECT role_id, login_id, user_name, mobile, email, permanent_block, user_block
-      FROM ${TABLE_LIST.USER_MASTER}
-      WHERE user_id = $1
-    `;
-
-		const previousResult = await dbRead.query(selectQuery, [edit_user_id]);
-		const previousData = previousResult[0];
-
 		const updatePayload = {
 			user_name: display_name,
 			mobile,
@@ -225,29 +213,28 @@ export async function editTeam(formData) {
 			{ user_id: edit_user_id },
 			TABLE_LIST.USER_MASTER,
 		);
-
-		await db.none(updateQuery);
+		await executeQuery(updateQuery);
 
 		const roleUpdateQuery = `
       UPDATE ${TABLE_LIST.USER_MASTER}
       SET role_name = (
         SELECT role_name 
         FROM ${TABLE_LIST.ROLE_MASTER} 
-        WHERE role_id = $2
+        WHERE role_id = ?
       )
-      WHERE user_id = $1
+      WHERE user_id = ?
     `;
 
-		await db.none(roleUpdateQuery, [edit_user_id, role]);
+		await executeQuery(roleUpdateQuery, [role, edit_user_id]);
 
-		saveLog({
-			module: "user",
-			action: "edit",
-			item_id: edit_user_id,
-			user_id,
-			payload: updatePayload,
-			previous: previousData,
-		});
+		// saveLog({
+		// 	module: "user",
+		// 	action: "edit",
+		// 	item_id: edit_user_id,
+		// 	user_id,
+		// 	payload: updatePayload,
+		// 	previous: previousData,
+		// });
 
 		return {
 			success: true,
@@ -272,7 +259,6 @@ export async function getCount() {
 		countQuery += `where user_block = 0 and role_id != ${DEFAULT_SUPER_ADMIN_ROLE} `;
 
 		const result = await executeQuery(countQuery, params);
-		console.log("result in getCount :", result[0]?.count);
 
 		return {
 			count: result[0]?.count ?? 0,

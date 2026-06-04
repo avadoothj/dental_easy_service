@@ -28,7 +28,6 @@ export default function UserCreationStep({ onboardingData, onNext, onBack }) {
 		},
 	});
 
-	console.log("onboardingData :", onboardingData);
 	const onSubmit = async (data) => {
 		const payload = {
 			...data,
@@ -48,7 +47,6 @@ export default function UserCreationStep({ onboardingData, onNext, onBack }) {
 	useEffect(() => {
 		if (!onboardingData?.userCreationData) return;
 		const usercreation = onboardingData.userCreationData;
-		console.log("usercreation :", usercreation);
 		reset({
 			username: usercreation.username || "",
 			password: usercreation.password || "",

@@ -49,7 +49,6 @@ export default function IspList() {
 
 		setIsLoading(true);
 		const data = await getAllIspList();
-		console.log("data :", data);
 		setList((list) => {
 			if (currentPage == 1) return data;
 			return [...list, ...data];
@@ -66,7 +65,6 @@ export default function IspList() {
 		},
 	};
 
-	console.log("list :", list);
 	return (
 		<>
 			{isLoading && currentPage <= 1 ? (

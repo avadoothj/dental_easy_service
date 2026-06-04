@@ -57,7 +57,6 @@ export default function ChangePassword({ postSuccess, handleClose }) {
 			password: formData.new_password,
 			current_password: formData.current_password,
 		};
-		console.log("payload :", payload);
 
 		const response = await setChangePassword(payload);
 

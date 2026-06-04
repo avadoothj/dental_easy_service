@@ -11,7 +11,6 @@ export default function OnBoardingPage() {
 			});
 
 			const data = await res.json();
-			console.log("data---------->>>", data.onboardingId);
 
 			if (!data.success) {
 				throw new Error("Onboarding creation failed");

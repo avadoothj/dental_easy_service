@@ -8,7 +8,6 @@ export default function DocumentStep({
 	isLast,
 	currentStep,
 }) {
-	console.log("DocumentStep - currentStep:", currentStep);
 	return (
 		<>
 			<div

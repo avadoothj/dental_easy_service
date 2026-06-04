@@ -772,7 +772,6 @@ export async function getFieldEngineerList(filters) {
 		// 	resetPassListQuery += ` LIMIT ${perPage} OFFSET ${offset}`;
 
 		const result = await executeQuery(resetPassListQuery, queryParams);
-		console.log("result :", result);
 
 		const list = result.map((x) => ({
 			...x,
@@ -836,7 +835,6 @@ export async function getFieldEngineer(fieldEngineerId) {
 }
 
 export async function getUserDataByCurrentStep(current_step, fieldEngineerId) {
-	console.log("current_step :", current_step);
 	if (current_step == "personal_information") {
 		let query = `
 				SELECT 
@@ -970,7 +968,6 @@ export async function addDocumentFieldEngineer(formData, fieldEngineerId) {
 }
 
 export async function saveDocumentDraft(formData, fieldEngineerId) {
-	console.log("formData :", formData);
 	try {
 		const passportPhoto = formData.get("passportPhoto");
 		const identityProof = formData.get("identityProof");
@@ -1048,7 +1045,6 @@ export async function saveDocumentDraft(formData, fieldEngineerId) {
 }
 
 export async function getOnboardingDataById(onboardingId) {
-	console.log("onboardingId :", onboardingId);
 	try {
 		const onboardingRows = await executeQuery(
 			`
@@ -1072,7 +1068,6 @@ export async function getOnboardingDataById(onboardingId) {
 		}
 
 		const onboarding = onboardingRows[0];
-		console.log("onboardinggetOnboardingDataByIdgetOnboardingDataById :", onboarding);
 
 		const personalRows = await executeQuery(
 			`
@@ -1512,7 +1507,7 @@ export async function savequalificationDraft(formData) {
 
 export async function addUserCreationFieldEngineer(payload) {
 	try {
-		console.log("payload :", payload);
+		("payload :", payload);
 
 		const { onboardingId, fieldEngineerId, username, password, assignServiceHead } = payload;
 
@@ -1529,7 +1524,6 @@ export async function addUserCreationFieldEngineer(payload) {
 			[username],
 		);
 
-		console.log("userExisting :", userExisting);
 
 		if (userExisting.length) {
 			return {
@@ -1938,7 +1932,6 @@ export async function handleStepChange(step, onboardingId) {
 			[step.id, onboardingId],
 		);
 
-		console.log("repsonse :", repsonse);
 		return { success: true };
 	} catch (error) {
 		console.error("handleStepChange error:", error);

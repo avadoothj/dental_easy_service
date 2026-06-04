@@ -97,7 +97,6 @@ export default function AddOnboardingPageWrapper({ mode, onboardingId }) {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			console.log("onboardingId fetchData :", onboardingId);
 			if (mode !== "edit" || !onboardingId) {
 				setIsLoading(false);
 				return;

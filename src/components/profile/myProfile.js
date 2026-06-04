@@ -27,11 +27,11 @@ import { AppContext } from "@/contextProvider";
 export default function MyProfile({ user, profileData, userMenu }) {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const { showAlert, handleUserLogout } = useContext(AppContext);
+	// const { showAlert, handleUserLogout } = useContext(AppContext);
 
-	if (user.user_type == "regional head") {
-		user.display_user_type = "Region";
-	}
+	// if (user.user_type == "regional head") {
+	// 	user.display_user_type = "Region";
+	// }
 
 	const [showEditForm, setShowEditForm] = useState(false);
 	const [showModal, setShowModal] = useState(false);
@@ -74,7 +74,7 @@ export default function MyProfile({ user, profileData, userMenu }) {
 	const handleLogoutClick = (e) => {
 		e.preventDefault();
 		setIsLoading(!isLoading);
-		handleUserLogout();
+		// handleUserLogout();
 	};
 
 	const downloadApiToken = async () => {
@@ -86,7 +86,7 @@ export default function MyProfile({ user, profileData, userMenu }) {
 			if (response.success) {
 				window.open(response.downloadPath, "_blank");
 			} else {
-				showAlert(response.msg);
+				// showAlert(response.msg);
 			}
 		}
 	};
@@ -98,9 +98,9 @@ export default function MyProfile({ user, profileData, userMenu }) {
 			setIsLoading2(false);
 
 			if (response.success) {
-				showAlert(messages.TOKEN_SENT_VIA_MAIL, 1);
+				// showAlert(messages.TOKEN_SENT_VIA_MAIL, 1);
 			} else {
-				showAlert(response.msg);
+				// showAlert(response.msg);
 			}
 		}
 	};
@@ -112,9 +112,9 @@ export default function MyProfile({ user, profileData, userMenu }) {
 			setIsLoading3(false);
 
 			if (response.success) {
-				showAlert(messages.TOKEN_REGENERATE_SUCCESS, 1);
+				// showAlert(messages.TOKEN_REGENERATE_SUCCESS, 1);
 			} else {
-				showAlert(response.msg);
+				// showAlert(response.msg);
 			}
 		}
 	};
@@ -173,15 +173,14 @@ export default function MyProfile({ user, profileData, userMenu }) {
 								<div className={style.detailBox}>
 									{/* <h3>Primary Details</h3> */}
 									<div className={style.detailRow}>
-										{user.user_type != "internal" &&
+										{/* {user.user_type != "internal" &&
 											user.user_type != "regional head" && (
 												<div className={style.detailcol}>
-													<label>{user.display_user_type} Code</label>
 													<div className={style.detailText}>
 														{profileData.oper_code}
 													</div>
 												</div>
-											)}
+											)} */}
 										<div className={style.detailcol}>
 											<label>{user.display_user_type} Name</label>
 											<div className={style.detailText}>
@@ -221,7 +220,7 @@ export default function MyProfile({ user, profileData, userMenu }) {
 												{profileData.address}
 											</div>
 										</div>
-										{user.user_type != "regional head" && (
+										{/* {user.user_type != "regional head" && (
 											<>
 												<div className={style.detailcol}>
 													<label>State</label>
@@ -248,7 +247,7 @@ export default function MyProfile({ user, profileData, userMenu }) {
 													</div>
 												</div>
 											</>
-										)}
+										)} */}
 									</div>
 								</div>
 							</Accordion.Body>

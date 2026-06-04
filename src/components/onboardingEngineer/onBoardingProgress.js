@@ -12,7 +12,6 @@ export default function OnboardingProgress({
 }) {
 	const router = useRouter();
 	const handleClick = async (step) => {
-		console.log("step :", step);
 
 		const changeStep = await handleStepChange(step, onboardingData?.onboardingId);
 		if (changeStep.success) {
