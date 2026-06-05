@@ -24,7 +24,6 @@ export async function getUserMenuData() {
 	return new Promise((resolve, reject) => {
 		getServerSession(options).then((session) => {
 			if (session?.user) {
-				console.log("session.user.allowedLinks,", session.user.allowedLinks)
 
 				resolve(JSON.stringify(filterMenus(sidebarData, session.user.allowedLinks)));
 			} else {

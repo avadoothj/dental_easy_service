@@ -2,6 +2,7 @@ import PreLoginSlider from "./preLoginSlider";
 import loginStyle from "@/css/auth/login.module.scss";
 import { bundlrLogo2 } from "@/utils/imagesPicker";
 import CustomImage from "@/components/common/customImage";
+import {dentallogo} from "@/utils/images/common"
 
 export default async function AuthLayout({ children }) {
 	return (

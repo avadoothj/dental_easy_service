@@ -113,7 +113,6 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 	useEffect(() => {
 		setSelectedMenu(findSidebarItem());
 	}, [pathname]);
-	console.log("menus", menus)
 	return (
 		<div className={`${sidebarStyle.sideBarMenu} sideBarMenu`}>
 			{menus != null &&

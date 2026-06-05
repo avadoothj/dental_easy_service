@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import commonStyle from "@/css/common/common.module.scss";
+import { AppContext } from "@/contextProvider";
+import { useContext } from "react";
 import { add } from "date-fns";
 import { addDocumentFieldEngineer, saveDocumentDraft } from "@/controllers/onboarding";
 
@@ -10,6 +12,7 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 	const {
 		register,
 		handleSubmit,
+		watch,
 		reset,
 		formState: { errors, isSubmitting },
 	} = useForm({
@@ -25,6 +28,7 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 		identityProof: null,
 		addressProof: null,
 	});
+	const { showAlert } = useContext(AppContext);
 
 	const buildFormData = (data, isDraft = false) => {
 		const formData = new FormData();
@@ -67,14 +71,13 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 	};
 
 	const handleSaveDraft = async (data) => {
-
 		const formData = buildFormData(data);
 
 		const response = await saveDocumentDraft(formData, onboardingData.fieldEngineerId);
 
 		if (response.success) {
 			// NEW USER
-
+			showAlert("Document updated successfully", 1);
 			if (!onboardingData?.onboardingId) {
 				router.replace(`/onboarding-engineer/edit/${response.onboardingId}`);
 
@@ -82,6 +85,10 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 			}
 		}
 	};
+
+	const passportPhoto = watch("passportPhoto");
+	const identityProof = watch("identityProof");
+	const addressProof = watch("addressProof");
 
 	useEffect(() => {
 		if (!onboardingData?.documentData) return;
@@ -149,7 +156,10 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 								<label className="form-label">
 									Upload Passport-size Photo<sup>*</sup>
 								</label>
-								<small>Please upload a passport-size photograph with a white background.</small>
+								<small>
+									Please upload a passport-size photograph with a white
+									background.
+								</small>
 							</div>
 							<div className={commonStyle.documentCopy}>
 								<label className={commonStyle.fileUpload}>
@@ -161,20 +171,26 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 											required: "Passport photo is required",
 										})}
 									/>
-									<span className="title">Click to <a href="#!">browse</a> local files</span>
-									<small>Supported formats: JPG, JPEG, PNG (Max size: 50KB)</small>
+									<span className="title">
+										Click to <a href="#!">browse</a> local files
+									</span>
+									<small>
+										Supported formats: JPG, JPEG, PNG (Max size: 50KB)
+									</small>
 								</label>
-								<div className={commonStyle.fileName}>myPhoto_2025.jpg</div>
+								{/* <div className={commonStyle.fileName}>
+									{passportPhoto?.[0]?.name ||
+										existingFiles?.passportPhoto?.fileName ||
+										"No file uploaded"}
+								</div> */}
 								<div className="d-flex align-items-center gap-2">
 									<div className="upload-files-names">
 										<div className="d-flex gap-1">
 											<span className="files"></span>
 											<div className="d-flex align-items-center gap-2">
 												<span className="file-name">
-													{existingFiles.passportPhoto
-														? existingFiles.passportPhoto
-																.fileName
-														: "No file uploaded"}
+													{passportPhoto?.[0]?.name ||
+														existingFiles?.passportPhoto?.fileName}
 												</span>
 											</div>
 										</div>
@@ -200,12 +216,31 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 											required: "Identity proof is required",
 										})}
 									/>
-									<span className="title">Click to <a href="#!">browse</a> local files</span>
-									<small>Supported formats: JPG, JPEG, PNG (Max size: 200KB)</small>
+									<span className="title">
+										Click to <a href="#!">browse</a> local files
+									</span>
+									<small>
+										Supported formats: JPG, JPEG, PNG (Max size: 200KB)
+									</small>
 								</label>
 								{/* <!-- <div className="note">
 												<span>Please upload a passport-size photograph with a white background. The file size must be within 50 kb.</span>
 											</div> --> */}
+
+								<div className="d-flex align-items-center gap-2">
+									<div className="upload-files-names">
+										<div className="d-flex gap-1">
+											<span className="files"></span>
+											<div className="d-flex align-items-center gap-2">
+												<span className="file-name">
+													{identityProof?.[0]?.name ||
+														existingFiles?.identityProof?.fileName}
+												</span>
+											</div>
+										</div>
+										<span className="close"></span>
+									</div>
+								</div>
 							</div>
 						</li>
 						<li>
@@ -213,7 +248,10 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 								<label className="form-label">
 									Proof Of Address <sup>*</sup>
 								</label>
-								<small>Upload utility proof eg. Aadhar card, Light bill, Driving license</small>
+								<small>
+									Upload utility proof eg. Aadhar card, Light bill, Driving
+									license
+								</small>
 							</div>
 							<div className={commonStyle.documentCopy}>
 								<label className={commonStyle.fileUpload}>
@@ -225,9 +263,27 @@ export default function DocumentStep({ onboardingData, onNext, onBack }) {
 											required: "Address proof is required",
 										})}
 									/>
-									<span className="title">Click to <a href="#!">browse</a> local files</span>
-									<small>Supported formats: JPG, JPEG, PNG (Max size: 200KB)</small>
+									<span className="title">
+										Click to <a href="#!">browse</a> local files
+									</span>
+									<small>
+										Supported formats: JPG, JPEG, PNG (Max size: 200KB)
+									</small>
 								</label>
+								<div className="d-flex align-items-center gap-2">
+									<div className="upload-files-names">
+										<div className="d-flex gap-1">
+											<span className="files"></span>
+											<div className="d-flex align-items-center gap-2">
+												<span className="file-name">
+													{addressProof?.[0]?.name ||
+														existingFiles?.addressProof?.fileName}
+												</span>
+											</div>
+										</div>
+										<span className="close"></span>
+									</div>
+								</div>
 							</div>
 						</li>
 					</ul>

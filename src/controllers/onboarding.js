@@ -510,12 +510,10 @@ export async function savePeronalDraft(payload) {
 
 		if (onboardingId && fieldEngineerId) {
 			// UPDATE FIELD ENGINEER
-
 			const updateFieldEngineerQuery = queryGenerator.generateUpdateQuery(
 				fieldEngineerPayload,
+				{ id: fieldEngineerId },
 				TABLE_LIST.FIELDENGINEER,
-				`id=${fieldEngineerId}`,
-				"user_id",
 			);
 
 			await executeQuery(updateFieldEngineerQuery);
@@ -543,11 +541,8 @@ export async function savePeronalDraft(payload) {
 			const updatePermanentAddressQuery = queryGenerator.generateUpdateQuery(
 				permanentAddressPayload,
 
+				{ field_engineer_id: fieldEngineerId, address_type: "permanent" },
 				TABLE_LIST.ONBOARDING_ADDRESS,
-
-				`field_engineer_id=${fieldEngineerId} AND address_type='permanent'`,
-
-				"user_id",
 			);
 
 			await executeQuery(updatePermanentAddressQuery);
@@ -574,11 +569,8 @@ export async function savePeronalDraft(payload) {
 			const updateCurrentAddressQuery = queryGenerator.generateUpdateQuery(
 				currentAddressPayload,
 
+				{ field_engineer_id: fieldEngineerId, address_type: "current" },
 				TABLE_LIST.ONBOARDING_ADDRESS,
-
-				`field_engineer_id=${fieldEngineerId} AND address_type='current'`,
-
-				"user_id",
 			);
 
 			await executeQuery(updateCurrentAddressQuery);
@@ -1524,7 +1516,6 @@ export async function addUserCreationFieldEngineer(payload) {
 			[username],
 		);
 
-
 		if (userExisting.length) {
 			return {
 				success: false,
@@ -1879,8 +1870,6 @@ export async function addRatingFieldEngineer(payload) {
 		if (existingRows.length) {
 			const updateQuery = queryGenerator.generateUpdateQuery(
 				ratingPayload,
-
-				
 				{ field_engineer_id: fieldEngineerId },
 				TABLE_LIST.ENGINEER_RATINGS,
 
