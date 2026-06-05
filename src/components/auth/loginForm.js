@@ -9,6 +9,9 @@ import style from "@/css/auth/login.module.scss";
 import ErrorMessage from "@/common/errorMessage";
 import commonStyle from "@/css/common/common.module.scss";
 import sidebarData from "@/utils/sidebarData";
+import Link from "next/link";
+import loginStyle from "@/css/auth/login.module.scss";
+
 
 export default function LoginForm() {
 	const {
@@ -110,39 +113,45 @@ export default function LoginForm() {
 
 	return (
 		<form onSubmit={handleSubmit(handleFormSubmit)}>
-			<h2>Sign In</h2>
-			<div className={style.inpulable}>
+			<span className={loginStyle.logo}></span>
+			<h3 className="text-center">Sign In</h3>
+			<p className="text-center">Please sign in to continue to the admin panel.</p>
+			<ErrorMessage message={authError} />
+
+			<div className="form-group">
+				<label className="form-label">Email Address</label>
 				<input
 					{...formValidation.username}
 					onChange={(e) => {
 						formValidation.username.onChange(e);
 						updateSelectedForm("username", e.target.value);
 					}}
-					className={commonStyle.formControl}
+					className="form-control"
 					type="text"
 					name="username"
 					id="username"
-					placeholder="User ID"
+					placeholder="Enter your email"
 					readOnly={isLoading}
 					value={formData.username}
 					maxLength={inputMaxLength}
-				/>
+					/>
 				{errors?.username && (
 					<span className={commonStyle.logerror}>{errors.username?.message}</span>
 				)}
 			</div>
-			<div className={style.inpulable}>
+			<div className="form-group position-relative">
+				<label className="form-label">Password</label>
 				<input
 					{...formValidation.password}
 					onChange={(e) => {
 						formValidation.password.onChange(e);
 						updateSelectedForm("password", e.target.value);
 					}}
-					className={commonStyle.formControl}
+					className="form-control"
 					type={showPassword ? "text" : "password"}
 					name="password"
 					id="password"
-					placeholder="Password"
+					placeholder="Enter your password"
 					readOnly={isLoading}
 					value={formData.password}
 					maxLength={inputMaxLength}
@@ -155,14 +164,19 @@ export default function LoginForm() {
 					<span className={commonStyle.logerror}>{errors.password?.message}</span>
 				)}
 			</div>
-			<ErrorMessage message={authError} />
-			<button
-				type="submit"
-				className={commonStyle.commonBtn + " " + "w-100"}
-				disabled={isLoading}
-			>
-				{isLoading ? getConstant("LOADING_TEXT") : "Sign In"}
-			</button>
+			<div className="d-flex justify-content-between align-items-center">
+				<button
+					type="submit"
+					className={commonStyle.commonBtn}
+					disabled={isLoading}
+				>
+					{isLoading ? getConstant("LOADING_TEXT") : "Sign In"}
+				</button>
+				<Link
+					href="/forgetPassword">
+					Forgot Password?
+				</Link>
+			</div>
 		</form>
 	);
 }

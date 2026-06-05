@@ -747,12 +747,7 @@ ul {
 	overflow: hidden;
 }
 
-.sidebarOutter {
-	height: 100vh;
-	z-index: 12;
-	position: sticky;
-	top: 0;
-}
+
 .planIcon {
 	display: none;
 }
@@ -1251,8 +1246,7 @@ ul {
 .showerror {
 	color: #ff5082;
 	font-size: 12px;
-	width: 280px;
-	margin: 0 auto;
+	margin-bottom:10px;
 	text-align: left;
 }
 .erricn {

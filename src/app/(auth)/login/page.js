@@ -20,12 +20,6 @@ export default async function Login({ searchParams = {} }) {
 	return (
 		<>
 			<LoginForm />
-			<Link
-				href="/forgetPassword"
-				className={style.forgotpass}
-			>
-				Forgot Password?
-			</Link>
 		</>
 	);
 }

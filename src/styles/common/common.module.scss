@@ -1,26 +1,28 @@
 @import "../variable";
 
 .eyeopen {
-	width: 15px;
-	height: 15px;
+	width: 32px;
+	height: 32px;
 	position: absolute;
-	right: 20px;
-	top: 13px;
+	right: 15px;
+	top: 25px;
 	cursor: pointer;
-	background-image: url(#{$image_path}/login/eye_on.png);
+	background-image: url("data:image/svg+xml,%3Csvg width='23' height='17' viewBox='0 0 23 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.5 8.5C0.5 8.5 4.5 0.5 11.5 0.5C18.5 0.5 22.5 8.5 22.5 8.5C22.5 8.5 18.5 16.5 11.5 16.5C4.5 16.5 0.5 8.5 0.5 8.5Z' stroke='black' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M11.5 11.5C13.1569 11.5 14.5 10.1569 14.5 8.5C14.5 6.84315 13.1569 5.5 11.5 5.5C9.84315 5.5 8.5 6.84315 8.5 8.5C8.5 10.1569 9.84315 11.5 11.5 11.5Z' stroke='black' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-position:center;
+	background-size:22px;
 }
 .eyeclose {
-	width: 15px;
-	height: 15px;
+	width: 32px;
+	height: 32px;
 	position: absolute;
-	right: 20px;
-	top: 13px;
+	right: 15px;
+	top: 25px;
 	cursor: pointer;
-	background-image: url(#{$image_path}/login/eye_off.png);
+	background-image: url("data:image/svg+xml,%3Csvg width='23' height='23' viewBox='0 0 23 23' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17.44 17.44C15.7306 18.743 13.6491 19.4649 11.5 19.5C4.5 19.5 0.5 11.5 0.5 11.5C1.74389 9.1819 3.46914 7.15661 5.56 5.56M9.4 3.74C10.0883 3.57888 10.7931 3.49834 11.5 3.5C18.5 3.5 22.5 11.5 22.5 11.5C21.893 12.6356 21.1691 13.7047 20.34 14.69M13.62 13.62C13.3454 13.9147 13.0141 14.1512 12.6462 14.3151C12.2782 14.4791 11.8809 14.5673 11.4781 14.5744C11.0753 14.5815 10.6752 14.5074 10.3016 14.3565C9.92806 14.2056 9.58872 13.981 9.30385 13.6962C9.01897 13.4113 8.79439 13.0719 8.64351 12.6984C8.49262 12.3248 8.41853 11.9247 8.42563 11.5219C8.43274 11.1191 8.52091 10.7218 8.68488 10.3538C8.84884 9.98585 9.08525 9.65465 9.38 9.38M0.5 0.5L22.5 22.5' stroke='black' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-position:center;
+	background-size:22px;
 }
 .logerror {
 	text-align: left;

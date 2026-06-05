@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import Link from "next/link";
 import SidebarItems from "./sidebarItems";
 import CustomImage from "@/common/customImage";
-import style from "@/css/common/sidebar.module.scss";
+import sidebarStyle from "@/css/common/sidebar.module.scss";
 import { ottplayLogo, logOutImg, bundlrLogo } from "@/utils/imagesPicker";
 import {dentallogo}from "@/utils/images/common"
 import Wallet from "./wallet";
@@ -32,7 +32,7 @@ export default function Sidebar({ user, balance, planCount, autoRenewal, userMen
 	};
 
 	const handleToggleClick = () => {
-		jQuery("#toggleButton").toggleClass(style.checked);
+		jQuery("#toggleButton").toggleClass(sidebarStyle.checked);
 		isSidebarClosedHandler();
 	};
 
@@ -42,17 +42,17 @@ export default function Sidebar({ user, balance, planCount, autoRenewal, userMen
 
 	return (
 		<div
-			className={`sidebarOutter ${isSidebarClosed ? "checked" : ""}`}
+			className={`${sidebarStyle.sidebarOutter} ${isSidebarClosed ? sidebarStyle.checked : ""}`}
 			id="sidebarOutter"
 		>
 			<div
-				className={`${style.toggleButton} toggleButton`}
+				className={`${sidebarStyle.toggleButton} toggleButton`}
 				id="toggleButton"
 				onClick={handleToggleClick}
 			></div>
 
-			<aside className={`${style.sidebar} sidebar`}>
-				<Link href="/" className={style.ispLogo}>
+			<aside className={`${sidebarStyle.sidebar} sidebar`}>
+				<Link href="/" className={sidebarStyle.ispLogo}>
 					{/* <CustomImage
 						alt="Dental Easy Services Logo"
 						src={dentallogo}
@@ -60,14 +60,14 @@ export default function Sidebar({ user, balance, planCount, autoRenewal, userMen
 						height="45"
 					/> */}
 				</Link>
-				<ul className={style.profileWrapper}>
-					<li className={style.profile}>
+				<ul className={sidebarStyle.profileWrapper}>
+					<li className={sidebarStyle.profile}>
 						<Link
 							href="/profile"
 							onClick={handleHamburgerClick}
 						>
-							<div className={style.avatar}>{user.imageText}</div>
-							<div className={style.profileDetail}>
+							<div className={sidebarStyle.avatar}>{user.imageText}</div>
+							<div className={sidebarStyle.profileDetail}>
 								<p>
 									{user.user_type == "internal"
 										? user.display_user_type
@@ -95,10 +95,10 @@ export default function Sidebar({ user, balance, planCount, autoRenewal, userMen
 						handleHamburgerClick={handleHamburgerClick}
 					/>
 				)}
-				<div className={style.footerBtn}>
+				<div className={sidebarStyle.footerBtn}>
 					<Link
 						href="#"
-						className={style.logout}
+						className={sidebarStyle.logout}
 						onClick={handleLogoutClick}
 					>
 						<CustomImage
@@ -111,7 +111,7 @@ export default function Sidebar({ user, balance, planCount, autoRenewal, userMen
 			</aside>
 			<a
 				onClick={handleHamburgerClick}
-				className={style.MOverlay}
+				className={sidebarStyle.MOverlay}
 			></a>
 		</div>
 	);

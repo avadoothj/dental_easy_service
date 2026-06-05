@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import style from "@/css/common/sidebar.module.scss";
+import sidebarStyle from "@/css/common/sidebar.module.scss";
 import CustomImage from "@/common/customImage";
 import { sidebarExclamationIcon } from "@/utils/imagesPicker";
 
@@ -27,7 +27,7 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 
 			if (
 				jQuery("#subMenu_" + menuId).hasClass("customSubMenu") &&
-				jQuery("#toggleButton").hasClass("checked")
+				jQuery("#toggleButton").hasClass(sidebarStyle.checked)
 			) {
 				jQuery("#toggleButton").trigger("click");
 			}
@@ -115,10 +115,10 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 	}, [pathname]);
 	console.log("menus", menus)
 	return (
-		<div className={`${style.sideBarMenu} sideBarMenu`}>
+		<div className={`${sidebarStyle.sideBarMenu} sideBarMenu`}>
 			{menus != null &&
 				JSON.parse(menus).map((parentMenu, parentIndex) => (
-					<ul key={parentIndex} className="testtttt">
+					<ul key={parentIndex}>
 						{parentMenu
 							.filter((y) => y.on_sidebar == 1)
 							.map((x, i) => (
@@ -126,9 +126,9 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 									key={i}
 									className={
 										selectedMenu?.includes(x.menu_id)
-											? style.active
+											? sidebarStyle.active
 											: x.link != "/" && pathname.startsWith(x.link)
-												? style.active
+												? sidebarStyle.active
 												: ""
 									}
 								>
@@ -146,7 +146,7 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 												width="16"
 												height="16"
 											/>
-											<div className={style.menuTxt}>
+											<div className={sidebarStyle.menuLabel}>
 												{displayMenuItemName(x.name)}
 												{x.link === "/plans" &&
 													planCount.price_not_set > 0 && (
@@ -160,10 +160,10 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 											</div>
 										</Link>
 									) : (
-										<div className={`${style.subMenuWrap} subMenuWrap`}>
+										<div className={`${sidebarStyle.subMenuWrap} subMenuWrap`}>
 											<div
 												id={"subMenu_" + x.menu_id}
-												className={`${style.subMenu} subMenu customSubMenu`}
+												className={`${sidebarStyle.subMenu} subMenu customSubMenu`}
 												onClick={() => handleSubMenuClick(x.menu_id)}
 											>
 												<CustomImage
@@ -172,7 +172,7 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 													width="16"
 													height="16"
 												/>
-												<div className={`${style.menuLabel} menuLabel`}>
+												<div className={`${sidebarStyle.menuLabel} menuLabel`}>
 													{x.name.split(" ").length > 1 ? (
 														x.name
 															.split(" ")
