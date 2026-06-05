@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import style from "@/css/common/header.module.scss";
 import ProfilePopup from "@/components/profile/profilePopup";
+import sidebarStyle from "@/css/common/sidebar.module.scss";
 
 export default function CommonHeader({ user, userMenu, balance, autoRenewal }) {
 	const path = usePathname();
@@ -11,7 +12,7 @@ export default function CommonHeader({ user, userMenu, balance, autoRenewal }) {
 
 	const handleHamburgerClick = () => {
 		jQuery("#sidebarOutter").trigger("click");
-		jQuery("#sidebarOutter").toggleClass("active");
+		jQuery("#sidebarOutter").toggleClass(sidebarStyle.active);
 		if (jQuery(".hamburgerGlobal").is(":visible")) {
 			$("body").css(
 				"overflow",

@@ -22,7 +22,7 @@ export default function Sidebar({ user, balance, planCount, autoRenewal, userMen
 
 	const handleHamburgerClick = () => {
 		jQuery("#sidebarOutter").trigger("click");
-		jQuery("#sidebarOutter").toggleClass("active");
+		jQuery("#sidebarOutter").toggleClass(sidebarStyle.active);
 		if (jQuery(".hamburgerGlobal").is(":visible")) {
 			$("body").css(
 				"overflow",

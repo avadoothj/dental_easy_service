@@ -135,16 +135,13 @@
 			}
 		}
 		.profileWrapper {
-			padding: 29px 22px;
+			padding: 15px;
 			background: #00000010;
 			display: none;
 			@media (max-width: 1024px) {
 				display: block;
 			}
 			li {
-				&:first-child {
-					margin-bottom: 31px;
-				}
 				a {
 					display: flex;
 					align-items: center;
@@ -527,7 +524,6 @@
 					}
 					@media (max-width: 1024px) {
 						transition: none;
-						padding: 8px 32px;
 						border-bottom: 0;
 					}
 				}
@@ -597,9 +593,23 @@
 							.label{display: none;}
 						}
 						.subMenu{position: absolute;left:100%;background-color: #fff;top:0;}
+						&:hover{
+							.subMenu{display: block;}
+						}
 					}
 				}
 			}
+		}
+	}
+	@media (max-width:480px){
+		width: 100%;
+		transform: translateX(-100%);
+		position: fixed;
+		transition: all 0.5s;
+		z-index: 999;
+		/* #sidebarOutter:target{transform: translateX(0%);} */
+		&.active {
+			transform: translateX(0%);
 		}
 	}
 }
