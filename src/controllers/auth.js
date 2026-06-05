@@ -144,7 +144,6 @@ export async function authenticateUser(loginId, password, ip = "", bypassUserId 
 		// MENUS
 		const allowedLinks = [];
 
-		console.log("user.permissions :", user.permissions);
 		JSON.parse(user.permissions).forEach((x) => {
 			x.forEach((y) => {
 				if (y.menus?.length > 0) {
@@ -157,7 +156,6 @@ export async function authenticateUser(loginId, password, ip = "", bypassUserId 
 			});
 		});
 
-		console.log("allowedLinks :", allowedLinks);
 		// NON ADMIN ACCESS
 		if (user.entity_type !== "INTERNAL" && user.entity_type !== "REGIONAL_HEAD") {
 			allowedLinks.push("/createUpdateInternalUser");

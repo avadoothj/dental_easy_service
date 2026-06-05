@@ -57,7 +57,6 @@ export default async function MainLayout({ children }) {
 		// checkPasswordExpiry(),
 		getUserMenuData(),
 	]);
-console.log("userMenu===========,",userMenu)
 	return (
 		<SessionProvider>
 			<AppContext>

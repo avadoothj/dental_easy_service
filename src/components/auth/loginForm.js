@@ -61,7 +61,6 @@ export default function LoginForm() {
 			password: encryptPassword(formData.password),
 			redirect: false,
 		});
-		console.log("response :", response);
 
 		if (response.error) {
 			setAuthError(response.error);

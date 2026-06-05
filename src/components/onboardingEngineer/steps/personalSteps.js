@@ -2,6 +2,8 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import commonStyle from "@/css/common/common.module.scss";
+import { AppContext } from "@/contextProvider";
+import { useContext } from "react";
 import Form from "react-bootstrap/Form";
 import { personalStepValidation } from "../../../utils/validations/onboarding";
 import { addPersonalFieldEngineer, savePeronalDraft } from "../../../controllers/onboarding";
@@ -38,6 +40,8 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 			isAddressSame: false,
 		},
 	});
+
+	const { showAlert } = useContext(AppContext);
 
 	const formValidation = {
 		name: register("name", personalStepValidation.name),
@@ -146,6 +150,8 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 			// =========================
 
 			if (!onboardingData?.onboardingId) {
+				showAlert("Personal Details updated successfully", 1);
+
 				router.replace(`/onboarding-engineer/edit/${fieldEngineerId}`);
 				onNext({
 					onboardingId,
@@ -159,6 +165,8 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 
 				return;
 			}
+
+			showAlert("Personal Details updated successfully", 1);
 
 			// =========================
 			// EDIT FLOW
@@ -203,6 +211,7 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 				addresses: response.addresses,
 			}));
 			// NEW USER
+			showAlert("Personal Details updated successfully", 1);
 
 			if (!onboardingData?.onboardingId) {
 				router.replace(`/onboarding-engineer/edit/${fieldEngineerId}`);
@@ -240,9 +249,7 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 									placeholder="Enter Full Name"
 								/>
 								{errors.name && (
-									<p className={commonStyle.errorMsg}>
-										{errors.name.message}
-									</p>
+									<p className={commonStyle.errorMsg}>{errors.name.message}</p>
 								)}
 							</div>
 						</div>
@@ -382,8 +389,7 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 						<div className="col-md-6">
 							<div className="form-group">
 								<label className="form-label">
-									Address Line 2{" "}
-									<span className="light-text">(Optional)</span>
+									Address Line 2 <span className="light-text">(Optional)</span>
 								</label>
 								<input
 									type="text"
@@ -511,8 +517,7 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 						<div className="col-md-6">
 							<div className="form-group">
 								<label className="form-label">
-									Address Line 2{" "}
-									<span className="light-text">(Optional)</span>
+									Address Line 2 <span className="light-text">(Optional)</span>
 								</label>
 								<input
 									type="text"
@@ -547,7 +552,7 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 									<option value="BR">Brazil</option>
 								</select>
 							</div>
-						</div> */ }
+						</div> */}
 						<div className="col-md-4">
 							<div className="form-group">
 								<label className="form-label">State</label>
@@ -584,7 +589,9 @@ export default function PersonalStep({ onboardingData, setOnboardingData, onNext
 									disabled={isSame}
 								/>
 								{errors.currentCity && (
-									<p className={commonStyle.errorMsg}>{errors.currentCity.message}</p>
+									<p className={commonStyle.errorMsg}>
+										{errors.currentCity.message}
+									</p>
 								)}
 							</div>
 						</div>

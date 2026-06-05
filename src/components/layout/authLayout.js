@@ -2,6 +2,7 @@ import PreLoginSlider from "./preLoginSlider";
 import style from "@/css/auth/login.module.scss";
 import { bundlrLogo2 } from "@/utils/imagesPicker";
 import CustomImage from "@/components/common/customImage";
+import {dentallogo} from "@/utils/images/common"
 
 export default async function AuthLayout({ children }) {
 	return (
@@ -15,7 +16,7 @@ export default async function AuthLayout({ children }) {
 				<div className={style.colrw}>
 					<div className={style.ottlogo}>
 						<CustomImage
-							src={bundlrLogo2}
+							src={dentallogo}
 							alt="sdfsdfsdfs Logo"
 							width="185"
 							height="47"

@@ -49,5 +49,14 @@ export default [
 			on_sidebar: 1,
 			menus: [],
 		},
+		{
+			menu_id: 20,
+			section_id: 1,
+			name: "Product",
+			link: "/products",
+			image: "/images/sidebar/dashboard.svg",
+			on_sidebar: 1,
+			menus: [],
+		},
 	],
 ];
