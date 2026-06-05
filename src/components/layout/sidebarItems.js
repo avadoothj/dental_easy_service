@@ -13,16 +13,16 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 	const handleSubMenuClick = (menuId = 0) => {
 		let hasClass = false;
 		if (menuId > 0) {
-			hasClass = jQuery("#subMenu_" + menuId).hasClass("open");
+			hasClass = jQuery("#subMenu_" + menuId).hasClass(sidebarStyle.open);
 		}
 
-		jQuery(".customSubMenu").removeClass("open");
+		jQuery(".customSubMenu").removeClass(sidebarStyle.open);
 
 		if (menuId > 0) {
 			if (hasClass) {
-				jQuery("#subMenu_" + menuId).removeClass("open");
+				jQuery("#subMenu_" + menuId).removeClass(sidebarStyle.open);
 			} else {
-				jQuery("#subMenu_" + menuId).addClass("open");
+				jQuery("#subMenu_" + menuId).addClass(sidebarStyle.open);
 			}
 
 			if (
@@ -117,7 +117,7 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 		<div className={`${sidebarStyle.sideBarMenu} sideBarMenu`}>
 			{menus != null &&
 				JSON.parse(menus).map((parentMenu, parentIndex) => (
-					<ul key={parentIndex}>
+					<ul key={parentIndex} className="avadooth">
 						{parentMenu
 							.filter((y) => y.on_sidebar == 1)
 							.map((x, i) => (
@@ -138,6 +138,7 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 												handleHamburgerClick();
 												handleSubMenuClick(x.menu_id);
 											}}
+											className={sidebarStyle.link}
 										>
 											<CustomImage
 												alt={x.name}
@@ -145,7 +146,7 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 												width="16"
 												height="16"
 											/>
-											<div className={sidebarStyle.menuLabel}>
+											<div className={sidebarStyle.label}>
 												{displayMenuItemName(x.name)}
 												{x.link === "/plans" &&
 													planCount.price_not_set > 0 && (
@@ -159,53 +160,53 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 											</div>
 										</Link>
 									) : (
-										<div className={`${sidebarStyle.subMenuWrap} subMenuWrap`}>
-											<div
-												id={"subMenu_" + x.menu_id}
-												className={`${sidebarStyle.subMenu} subMenu customSubMenu`}
-												onClick={() => handleSubMenuClick(x.menu_id)}
-											>
-												<CustomImage
-													alt={x.name}
-													src={x.image}
-													width="16"
-													height="16"
-												/>
-												<div className={`${sidebarStyle.menuLabel} menuLabel`}>
-													{x.name.split(" ").length > 1 ? (
-														x.name
-															.split(" ")
-															.map((menuInWord, i) => (
-																<span key={i}>{menuInWord}</span>
-															))
-													) : (
-														<>{x.name}</>
-													)}
-												</div>
+										<>
+										<div
+											id={"subMenu_" + x.menu_id}
+											className={`${sidebarStyle.link} subMenu customSubMenu`}
+											onClick={() => handleSubMenuClick(x.menu_id)}
+										>
+											<CustomImage
+												alt={x.name}
+												src={x.image}
+												width="16"
+												height="16"
+											/>
+											<div className={sidebarStyle.label}>
+												{x.name.split(" ").length > 1 ? (
+													x.name
+														.split(" ")
+														.map((menuInWord, i) => (
+															<span key={i}>{menuInWord}</span>
+														))
+												) : (
+													<>{x.name}</>
+												)}
 											</div>
-											<ul className="testtttt">
-												{x.menus
-													.filter((y) => y.on_sidebar == 1)
-													.map((y, j) => (
-														<li
-															key={j}
-															className={
-																selectedMenu?.includes(y.menu_id)
-																	? style.active
-																	: ""
-															}
-														>
-															<Link
-																href={y.link}
-																className="sub_menu_link"
-																onClick={handleHamburgerClick}
-															>
-																{y.name}
-															</Link>
-														</li>
-													))}
-											</ul>
 										</div>
+										<ul className={sidebarStyle.subMenu}>
+											{x.menus
+												.filter((y) => y.on_sidebar == 1)
+												.map((y, j) => (
+													<li
+														key={j}
+														className={
+															selectedMenu?.includes(y.menu_id)
+																? style.active
+																: ""
+														}
+													>
+														<Link
+															href={y.link}
+															className="sub_menu_link"
+															onClick={handleHamburgerClick}
+														>
+															{y.name}
+														</Link>
+													</li>
+												))}
+										</ul>
+										</>
 									)}
 								</li>
 							))}
