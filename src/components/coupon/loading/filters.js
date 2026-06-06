@@ -1,5 +1,6 @@
 import Link from "next/link";
 import style from "@/css/common/searchPanel.module.scss";
+import commonStyle from "@/css/common/common.module.scss";
 import CustomImage from "@/common/customImage";
 import { filterIcon, sortIcon } from "@/utils/imagesPicker";
 
@@ -29,7 +30,7 @@ export default function SearchFilterLoading() {
 					<div className={style.addteam}>
 						<Link
 							href="/isp/add"
-							className={style.addnewbtn}
+							className={commonStyle.commonBtn}
 						>
 							+ Add New
 						</Link>
@@ -80,7 +81,7 @@ export default function SearchFilterLoading() {
 				</div>
 				<Link
 					href="/isp/add"
-					className={style.addnewbtn}
+					className={commonStyle.commonBtn}
 				>
 					+ Add New
 				</Link>

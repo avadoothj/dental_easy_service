@@ -8,6 +8,7 @@ import { roleTypesList, sortList } from "@/utils/masterData";
 import { filterIcon, sortIcon } from "@/utils/imagesPicker";
 import CommonModal from "@/common/commonModal";
 import { getConstant } from "@/utils/utils";
+import commonStyle from "@/css/common/common.module.scss";
 
 export default function SearchFilterMobile() {
 	const router = useRouter();
@@ -142,7 +143,7 @@ export default function SearchFilterMobile() {
 				</div>
 				<Link
 					href="/roles/add"
-					className={style.addnewbtn}
+					className={commonStyle.commonBtn}
 				>
 					+ Add New
 				</Link>

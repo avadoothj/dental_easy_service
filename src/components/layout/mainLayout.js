@@ -69,7 +69,9 @@ export default async function MainLayout({ children }) {
 						user={session.user}
 						userMenu={userMenu}
 					/>
-					<main className="mainbox p-3">{children}</main>
+					<main className="mainbox p-3">
+						<div className="contentCopy">{children}</div>
+					</main>
 				</div>
 				{/* <AccountActions
 					terms={terms}

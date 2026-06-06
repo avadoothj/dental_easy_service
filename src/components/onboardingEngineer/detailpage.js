@@ -12,7 +12,6 @@ import { getOnboardingDataById } from "@/controllers/onboarding";
 export default function DetailPageWrapper({ onboardingData }) {
 	return (
 		<>
-			<div className="contentCopy">
 				{/* Personal Information */}
 				{onboardingData?.personalData && (
 					<Accordion
@@ -849,7 +848,6 @@ export default function DetailPageWrapper({ onboardingData }) {
 						</Accordion.Item>
 					</Accordion>
 				)}
-			</div>
 		</>
 	);
 }

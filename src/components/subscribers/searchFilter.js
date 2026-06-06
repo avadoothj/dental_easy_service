@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import style from "@/css/common/searchPanel.module.scss";
+import commonStyle from "@/css/common/common.module.scss";
 import CustomDropdown from "@/common/customDropdown";
 import {
   searchLetters,
@@ -134,7 +135,7 @@ export default function SearchFilter() {
 					/>
 				</div> */}
         <div className={style.addteam}>
-          <Link href="/subscribers/add" className={style.addnewbtn}>
+          <Link href="/subscribers/add" className={commonStyle.commonBtn}>
             + Add New
           </Link>
         </div>

@@ -1,5 +1,7 @@
 import Script from "next/script";
 import "bootstrap/dist/css/bootstrap.min.css";
+import commonStyle from "@/css/common/common.module.scss";
+
 import "@/css/globals.css";
 
 export const metadata = {
@@ -51,7 +53,7 @@ export default async function RootLayout({ children }) {
         <meta property="og:url" content={process.env.FRONTEND_DOMAIN} />
       </head>
       <body>
-        <div className="wrapper">{children}</div>
+        <div className={commonStyle.wrapper}>{children}</div>
       </body>
     </html>
   );

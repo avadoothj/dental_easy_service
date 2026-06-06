@@ -32,7 +32,12 @@
 	font-size: 12px;
 	padding-top: 0px;
 }
-
+.wrapper {
+	display: flex;
+	width: 100%;
+	min-height: 100vh;
+	flex-wrap:wrap;
+}
 .inputParentModal {
 	position: relative;
 	.eyeopen {
@@ -673,7 +678,6 @@
 
 .DashboardNoResult {
 	background: #ffffff;
-	box-shadow: 0 0 9px rgba(165, 171, 203, 0.302);
 	border-radius: 15px;
 	padding: 15px 70px;
 	height: calc(100vh - 80px - 1.5rem*2);
@@ -683,11 +687,7 @@
 	background-repeat: no-repeat;
 	background-position: right center;
 	background-size: contain;
-	@media (max-width: 1024px) {
-		height: auto;
-		padding: 20px;
-		background-image: none;
-	}
+	margin:-20px;
 	.inner {
 		width: 536px;
 		@media (max-width: 1024px) {

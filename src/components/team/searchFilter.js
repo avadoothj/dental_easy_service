@@ -148,7 +148,7 @@ export default function SearchFilter() {
 					<div className={style.addteam}>
 						<Link
 							href="/team/add"
-							className={style.addnewbtn}
+							className={commonStyle.commonBtn}
 						>
 							+ Add New
 						</Link>

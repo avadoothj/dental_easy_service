@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import style from "@/css/common/searchPanel.module.scss";
 import CustomDropdown from "@/common/customDropdown";
 import { zoneList, sortList } from "@/utils/masterData";
+import commonStyle from "@/css/common/common.module.scss";
 
 export default function SearchFilter({ categoryList, user }) {
 	const router = useRouter();
@@ -134,7 +135,7 @@ export default function SearchFilter({ categoryList, user }) {
 					<div className={style.addteam}>
 						<Link
 							href="/isp/add"
-							className={style.addnewbtn}
+							className={commonStyle.commonBtn}
 						>
 							+ Add New
 						</Link>

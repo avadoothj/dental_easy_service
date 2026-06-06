@@ -40,7 +40,6 @@ export default function ProfileDropdown({
 
 	return (
 		<div className={`${style.wrapper} ${showModal ? style.show : ""}`}>
-			<h3>My Profile</h3>
 			<div className={style.operatorWrap}>
 				<Highlight user={user} />
 			</div>
@@ -110,10 +109,8 @@ export default function ProfileDropdown({
 						</Link>
 					</li>
 				)}
-			</ul>
-			<div className={style.setting}>
-				<h3>Settings</h3>
-				<a
+				<li>
+				<Link
 					href="#"
 					onClick={(e) => {
 						e.preventDefault();
@@ -128,8 +125,9 @@ export default function ProfileDropdown({
 						height="18"
 					/>
 					Change Password
-				</a>
-			</div>
+				</Link>
+				</li>
+			</ul>
 			<button
 				className={commonStyle.commonBtn + " " + "w-100 mt-3"}
 				disabled={isLoading}

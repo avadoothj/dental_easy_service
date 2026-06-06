@@ -195,7 +195,6 @@
 	display: grid;
 	grid-template-columns: repeat(4, minmax(0, 1fr));
 	grid-gap: 15px;
-	padding: 10px 0px;
 	@media (max-width: 1024px) {
 		grid-template-columns: repeat(1, 100%);
 		grid-gap: 15px;

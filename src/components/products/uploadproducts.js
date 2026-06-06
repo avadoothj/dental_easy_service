@@ -31,8 +31,8 @@ export default function ProductUpload() {
 	const productExcel = watch("productExcel");
 
 	return (
-		<div className={style.teamgridbox}>
-			<div className={style.innergrid}>
+		<ul className={commonStyle.documentList}>
+			<li>
 				<div className={commonStyle.documentLabel}>
 					<label className="form-label">
 						Upload Product Excel File<sup>*</sup>
@@ -40,9 +40,8 @@ export default function ProductUpload() {
 					{/* <small>Please upload the product Excel file.</small> */}
 				</div>
 
-				<Form onSubmit={handleSubmit(onSubmit)}>
-					<div className={commonStyle.documentCopy}>
-						<label className={commonStyle.fileUpload}>
+				<Form onSubmit={handleSubmit(onSubmit)} className={commonStyle.documentCopy}>
+					<label className={commonStyle.fileUpload}>
 							<input
 								type="file"
 								className="form-control"
@@ -56,12 +55,8 @@ export default function ProductUpload() {
 							</span>
 							<small>Supported formats: XLSX, XLS</small>
 						</label>
-						{/* <div className={commonStyle.fileName}>
-									{passportPhoto?.[0]?.name ||
-										existingFiles?.passportPhoto?.fileName ||
-										"No file uploaded"}
-								</div> */}
-						<div className="d-flex align-items-center gap-2">
+					<div>
+					<div className="d-flex align-items-center gap-2">
 							<div className="upload-files-names">
 								<div className="d-flex gap-1">
 									<span className="files"></span>
@@ -75,9 +70,9 @@ export default function ProductUpload() {
 							</div>
 						</div>
 					</div>
-					<button className={style.uploadbtn}>Upload</button>
+					<button className={commonStyle.commonBtn}>Upload</button>
 				</Form>
-			</div>
-		</div>
+			</li>
+		</ul>
 	);
 }

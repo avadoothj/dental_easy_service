@@ -117,7 +117,7 @@ export default function SidebarItems({ menus, planCount, handleHamburgerClick })
 		<div className={`${sidebarStyle.sideBarMenu} sideBarMenu`}>
 			{menus != null &&
 				JSON.parse(menus).map((parentMenu, parentIndex) => (
-					<ul key={parentIndex} className="avadooth">
+					<ul key={parentIndex}>
 						{parentMenu
 							.filter((y) => y.on_sidebar == 1)
 							.map((x, i) => (

@@ -1,7 +1,7 @@
 @import "../variable";
 
 .wrapper {
-	width: 369px;
+	width: 250px;
 	position: absolute;
 	background: #ffffff;
 	top: 100%;
@@ -13,13 +13,13 @@
 	transition: 0.4s all;
 	visibility: hidden;
 	opacity: 0;
-	transform: translateY(50px);
+	transform: scale(0.6);
+	transform-origin: right top;
 	overflow: hidden;
-	height: 0;
 	&.show {
 		visibility: visible;
 		opacity: 1;
-		transform: translateY(0px);
+		transform: scale(1);
 		overflow: initial;
 		height: initial;
 	}
@@ -34,11 +34,10 @@
 		margin-bottom: 10px;
 	}
 	ul.navLists {
-		margin-bottom: 30px;
 		li {
 			border-bottom: 1px solid #6a6a8c33;
 			a {
-				padding: 20px 15px;
+				padding:12px 0;
 				color: #666e91;
 				font-size: 14px;
 				line-height: 14px;

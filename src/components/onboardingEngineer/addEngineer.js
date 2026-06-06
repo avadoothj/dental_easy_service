@@ -160,7 +160,6 @@ export default function AddOnboardingPageWrapper({ mode, onboardingId }) {
 	}
 
 	return (
-		<div className="contentCopy">
 			<div className="tab-content">
 				<nav className="management-tabs">
 					<OnboardingProgress
@@ -230,6 +229,5 @@ export default function AddOnboardingPageWrapper({ mode, onboardingId }) {
 					/>
 				)}
 			</div>
-		</div>
 	);
 }
